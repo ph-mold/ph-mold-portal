@@ -2,11 +2,15 @@ import { app, BrowserWindow } from "electron";
 import path from "path";
 import { isDev } from "./util.js";
 import { getPreloadPath } from "./pathResolver.js";
+import { registerFileHandlers } from "./api/file.js";
+import { registerVersionHandlers } from "./api/version.js";
 
-app.on("ready", () => {
+const createWindow = () => {
   const mainWindow = new BrowserWindow({
     webPreferences: {
       preload: getPreloadPath(),
+      contextIsolation: true,
+      nodeIntegration: false,
     },
   });
   if (isDev()) {
@@ -14,4 +18,10 @@ app.on("ready", () => {
   } else {
     mainWindow.loadFile(path.join(app.getAppPath(), "/dist-react/index.html"));
   }
+};
+
+app.whenReady().then(() => {
+  createWindow();
+  registerFileHandlers();
+  registerVersionHandlers();
 });

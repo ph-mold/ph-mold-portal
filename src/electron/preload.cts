@@ -1,6 +1,7 @@
-const electron = require("electron");
+import { contextBridge, ipcRenderer } from "electron";
 
-electron.contextBridge.exposeInMainWorld("electron", {
-  subscribeStatistics: (callback: (statistics: any) => void) => callback({}),
-  getStaticData: () => console.log("static"),
+contextBridge.exposeInMainWorld("electronAPI", {
+  saveFile: (name: string, content: string) =>
+    ipcRenderer.invoke("save-file", { name, content }),
+  getAppVersion: () => ipcRenderer.invoke("get-app-version"),
 });
