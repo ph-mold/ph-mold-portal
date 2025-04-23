@@ -1,3 +1,4 @@
+import { Button } from "@ph-mold/ph-ui";
 import { useState } from "react";
 
 export default function App() {
@@ -14,9 +15,13 @@ export default function App() {
 
   return (
     <div>
-      <h1>Electron IPC Demo</h1>
-      <button onClick={saveFile}>📁 파일 저장</button>
-      <button onClick={getVersion}>🔍 버전 확인</button>
+      <h1 className="text-4xl text-signature">Electron IPC Demo</h1>
+      <Button size="small" onClick={saveFile}>
+        파일 저장
+      </Button>
+      <Button size="small" onClick={getVersion}>
+        버전 확인
+      </Button>
       <p>버전: {version}</p>
     </div>
   );
