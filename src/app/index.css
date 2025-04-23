@@ -1,0 +1,54 @@
+@import "tailwindcss";
+@source "../../node_modules/@ph-mold/ph-ui/dist/ph-ui.css";
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none; /* IE, Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+}
+
+@layer base {
+  :root {
+    --font-sans: "Noto Sans KR", sans-serif;
+    --pm-background: #ffffff;
+    --pm-background2: #f3f8fc;
+    --pm-foreground: #171717;
+    --pm-foreground2: #6d6d6d;
+    --pm-reverseForground: #ffffff;
+    --pm-signature: #0f9bff;
+    --pm-error: #ff3f2d;
+  }
+}
+
+@theme {
+  --font-family: var(--font-sans);
+  --color-background: var(--pm-background);
+  --color-background2: var(--pm-background2);
+  --color-foreground: var(--pm-foreground);
+  --color-foreground2: var(--pm-foreground2);
+  --color-reverseForground: var(--pm-reverseForground);
+  --color-signature: var(--pm-signature);
+  --color-error: var(--pm-error);
+}
+
+html {
+  @apply text-foreground bg-background;
+}
+
+body,
+main {
+  @apply max-w-full font-sans antialiased;
+}
+
+* {
+  @apply box-border;
+}
+
+a {
+  @apply no-underline;
+}
