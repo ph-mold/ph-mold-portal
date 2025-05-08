@@ -4,7 +4,7 @@ import { mapCategoriesToTabItems } from "../lib/mapper/categoriesToTabItems";
 import { useEffect, useState } from "react";
 import { TabItem } from "@ph-mold/ph-ui/types";
 
-export default function App() {
+export default function Page() {
   const [tabs, setTabs] = useState<TabItem[]>([]);
   useEffect(() => {
     getRootCategory().then((categories) => {

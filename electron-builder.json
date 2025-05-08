@@ -1,6 +1,12 @@
 {
   "appId": "com.ph-mold.ph-mold-portal",
-  "files": ["dist-electron", "dist-react"],
+  "files": [
+    "dist-electron",
+    "dist-react",
+    "!node_modules/sharp/**",
+    "!node_modules/@img/sharp-*",
+    "!**/binding.node"
+  ],
   "extraResources": ["dist-electron/preload.cjs"],
   "mac": {
     "target": "dmg"
