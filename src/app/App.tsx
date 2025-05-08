@@ -1,10 +1,13 @@
 import { HashRouter } from "react-router-dom";
 import Routes from "./routes";
+import { SWRProvider } from "./swr-provider";
 
 export default function App() {
   return (
-    <HashRouter>
-      <Routes />
-    </HashRouter>
+    <SWRProvider>
+      <HashRouter>
+        <Routes />
+      </HashRouter>
+    </SWRProvider>
   );
 }
