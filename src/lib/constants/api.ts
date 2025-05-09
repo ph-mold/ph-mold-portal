@@ -8,5 +8,7 @@ export const API = {
   PRODUCTS: {
     GET_BY_CATEGORY: (category: string) =>
       `${API_BASE}/products?category=${category}`,
+    GET_ONE_BY_PRODUCT_KEY: (productKey: string) =>
+      `${API_BASE}/products/${productKey}/info`,
   },
 };

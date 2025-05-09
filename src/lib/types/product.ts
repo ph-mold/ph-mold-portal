@@ -18,3 +18,17 @@ export interface ITag {
   key: string;
   name: string;
 }
+export interface IGetProductInfo extends IGetProduct {
+  specs: ISpec[];
+}
+
+export interface ISpec {
+  id?: number;
+  value: string;
+  specType: {
+    id: number;
+    key: string;
+    label: string;
+    unit: string;
+  };
+}
