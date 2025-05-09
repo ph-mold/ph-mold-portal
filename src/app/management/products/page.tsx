@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IGetProduct } from "../../../lib/types/product";
 import { Button } from "@ph-mold/ph-ui";
 import useSWR from "swr";
@@ -14,6 +14,10 @@ export default function ManagementProductsPage() {
     IGetProduct[]
   >([GET_PRODUCTS_BY_CATEGORY, "all"], () => getProductsByCategory("all"));
 
+  const navigate = useNavigate();
+  const handleDoubleClick = (product: IGetProduct) => {
+    navigate(`/management/products/${product.key}`);
+  };
   return (
     <div className="flex flex-col h-screen overflow-hidden py-2">
       {/* 타이틀 영역 */}
@@ -28,7 +32,9 @@ export default function ManagementProductsPage() {
 
       {/* 테이블 영역 */}
       <div className="flex-1 overflow-hidden">
-        {!isProductsLoading && products && <ProductsTable data={products} />}
+        {!isProductsLoading && products && (
+          <ProductsTable data={products} onDoubleClick={handleDoubleClick} />
+        )}
       </div>
     </div>
   );
