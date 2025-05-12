@@ -1,25 +1,21 @@
 import { Modal } from "@ph-mold/ph-ui";
 import { PlusSquare } from "lucide-react";
 import useSWR from "swr";
-import { ISpecType } from "../../../lib/types/product";
-import { GET_SPEC_TYPES, getSpecTypes } from "../../../lib/api/spec-types";
-import SpecTypesTable from "../../domain/table/SpecTypesTable";
+import { ITag } from "../../../lib/types/product";
+import { GET_TAGS, getTags } from "../../../lib/api/tags";
+import TagsTable from "../../domain/table/TagsTable";
 
 interface Props {
   open: boolean;
   setOpen: (isOpen: boolean) => void;
-  addSpecTypeAction?: (spec: ISpecType) => void;
+  addTagAction?: (tag: ITag) => void;
 }
 
-export default function AddSpecModal({
-  open,
-  setOpen,
-  addSpecTypeAction,
-}: Props) {
-  const { data } = useSWR<ISpecType[]>([GET_SPEC_TYPES], getSpecTypes);
+export default function AddTagModal({ open, setOpen, addTagAction }: Props) {
+  const { data } = useSWR<ITag[]>([GET_TAGS], getTags);
 
-  const handleOnDoubleClick = (spec: ISpecType) => {
-    addSpecTypeAction?.(spec);
+  const handleOnDoubleClick = (tag: ITag) => {
+    addTagAction?.(tag);
     setOpen(false);
   };
 
@@ -37,7 +33,7 @@ export default function AddSpecModal({
       className="!min-w-[520px]"
     >
       <div className="overflow-y-hidden h-[480px]">
-        <SpecTypesTable data={data} onDoubleClick={handleOnDoubleClick} />
+        <TagsTable data={data} onDoubleClick={handleOnDoubleClick} />
       </div>
     </Modal>
   );

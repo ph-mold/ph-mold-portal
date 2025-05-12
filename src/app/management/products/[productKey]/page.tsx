@@ -2,7 +2,11 @@ import { Button, Input } from "@ph-mold/ph-ui";
 import { ChevronLeft, PlusSquareIcon, X } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 import useSWR from "swr";
-import { IGetProductInfo, ISpecType } from "../../../../lib/types/product";
+import {
+  IGetProductInfo,
+  ISpecType,
+  ITag,
+} from "../../../../lib/types/product";
 import {
   GET_PRODUCT_INFO_BY_KEY,
   getProductInfoByKey,
@@ -10,6 +14,7 @@ import {
 import { useFieldArray, useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import AddSpecModal from "../../../../components/management/products/AddSpecModal";
+import AddTagModal from "../../../../components/management/products/AddTagModal";
 
 export default function ManagementProductPage() {
   const { productKey } = useParams<{ productKey: string }>();
@@ -60,23 +65,36 @@ export default function ManagementProductPage() {
     console.log(getValues());
   };
 
-  const [open, setOpen] = useState(false);
-
-  const handleOnOpenSpecModal = () => {
-    setOpen(true);
+  const [openAddSpec, setOpenAddSpec] = useState(false);
+  const handleOnOpenAddSpecModal = () => {
+    setOpenAddSpec(true);
   };
-
   const hanldOnAddSpecType = (spec: ISpecType) => {
     appendSpec({ value: "", specType: spec });
+  };
+
+  const [openAddTag, setOpenAddTag] = useState(false);
+  const handleOnOpenAddTagModal = () => {
+    setOpenAddTag(true);
+  };
+  const hanldOnAddTag = (tag: ITag) => {
+    appendTag(tag);
   };
 
   return (
     <>
       <AddSpecModal
-        open={open}
-        setOpen={setOpen}
+        open={openAddSpec}
+        setOpen={setOpenAddSpec}
         addSpecTypeAction={hanldOnAddSpecType}
       />
+
+      <AddTagModal
+        open={openAddTag}
+        setOpen={setOpenAddTag}
+        addTagAction={hanldOnAddTag}
+      />
+
       <div className="flex flex-col h-screen overflow-hidden py-2">
         {/* 타이틀 영역 */}
         <div className="flex gap-2 items-center mx-2 shrink-0">
@@ -126,7 +144,7 @@ export default function ManagementProductPage() {
                       variant="text"
                       size="small"
                       startIcon={<PlusSquareIcon />}
-                      onClick={handleOnOpenSpecModal}
+                      onClick={handleOnOpenAddSpecModal}
                     >
                       추가
                     </Button>
@@ -149,6 +167,34 @@ export default function ManagementProductPage() {
                           삭제
                         </Button>
                       </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="border-signature border rounded-lg p-4">
+                  <div className="flex flex-row justify-between items-center mb-2">
+                    <p className="text-foreground2">태그</p>
+                    <Button
+                      variant="text"
+                      size="small"
+                      startIcon={<PlusSquareIcon />}
+                      onClick={handleOnOpenAddTagModal}
+                    >
+                      추가
+                    </Button>
+                  </div>
+                  <div className="gap-2 flex flex-row flex-wrap ">
+                    {tags.map((tag, idx) => (
+                      <p
+                        key={tag.key}
+                        className="group bg-background2 text-signature h-7 rounded-md px-2 py-1 text-sm text-nowrap flex items-center gap-2 hover:bg-error hover:text-white transition-colors"
+                      >
+                        {tag.name}
+                        <X
+                          size={16}
+                          onClick={() => removeTag(idx)}
+                          className="cursor-pointer"
+                        />
+                      </p>
                     ))}
                   </div>
                 </div>

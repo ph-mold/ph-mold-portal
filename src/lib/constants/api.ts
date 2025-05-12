@@ -14,4 +14,7 @@ export const API = {
   SPEC_TYPES: {
     GET_SPEC_TYPES: `${API_BASE}/admin/product-spec`,
   },
+  TAGS: {
+    GET_TAGS: `${API_BASE}/admin/product-tag`,
+  },
 };
