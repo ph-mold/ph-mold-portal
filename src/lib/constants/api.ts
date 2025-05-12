@@ -11,4 +11,7 @@ export const API = {
     GET_ONE_BY_PRODUCT_KEY: (productKey: string) =>
       `${API_BASE}/products/${productKey}/info`,
   },
+  SPEC_TYPES: {
+    GET_SPEC_TYPES: `${API_BASE}/admin/product-spec`,
+  },
 };

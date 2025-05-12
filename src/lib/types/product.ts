@@ -25,10 +25,12 @@ export interface IGetProductInfo extends IGetProduct {
 export interface ISpec {
   id?: number;
   value: string;
-  specType: {
-    id: number;
-    key: string;
-    label: string;
-    unit: string;
-  };
+  specType: ISpecType;
+}
+
+export interface ISpecType {
+  id: number;
+  key: string;
+  label: string;
+  unit: string;
 }
