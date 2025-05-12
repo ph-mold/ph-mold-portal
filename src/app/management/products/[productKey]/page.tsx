@@ -1,7 +1,9 @@
-import { Button, Input } from "@ph-mold/ph-ui";
-import { ChevronLeft, PlusSquareIcon, X } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 import useSWR from "swr";
+import { useFieldArray, useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { Button } from "@ph-mold/ph-ui";
 import {
   IGetProductInfo,
   ISpecType,
@@ -11,14 +13,14 @@ import {
   GET_PRODUCT_INFO_BY_KEY,
   getProductInfoByKey,
 } from "../../../../lib/api/products";
-import { useFieldArray, useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
 import AddSpecModal from "../../../../components/management/products/AddSpecModal";
 import AddTagModal from "../../../../components/management/products/AddTagModal";
+import ProductInfoForm from "../../../../components/management/products/ProductInfoForm";
+import SpecEditor from "../../../../components/management/products/SpecEditor";
+import TagEditor from "../../../../components/management/products/TagEditor";
 
 export default function ManagementProductPage() {
   const { productKey } = useParams<{ productKey: string }>();
-
   const { data: product, isLoading: isProductLoading } = useSWR<
     IGetProductInfo | undefined
   >(productKey ? [GET_PRODUCT_INFO_BY_KEY, productKey] : null, () =>
@@ -32,23 +34,12 @@ export default function ManagementProductPage() {
     formState: { errors },
     getValues,
   } = useForm<IGetProductInfo>({ mode: "onChange" });
-  const {
-    fields: specs,
-    append: appendSpec,
-    remove: removeSpec,
-  } = useFieldArray({
-    control,
-    name: "specs",
-  });
 
-  const {
-    fields: tags,
-    append: appendTag,
-    remove: removeTag,
-  } = useFieldArray({
-    control,
-    name: "tags",
-  });
+  const specsField = useFieldArray({ control, name: "specs" });
+  const tagsField = useFieldArray({ control, name: "tags" });
+
+  const [openAddSpec, setOpenAddSpec] = useState(false);
+  const [openAddTag, setOpenAddTag] = useState(false);
 
   useEffect(() => {
     if (product) {
@@ -61,42 +52,24 @@ export default function ManagementProductPage() {
     }
   }, [product, reset]);
 
-  const test = () => {
-    console.log(getValues());
-  };
-
-  const [openAddSpec, setOpenAddSpec] = useState(false);
-  const handleOnOpenAddSpecModal = () => {
-    setOpenAddSpec(true);
-  };
-  const hanldOnAddSpecType = (spec: ISpecType) => {
-    appendSpec({ value: "", specType: spec });
-  };
-
-  const [openAddTag, setOpenAddTag] = useState(false);
-  const handleOnOpenAddTagModal = () => {
-    setOpenAddTag(true);
-  };
-  const hanldOnAddTag = (tag: ITag) => {
-    appendTag(tag);
-  };
+  const test = () => console.log(getValues());
 
   return (
     <>
       <AddSpecModal
         open={openAddSpec}
         setOpen={setOpenAddSpec}
-        addSpecTypeAction={hanldOnAddSpecType}
+        addSpecTypeAction={(spec: ISpecType) =>
+          specsField.append({ value: "", specType: spec })
+        }
       />
-
       <AddTagModal
         open={openAddTag}
         setOpen={setOpenAddTag}
-        addTagAction={hanldOnAddTag}
+        addTagAction={(tag: ITag) => tagsField.append(tag)}
       />
 
       <div className="flex flex-col h-screen overflow-hidden py-2">
-        {/* 타이틀 영역 */}
         <div className="flex gap-2 items-center mx-2 shrink-0">
           <Link to="/management/products">
             <Button className="!p-1" variant="text">
@@ -113,91 +86,23 @@ export default function ManagementProductPage() {
           {!isProductLoading && (
             <div className="grid grid-cols-2 relative">
               <div className="h-full">test</div>
-              <div className="max-w-[400px] m-4 flex gap-1 flex-col">
-                <Input label="ID" readOnly value={product?.id} />
-                <Input label="코드" readOnly value={product?.code} />
-                <Input
-                  required
-                  label="제품명"
-                  placeholder="예) 3ml PP 주사기"
-                  {...register("name", { required: "제품명을 입력해주세요." })}
-                  error={!!errors.name}
-                  helperText={errors.name?.message}
+              <div className="max-w-[400px] m-4 flex gap-2 flex-col">
+                <ProductInfoForm
+                  register={register}
+                  errors={errors}
+                  product={product}
                 />
-                <Input
-                  required
-                  label="MOQ"
-                  type="number"
-                  placeholder="예) 10000"
-                  defaultValue={product?.moq}
-                  {...register("moq", {
-                    required: "샘플 수량을 입력해주세요.",
-                    validate: (v) => v > 0 || "1개 이상의 수량을 입력해주세요.",
-                  })}
-                  error={!!errors.moq}
-                  helperText={errors.moq?.message}
+                <SpecEditor
+                  specs={specsField.fields}
+                  register={register}
+                  remove={specsField.remove}
+                  openAddSpecModal={() => setOpenAddSpec(true)}
                 />
-                <div className="border-signature border rounded-lg p-4">
-                  <div className="mb-4 flex flex-row justify-between items-center">
-                    <p className="text-foreground2">스펙</p>
-                    <Button
-                      variant="text"
-                      size="small"
-                      startIcon={<PlusSquareIcon />}
-                      onClick={handleOnOpenAddSpecModal}
-                    >
-                      추가
-                    </Button>
-                  </div>
-                  <div className="gap-2 flex flex-col">
-                    {specs.map((spec, idx) => (
-                      <div key={spec.id} className="flex gap-2 items-center">
-                        <Input
-                          className="flex-1"
-                          label={spec.specType.label}
-                          placeholder={`단위: ${spec.specType.unit}`}
-                          endIcon={<span>{spec.specType.unit}</span>}
-                          {...register(`specs.${idx}.value`)}
-                        />
-                        <Button
-                          className="mt-6"
-                          onClick={() => removeSpec(idx)}
-                          variant="text"
-                        >
-                          삭제
-                        </Button>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <div className="border-signature border rounded-lg p-4">
-                  <div className="flex flex-row justify-between items-center mb-2">
-                    <p className="text-foreground2">태그</p>
-                    <Button
-                      variant="text"
-                      size="small"
-                      startIcon={<PlusSquareIcon />}
-                      onClick={handleOnOpenAddTagModal}
-                    >
-                      추가
-                    </Button>
-                  </div>
-                  <div className="gap-2 flex flex-row flex-wrap ">
-                    {tags.map((tag, idx) => (
-                      <p
-                        key={tag.key}
-                        className="group bg-background2 text-signature h-7 rounded-md px-2 py-1 text-sm text-nowrap flex items-center gap-2 hover:bg-error hover:text-white transition-colors"
-                      >
-                        {tag.name}
-                        <X
-                          size={16}
-                          onClick={() => removeTag(idx)}
-                          className="cursor-pointer"
-                        />
-                      </p>
-                    ))}
-                  </div>
-                </div>
+                <TagEditor
+                  tags={tagsField.fields}
+                  remove={tagsField.remove}
+                  openAddTagModal={() => setOpenAddTag(true)}
+                />
               </div>
             </div>
           )}
