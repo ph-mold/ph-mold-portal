@@ -34,3 +34,11 @@ export interface ISpecType {
   label: string;
   unit: string;
 }
+
+export interface IGetProductImage {
+  id: number;
+  url: string;
+  isThumbnail: number;
+  sortOrder: number;
+  createdAt: Date;
+}

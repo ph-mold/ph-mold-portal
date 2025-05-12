@@ -5,12 +5,15 @@ import { useFieldArray, useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { Button } from "@ph-mold/ph-ui";
 import {
+  IGetProductImage,
   IGetProductInfo,
   ISpecType,
   ITag,
 } from "../../../../lib/types/product";
 import {
+  GET_PRODUCT_IMAGES_BY_KEY,
   GET_PRODUCT_INFO_BY_KEY,
+  getProductImagesByKey,
   getProductInfoByKey,
 } from "../../../../lib/api/products";
 import AddSpecModal from "../../../../components/management/products/AddSpecModal";
@@ -18,6 +21,7 @@ import AddTagModal from "../../../../components/management/products/AddTagModal"
 import ProductInfoForm from "../../../../components/management/products/ProductInfoForm";
 import SpecEditor from "../../../../components/management/products/SpecEditor";
 import TagEditor from "../../../../components/management/products/TagEditor";
+import ProductImageManager from "../../../../components/management/products/ProductImageManager";
 
 export default function ManagementProductPage() {
   const { productKey } = useParams<{ productKey: string }>();
@@ -25,6 +29,11 @@ export default function ManagementProductPage() {
     IGetProductInfo | undefined
   >(productKey ? [GET_PRODUCT_INFO_BY_KEY, productKey] : null, () =>
     getProductInfoByKey(productKey)
+  );
+
+  const { data: images } = useSWR<IGetProductImage[] | undefined>(
+    productKey ? [GET_PRODUCT_IMAGES_BY_KEY, productKey] : null,
+    () => getProductImagesByKey(productKey)
   );
 
   const {
@@ -40,6 +49,8 @@ export default function ManagementProductPage() {
 
   const [openAddSpec, setOpenAddSpec] = useState(false);
   const [openAddTag, setOpenAddTag] = useState(false);
+
+  const [tempImages, setImages] = useState<string[]>([]);
 
   useEffect(() => {
     if (product) {
@@ -82,11 +93,10 @@ export default function ManagementProductPage() {
           </Button>
         </div>
 
-        <div className="flex-1 overflow-y-scroll">
+        <div className=" h-full overflow-hidden">
           {!isProductLoading && (
-            <div className="grid grid-cols-2 relative">
-              <div className="h-full">test</div>
-              <div className="max-w-[400px] m-4 flex gap-2 flex-col">
+            <div className="grid grid-cols-[auto_1fr] relative h-full">
+              <div className="max-w-[400px] p-4 flex gap-2 flex-col overflow-y-auto">
                 <ProductInfoForm
                   register={register}
                   errors={errors}
@@ -102,6 +112,13 @@ export default function ManagementProductPage() {
                   tags={tagsField.fields}
                   remove={tagsField.remove}
                   openAddTagModal={() => setOpenAddTag(true)}
+                />
+              </div>
+              <div className="h-full overflow-y-auto">
+                <ProductImageManager
+                  images={images}
+                  tempImages={tempImages}
+                  onUpload={(paths) => setImages((prev) => [...prev, ...paths])}
                 />
               </div>
             </div>

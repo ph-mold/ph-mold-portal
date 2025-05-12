@@ -10,7 +10,10 @@ interface Props {
 
 export default function ProductInfoForm({ register, errors, product }: Props) {
   return (
-    <>
+    <div className="border-signature border rounded-lg px-4 pt-2 pb-4">
+      <div className="mb-4 flex flex-row justify-between items-center">
+        <p className="text-foreground2">기본 정보</p>
+      </div>
       <Input label="ID" readOnly value={product?.id} />
       <Input label="코드" readOnly value={product?.code} />
       <Input
@@ -33,6 +36,6 @@ export default function ProductInfoForm({ register, errors, product }: Props) {
         error={!!errors.moq}
         helperText={errors.moq?.message}
       />
-    </>
+    </div>
   );
 }
