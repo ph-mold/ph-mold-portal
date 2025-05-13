@@ -33,7 +33,7 @@ export default function ProductImageManager({
     });
 
     setLocalImages(updated);
-  }, [field, field.fields.length]);
+  }, [field.fields.length]);
 
   // 이미지 업로드
   const handleOnUpload = useCallback(
