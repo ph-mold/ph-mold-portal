@@ -17,15 +17,18 @@ export interface ITag {
   id: number;
   key: string;
   name: string;
+  flag?: ChangeFlag;
 }
 export interface IGetProductInfo extends IGetProduct {
   specs: ISpec[];
+  images: IGetProductImage[];
 }
 
 export interface ISpec {
   id?: number;
   value: string;
   specType: ISpecType;
+  flag?: ChangeFlag;
 }
 
 export interface ISpecType {
@@ -36,9 +39,12 @@ export interface ISpecType {
 }
 
 export interface IGetProductImage {
-  id: number;
+  id?: number;
   url: string;
   isThumbnail: number;
   sortOrder: number;
-  createdAt: Date;
+  createdAt?: Date;
+  flag?: ChangeFlag;
 }
+
+type ChangeFlag = "new" | "update" | "delete" | undefined;
