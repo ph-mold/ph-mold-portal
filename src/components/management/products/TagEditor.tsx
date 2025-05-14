@@ -50,8 +50,9 @@ export default function TagEditor({ field }: Props) {
         </div>
         <div className="gap-2 flex flex-row flex-wrap">
           {field.fields
-            .filter((tag) => tag.flag !== "delete")
-            .map((tag, idx) => (
+            .map((tag, idx) => ({ tag, idx }))
+            .filter(({ tag }) => tag.flag !== "delete")
+            .map(({ tag, idx }) => (
               <p
                 key={tag.key}
                 className="group bg-background2 text-signature h-7 rounded-md px-2 py-1 text-sm text-nowrap flex items-center gap-2 hover:bg-error hover:text-white transition-colors"
