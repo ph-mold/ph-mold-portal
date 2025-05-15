@@ -1,9 +1,9 @@
 import { ChevronLeft } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 import { useFieldArray, useForm } from "react-hook-form";
-import { useEffect } from "react";
-import { Button } from "@ph-mold/ph-ui";
+import { useEffect, useState } from "react";
+import { Alert, Button } from "@ph-mold/ph-ui";
 import {
   IGetProductImage,
   IGetProductInfo,
@@ -13,6 +13,7 @@ import {
   GET_PRODUCT_INFO_BY_KEY,
   getProductImagesByKey,
   getProductInfoByKey,
+  patchProduct,
 } from "../../../../lib/api/products";
 import ProductInfoForm from "../../../../components/management/products/ProductInfoForm";
 import SpecEditor from "../../../../components/management/products/SpecEditor";
@@ -69,10 +70,34 @@ export default function ManagementProductPage() {
     }
   }, [product, images, reset]);
 
-  const test = () => console.log(getValues());
+  const handleOnSubmit = async () => {
+    const values = getValues();
+
+    try {
+      if (!product) return;
+      await patchProduct(product.id, values);
+      setIsConfirmOpen(false);
+      mutate([GET_PRODUCT_IMAGES_BY_KEY, product.key]);
+      mutate([GET_PRODUCT_INFO_BY_KEY, product.key]);
+      alert("수정되었습니다.");
+    } catch (e) {
+      console.error(e);
+      alert("오류가 발생했습니다.");
+    }
+  };
+
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
   return (
     <>
+      <Alert
+        description="제품 정보를 수정하시겠습니까?"
+        open={isConfirmOpen}
+        onClose={() => setIsConfirmOpen(false)}
+        acceptLabel="수정"
+        cancelLabel="취소"
+        onAccept={handleOnSubmit}
+      />
       <div className="flex flex-col h-screen overflow-hidden py-2">
         <div className="flex gap-2 items-center mx-2 shrink-0">
           <Link to="/management/products">
@@ -81,8 +106,8 @@ export default function ManagementProductPage() {
             </Button>
           </Link>
           <h1 className="text-2xl">제품 관리</h1>
-          <Button onClick={test} variant="text">
-            저장
+          <Button onClick={() => setIsConfirmOpen(true)} variant="text">
+            수정
           </Button>
         </div>
 

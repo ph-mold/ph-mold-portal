@@ -31,6 +31,7 @@ export default function ProductInfoForm({ register, errors, product }: Props) {
         placeholder="예) 10000"
         {...register("moq", {
           required: "MOQ를 입력해주세요.",
+          valueAsNumber: true,
           validate: (v: number) => v > 0 || "1개 이상의 수량을 입력해주세요.",
         })}
         error={!!errors.moq}

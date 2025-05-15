@@ -12,6 +12,8 @@ export const API = {
     GET_ONE_BY_PRODUCT_KEY: (productKey: string) =>
       `${API_BASE}/products/${productKey}/info`,
     GET_IMAGES_BY_KEY: (key: string) => `${API_BASE}/products/${key}/images`,
+    PATCH_PRODUCT: (productId: number) =>
+      `${API_BASE}/admin/products/${productId}`,
   },
   SPEC_TYPES: {
     GET_SPEC_TYPES: `${API_BASE}/admin/product-spec`,
