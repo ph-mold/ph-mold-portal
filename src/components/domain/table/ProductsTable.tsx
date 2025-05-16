@@ -50,8 +50,15 @@ const getColumns = () => [
 ];
 interface Props {
   data: IGetProduct[];
+  onDoubleClick?: (row: IGetProduct) => void;
 }
 
-export default function ProductsTable({ data }: Props) {
-  return <Table<IGetProduct> data={data} columns={getColumns()} />;
+export default function ProductsTable({ data, onDoubleClick }: Props) {
+  return (
+    <Table<IGetProduct>
+      data={data}
+      columns={getColumns()}
+      onDoubleClick={onDoubleClick}
+    />
+  );
 }

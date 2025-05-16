@@ -141,7 +141,7 @@ export default function Table<T>({
                 data-index={virtualRow.index}
                 key={row.id}
                 ref={(node) => rowVirtualizer.measureElement(node)}
-                className="h-16 group relative hover:bg-background2"
+                className="h-16 group relative"
                 onDoubleClick={() =>
                   onDoubleClick && onDoubleClick(row.original)
                 }
@@ -152,7 +152,7 @@ export default function Table<T>({
                     <td
                       key={cell.id}
                       className={clsx(
-                        `px-2 font-bold first:rounded-l-lg first:pl-8 last:rounded-r-lg last:pr-8 bg-background group-hover:bg-selectedBg`,
+                        `px-2 font-bold first:rounded-l-lg first:pl-8 last:rounded-r-lg last:pr-8 bg-background group-hover:bg-background2`,
                         className
                       )}
                       style={style}

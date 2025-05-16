@@ -17,4 +17,34 @@ export interface ITag {
   id: number;
   key: string;
   name: string;
+  flag?: ChangeFlag;
 }
+export interface IGetProductInfo extends IGetProduct {
+  specs: ISpec[];
+  images: IGetProductImage[];
+}
+
+export interface ISpec {
+  id?: number;
+  value: string;
+  specType: ISpecType;
+  flag?: ChangeFlag;
+}
+
+export interface ISpecType {
+  id: number;
+  key: string;
+  label: string;
+  unit: string;
+}
+
+export interface IGetProductImage {
+  id?: number;
+  url: string;
+  isThumbnail: number;
+  sortOrder: number;
+  createdAt?: Date;
+  flag?: ChangeFlag;
+}
+
+type ChangeFlag = "new" | "update" | "delete" | undefined;

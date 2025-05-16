@@ -19,7 +19,7 @@
     --pm-background2: #f3f8fc;
     --pm-foreground: #171717;
     --pm-foreground2: #6d6d6d;
-    --pm-reverseForground: #ffffff;
+    --pm-reverseForeground: #ffffff;
     --pm-signature: #0f9bff;
     --pm-error: #ff3f2d;
   }
@@ -31,7 +31,7 @@
   --color-background2: var(--pm-background2);
   --color-foreground: var(--pm-foreground);
   --color-foreground2: var(--pm-foreground2);
-  --color-reverseForground: var(--pm-reverseForground);
+  --color-reverseForeground: var(--pm-reverseForeground);
   --color-signature: var(--pm-signature);
   --color-error: var(--pm-error);
 }
