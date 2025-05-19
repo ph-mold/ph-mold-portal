@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@source "../../node_modules/@ph-mold/ph-ui/dist/ph-ui.css";
 
 @layer utilities {
   .scrollbar-hide {
