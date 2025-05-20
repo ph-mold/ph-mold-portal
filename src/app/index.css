@@ -58,3 +58,23 @@ main,
 a {
   @apply no-underline;
 }
+
+@keyframes mist {
+  0% {
+    transform: translateX(-50%) translateY(-40%) scale(1.2);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translateX(20%) translateY(30%) scale(1.4);
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateX(50%) translateY(40%) scale(1.2);
+    opacity: 0.2;
+  }
+}
+
+.animate-mist {
+  animation: mist 12s infinite alternate ease-in-out;
+  filter: blur(50px);
+}
