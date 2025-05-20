@@ -1,5 +1,11 @@
 import { Button, Input } from "@ph-mold/ph-ui";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import {
+  clearLoginId,
+  getSavedLoginId,
+  saveLoginId,
+} from "../../lib/electron/loginPref";
 
 interface LoginForm {
   id: string;
@@ -7,16 +13,37 @@ interface LoginForm {
 }
 
 export default function LoginForm() {
-  const { register, handleSubmit } = useForm<LoginForm>({
+  const { register, handleSubmit, setValue } = useForm<LoginForm>({
     defaultValues: {
       id: "",
       password: "",
     },
   });
+  const [isSaveId, setIsSaveId] = useState(false);
 
-  const onSubmit = (data: LoginForm) => {
+  useEffect(() => {
+    (async () => {
+      const id = await getSavedLoginId();
+      if (id) {
+        setValue("id", id);
+        setIsSaveId(true);
+      }
+    })();
+  }, []);
+
+  const onSubmit = async (data: LoginForm) => {
     console.log("Submitted login data", data);
     // TODO: API 연동 처리
+
+    if (isSaveId) {
+      await saveLoginId(data.id);
+    } else {
+      await clearLoginId();
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsSaveId(e.target.checked);
   };
 
   return (
@@ -31,7 +58,7 @@ export default function LoginForm() {
             {...register("password", { required: true })}
           />
           <label className="flex gap-1 cursor-pointer items-center ml-auto w-fit select-none">
-            <input type="checkbox" />
+            <input type="checkbox" checked={isSaveId} onChange={handleChange} />
             <span className="text-xs">아이디 저장</span>
           </label>
           <Button type="submit" fullWidth>
