@@ -72,9 +72,11 @@ export default function LoginPage() {
           <form className="space-y-2">
             <Input label="아이디" />
             <Input label="비밀번호" type="password" />
-            <Button fullWidth className="mt-2">
-              로그인
-            </Button>
+            <label className="flex gap-1 cursor-pointer items-center ml-auto w-fit select-none">
+              <input type="checkbox" />
+              <span className="text-xs">아이디 저장</span>
+            </label>
+            <Button fullWidth>로그인</Button>
           </form>
           <Button variant="text" className="text-xs !w-fit mx-auto">
             비밀번호를 잊어버리셨나요?
