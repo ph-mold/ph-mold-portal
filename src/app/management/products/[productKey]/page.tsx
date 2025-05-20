@@ -1,5 +1,4 @@
-import { ChevronLeft } from "lucide-react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import useSWR, { mutate } from "swr";
 import { useFieldArray, useForm } from "react-hook-form";
 import { useEffect } from "react";
@@ -15,19 +14,17 @@ import {
   getProductInfoByKey,
   patchProduct,
 } from "../../../../lib/api/products";
-import ProductInfoForm from "../../../../components/management/products/ProductInfoForm";
-import SpecEditor from "../../../../components/management/products/SpecEditor";
-import TagEditor from "../../../../components/management/products/TagEditor";
-import ProductImageManager from "../../../../components/management/products/ProductImageManager";
 import { useAlert } from "../../../../recoil/alert/useAlert";
+import ProductImageEditor from "../../../../components/management/products/ProductImageEditor";
+import ProductInfoPanel from "../../../../components/management/products/ProductInfoPanel";
+import Header from "../../../../components/common/Header";
 
 export default function ManagementProductPage() {
   const { productKey } = useParams<{ productKey: string }>();
 
-  const { data: product, isLoading: isProductLoading } = useSWR<
-    IGetProductInfo | undefined
-  >(productKey ? [GET_PRODUCT_INFO_BY_KEY, productKey] : null, () =>
-    getProductInfoByKey(productKey)
+  const { data: product } = useSWR<IGetProductInfo | undefined>(
+    productKey ? [GET_PRODUCT_INFO_BY_KEY, productKey] : null,
+    () => getProductInfoByKey(productKey)
   );
 
   const { data: images } = useSWR<IGetProductImage[] | undefined>(
@@ -106,43 +103,29 @@ export default function ManagementProductPage() {
   };
 
   return (
-    <>
-      <div className="flex flex-col h-screen overflow-hidden py-2">
-        <div className="flex gap-2 items-center mx-2 shrink-0">
-          <Link to="/management/products">
-            <Button className="!p-1" variant="text">
-              <ChevronLeft />
-            </Button>
-          </Link>
-          <h1 className="text-2xl">제품 관리</h1>
+    <div className="flex flex-col h-screen overflow-y-auto">
+      <Header
+        title={`${product?.name} 제품 관리`}
+        prevLink="/management/products"
+        components={
           <Button onClick={handleOnModify} variant="text">
             수정
           </Button>
-        </div>
-
-        <div className=" h-full overflow-hidden">
-          {!isProductLoading && (
-            <div className="grid grid-cols-[auto_1fr] relative h-full">
-              <div className="min-w-[400px] p-4 flex gap-2 flex-col overflow-y-auto">
-                <ProductInfoForm
-                  register={register}
-                  errors={errors}
-                  product={product}
-                />
-                <SpecEditor
-                  register={register}
-                  field={specsField}
-                  control={control}
-                />
-                <TagEditor field={tagsField} />
-              </div>
-              <div className="h-full overflow-y-auto">
-                <ProductImageManager field={imagesField} />
-              </div>
-            </div>
-          )}
+        }
+      />
+      <div className="mx-auto mb-10 flex w-full max-w-[1080px] flex-col gap-10 px-4 md:px-10">
+        <div className="my-4 grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-4 md:gap-12">
+          <ProductImageEditor field={imagesField} />
+          <ProductInfoPanel
+            register={register}
+            control={control}
+            errors={errors}
+            product={product}
+            tagsField={tagsField}
+            specsField={specsField}
+          />
         </div>
       </div>
-    </>
+    </div>
   );
 }
