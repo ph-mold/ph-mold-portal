@@ -1,7 +1,11 @@
 import { Button, Input } from "@ph-mold/ph-ui";
 import { useEffect, useState } from "react";
 
-const TITLES = ["Premium cosmetics packaging", "프리미엄 화장품 패키징"];
+const TITLES = [
+  "P&M Portal",
+  "Premium cosmetics packaging",
+  "프리미엄 화장품 패키징",
+];
 
 // 애니메이션 타이밍 상수
 const FADE_DURATION = 1000; // ms (1초 동안 페이드 인/아웃)
