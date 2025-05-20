@@ -1,5 +1,4 @@
-import { ChevronLeft } from "lucide-react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import useSWR, { mutate } from "swr";
 import { useFieldArray, useForm } from "react-hook-form";
 import { useEffect } from "react";
@@ -18,6 +17,7 @@ import {
 import { useAlert } from "../../../../recoil/alert/useAlert";
 import ProductImageEditor from "../../../../components/management/products/ProductImageEditor";
 import ProductInfoPanel from "../../../../components/management/products/ProductInfoPanel";
+import Header from "../../../../components/common/Header";
 
 export default function ManagementProductPage() {
   const { productKey } = useParams<{ productKey: string }>();
@@ -103,19 +103,16 @@ export default function ManagementProductPage() {
   };
 
   return (
-    <div className="flex flex-col h-screen overflow-y-auto py-2">
-      <div className="flex gap-2 items-center mx-2 shrink-0">
-        <Link to="/management/products">
-          <Button className="!p-1" variant="text">
-            <ChevronLeft />
+    <div className="flex flex-col h-screen overflow-y-auto">
+      <Header
+        title={`${product?.name} 제품 관리`}
+        prevLink="/management/products"
+        components={
+          <Button onClick={handleOnModify} variant="text">
+            수정
           </Button>
-        </Link>
-        <h1 className="text-2xl">제품 관리</h1>
-        <Button onClick={handleOnModify} variant="text">
-          수정
-        </Button>
-      </div>
-
+        }
+      />
       <div className="mx-auto mb-10 flex w-full max-w-[1080px] flex-col gap-10 px-4 md:px-10">
         <div className="my-4 grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-4 md:gap-12">
           <ProductImageEditor field={imagesField} />
