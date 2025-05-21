@@ -31,15 +31,11 @@ export async function getProductImagesByKey(
 
 export const PATCH_PRODUCT = "patchProduct";
 export async function patchProduct(productId: number, data: IGetProductInfo) {
-  const response = await fetch(`${API.PRODUCTS.PATCH_PRODUCT(productId)}`, {
+  await fetcher(`${API.PRODUCTS.PATCH_PRODUCT(productId)}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
   });
-
-  if (!response.ok) {
-    throw new Error("제품 정보 수정에 실패했습니다.");
-  }
 }

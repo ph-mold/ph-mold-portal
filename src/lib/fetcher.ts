@@ -6,7 +6,6 @@ export const fetcher = async <T>(
 ): Promise<T | undefined> => {
   const cache = options?.cacheType ?? "no-store";
   const headers = new Headers(options?.headers || {});
-
   const accessToken = await getAccessToken();
   if (accessToken) {
     headers.set("Authorization", `Bearer ${accessToken}`);
@@ -20,8 +19,14 @@ export const fetcher = async <T>(
   });
 
   if (!res.ok) {
-    // TODO: 필요 시 401 에러 핸들링
+    throw new Error("Fetch failed");
   }
 
-  return res.json();
+  const text = await res.text();
+  try {
+    return text ? JSON.parse(text) : undefined;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (e: unknown) {
+    throw new Error("Invalid JSON response");
+  }
 };
