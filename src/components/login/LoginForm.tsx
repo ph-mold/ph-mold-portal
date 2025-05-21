@@ -8,8 +8,15 @@ import {
 } from "../../lib/electron/loginPref";
 import { ILoginBody } from "../../lib/types/auth";
 import { postLogin } from "../../lib/api/auth";
+import { saveAccessToken, saveRefreshToken } from "../../lib/electron/authPref";
+import { isElectron } from "../../lib/electron/isElectron";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function LoginForm() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
   const { register, handleSubmit, setValue } = useForm<ILoginBody>({
     defaultValues: {
       email: "",
@@ -29,15 +36,21 @@ export default function LoginForm() {
   }, []);
 
   const onSubmit = async (data: ILoginBody) => {
-    console.log("Submitted login data", data);
-    // TODO: API 연동 처리
-    await postLogin(data);
+    const result = await postLogin(data);
+
+    if (result.accessToken) {
+      await saveAccessToken(result.accessToken);
+    }
+    if (isElectron && result.refreshToken) {
+      await saveRefreshToken(result.refreshToken);
+    }
 
     if (isSaveEmail) {
       await saveLoginEmail(data.email);
     } else {
       await clearLoginEmail();
     }
+    navigate(from, { replace: true });
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

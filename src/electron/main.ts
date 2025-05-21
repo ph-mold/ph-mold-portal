@@ -5,6 +5,7 @@ import { getPreloadPath } from "./pathResolver.js";
 import { registerFileHandlers } from "./api/file.js";
 import { registerVersionHandlers } from "./api/version.js";
 import "./api/userPref.js";
+import "./api/authPref.js";
 
 const createWindow = () => {
   const mainWindow = new BrowserWindow({

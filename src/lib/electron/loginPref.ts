@@ -1,4 +1,4 @@
-const isElectron = typeof window !== "undefined" && !!window.electronAPI;
+import { isElectron } from "./isElectron";
 
 const STORAGE_KEY = "login.email";
 

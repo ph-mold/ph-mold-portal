@@ -8,5 +8,12 @@ interface Window {
       getSavedLoginEmail(): Promise<string | undefined>;
       clearLoginEmail(): Promise<void>;
     };
+    authPref: {
+      saveAccessToken(token: string): Promise<void>;
+      saveRefreshToken(token: string): Promise<void>;
+      getAccessToken(): Promise<string | undefined>;
+      getRefreshToken(): Promise<string | undefined>;
+      clearToken(): Promise<void>;
+    };
   };
 }
