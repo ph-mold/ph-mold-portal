@@ -4,6 +4,8 @@ export const IMAGE_BASE_URL = import.meta.env.VITE_IMAGE_BASE_URL || "";
 export const API = {
   AUTH: {
     LOGIN: `${API_BASE}/auth/login`,
+    REFRESH: `${API_BASE}/auth/refresh`,
+    LOGOUT: `${API_BASE}/auth/logout`,
   },
   CATEGORIES: {
     GET: `${API_BASE}/categories`,

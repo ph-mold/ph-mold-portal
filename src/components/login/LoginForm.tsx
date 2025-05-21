@@ -10,12 +10,10 @@ import { ILoginBody } from "../../lib/types/auth";
 import { postLogin } from "../../lib/api/auth";
 import { saveAccessToken, saveRefreshToken } from "../../lib/electron/authPref";
 import { isElectron } from "../../lib/electron/isElectron";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginForm() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
 
   const { register, handleSubmit, setValue } = useForm<ILoginBody>({
     defaultValues: {
@@ -50,7 +48,7 @@ export default function LoginForm() {
     } else {
       await clearLoginEmail();
     }
-    navigate(from, { replace: true });
+    navigate(-1);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
