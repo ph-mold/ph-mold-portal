@@ -5,8 +5,9 @@ contextBridge.exposeInMainWorld("electronAPI", {
     ipcRenderer.invoke("save-file", { name, content }),
   getAppVersion: () => ipcRenderer.invoke("get-app-version"),
   loginPref: {
-    getSavedLoginId: () => ipcRenderer.invoke("get-login-id"),
-    saveLoginId: (id: string) => ipcRenderer.invoke("save-login-id", id),
-    clearLoginId: () => ipcRenderer.invoke("clear-login-id"),
+    getSavedLoginEmail: () => ipcRenderer.invoke("get-login-email"),
+    saveLoginEmail: (email: string) =>
+      ipcRenderer.invoke("save-login-email", email),
+    clearLoginEmail: () => ipcRenderer.invoke("clear-login-email"),
   },
 });

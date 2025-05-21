@@ -1,26 +1,26 @@
 const isElectron = typeof window !== "undefined" && !!window.electronAPI;
 
-const STORAGE_KEY = "login.id";
+const STORAGE_KEY = "login.email";
 
-export const saveLoginId = async (id: string) => {
+export const saveLoginEmail = async (email: string) => {
   if (isElectron) {
-    await window.electronAPI.loginPref.saveLoginId(id);
+    await window.electronAPI.loginPref.saveLoginEmail(email);
   } else {
-    localStorage.setItem(STORAGE_KEY, id);
+    localStorage.setItem(STORAGE_KEY, email);
   }
 };
 
-export const getSavedLoginId = async (): Promise<string | undefined> => {
+export const getSavedLoginEmail = async (): Promise<string | undefined> => {
   if (isElectron) {
-    return await window.electronAPI.loginPref.getSavedLoginId();
+    return await window.electronAPI.loginPref.getSavedLoginEmail();
   } else {
     return localStorage.getItem(STORAGE_KEY) || undefined;
   }
 };
 
-export const clearLoginId = async () => {
+export const clearLoginEmail = async () => {
   if (isElectron) {
-    await window.electronAPI.loginPref.clearLoginId();
+    await window.electronAPI.loginPref.clearLoginEmail();
   } else {
     localStorage.removeItem(STORAGE_KEY);
   }

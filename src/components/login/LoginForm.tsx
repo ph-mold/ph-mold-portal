@@ -2,31 +2,31 @@ import { Button, Input } from "@ph-mold/ph-ui";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
-  clearLoginId,
-  getSavedLoginId,
-  saveLoginId,
+  clearLoginEmail,
+  getSavedLoginEmail,
+  saveLoginEmail,
 } from "../../lib/electron/loginPref";
 
 interface LoginForm {
-  id: string;
+  email: string;
   password: string;
 }
 
 export default function LoginForm() {
   const { register, handleSubmit, setValue } = useForm<LoginForm>({
     defaultValues: {
-      id: "",
+      email: "",
       password: "",
     },
   });
-  const [isSaveId, setIsSaveId] = useState(false);
+  const [isSaveEmail, setIsSaveEmail] = useState(false);
 
   useEffect(() => {
     (async () => {
-      const id = await getSavedLoginId();
+      const id = await getSavedLoginEmail();
       if (id) {
-        setValue("id", id);
-        setIsSaveId(true);
+        setValue("email", id);
+        setIsSaveEmail(true);
       }
     })();
   }, []);
@@ -35,15 +35,15 @@ export default function LoginForm() {
     console.log("Submitted login data", data);
     // TODO: API 연동 처리
 
-    if (isSaveId) {
-      await saveLoginId(data.id);
+    if (isSaveEmail) {
+      await saveLoginEmail(data.email);
     } else {
-      await clearLoginId();
+      await clearLoginEmail();
     }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsSaveId(e.target.checked);
+    setIsSaveEmail(e.target.checked);
   };
 
   return (
@@ -51,15 +51,19 @@ export default function LoginForm() {
       <div className="flex flex-col gap-4 w-full px-8">
         <p className="text-2xl font-semibold text-center">로그인</p>
         <form className="space-y-2" onSubmit={handleSubmit(onSubmit)}>
-          <Input label="아이디" {...register("id", { required: true })} />
+          <Input label="이메일" {...register("email", { required: true })} />
           <Input
             label="비밀번호"
             type="password"
             {...register("password", { required: true })}
           />
           <label className="flex gap-1 cursor-pointer items-center ml-auto w-fit select-none">
-            <input type="checkbox" checked={isSaveId} onChange={handleChange} />
-            <span className="text-xs">아이디 저장</span>
+            <input
+              type="checkbox"
+              checked={isSaveEmail}
+              onChange={handleChange}
+            />
+            <span className="text-xs">이메일 저장</span>
           </label>
           <Button type="submit" fullWidth>
             로그인
