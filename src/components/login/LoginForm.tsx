@@ -6,14 +6,11 @@ import {
   getSavedLoginEmail,
   saveLoginEmail,
 } from "../../lib/electron/loginPref";
-
-interface LoginForm {
-  email: string;
-  password: string;
-}
+import { ILoginBody } from "../../lib/types/auth";
+import { postLogin } from "../../lib/api/auth";
 
 export default function LoginForm() {
-  const { register, handleSubmit, setValue } = useForm<LoginForm>({
+  const { register, handleSubmit, setValue } = useForm<ILoginBody>({
     defaultValues: {
       email: "",
       password: "",
@@ -31,9 +28,10 @@ export default function LoginForm() {
     })();
   }, []);
 
-  const onSubmit = async (data: LoginForm) => {
+  const onSubmit = async (data: ILoginBody) => {
     console.log("Submitted login data", data);
     // TODO: API 연동 처리
+    await postLogin(data);
 
     if (isSaveEmail) {
       await saveLoginEmail(data.email);

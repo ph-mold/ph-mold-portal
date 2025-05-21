@@ -2,6 +2,9 @@ export const API_BASE = import.meta.env.VITE_API_URL || "";
 export const IMAGE_BASE_URL = import.meta.env.VITE_IMAGE_BASE_URL || "";
 
 export const API = {
+  AUTH: {
+    LOGIN: `${API_BASE}/auth/login`,
+  },
   CATEGORIES: {
     GET: `${API_BASE}/categories`,
     GET_BY_PARENT_KEY: (key: string) => `${API_BASE}/categories/${key}`,
