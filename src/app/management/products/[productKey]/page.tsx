@@ -18,6 +18,7 @@ import { useAlert } from "../../../../recoil/alert/useAlert";
 import ProductImageEditor from "../../../../components/management/products/ProductImageEditor";
 import ProductInfoPanel from "../../../../components/management/products/ProductInfoPanel";
 import Header from "../../../../components/common/Header";
+import { AxiosError } from "axios";
 
 export default function ManagementProductPage() {
   const { productKey } = useParams<{ productKey: string }>();
@@ -92,13 +93,16 @@ export default function ManagementProductPage() {
         acceptLabel: "확인",
         showCancelButton: false,
       });
-    } catch (e) {
-      alert({
-        title: "오류",
-        description: `${e}`,
-        acceptLabel: "닫기",
-        showCancelButton: false,
-      });
+    } catch (e: unknown) {
+      const err = e as AxiosError;
+      if (err.status !== 403 && err.status !== 401) {
+        alert({
+          title: "오류",
+          description: `${e}`,
+          acceptLabel: "닫기",
+          showCancelButton: false,
+        });
+      }
     }
   };
 

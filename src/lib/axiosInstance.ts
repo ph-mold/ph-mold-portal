@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
+import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
 import {
   clearToken,
   getAccessToken,
@@ -40,18 +40,12 @@ instance.interceptors.response.use(
 
     const status = error.response?.status;
 
-    if (status === 401) {
-      await clearToken();
-      window.location.href = "#/login";
-      return;
-    }
-
-    if (status === 403 && !originalRequest._retry) {
+    if (status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
         const refreshToken = await getRefreshToken();
 
-        const res = await instance.post(
+        const res = await axios.post(
           API.AUTH.REFRESH,
           isElectron ? { refresh_token: refreshToken } : undefined,
           {
@@ -71,11 +65,16 @@ instance.interceptors.response.use(
         };
 
         return instance(originalRequest);
-      } catch (refreshError) {
-        console.error("토큰 갱신 실패", refreshError);
-        await clearToken();
-        window.location.href = "#/login";
-        return;
+      } catch (refreshError: unknown) {
+        const err = refreshError as AxiosError;
+        const refreshStatus = err?.response?.status;
+
+        if (refreshStatus === 401 || refreshStatus === 403) {
+          await clearToken();
+          window.location.href = "#/login";
+        }
+
+        return Promise.reject(refreshError);
       }
     }
 
