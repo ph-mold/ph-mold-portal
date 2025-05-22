@@ -1,6 +1,7 @@
 import { atom } from "recoil";
+import { IUser } from "../../lib/types/auth";
 
-export const accessTokenState = atom<string | null>({
-  key: "accessTokenState",
+export const userState = atom<IUser | null>({
+  key: "userState",
   default: null,
 });

@@ -7,6 +7,8 @@ import {
 } from "./electron/authPref";
 import { isElectron } from "./electron/isElectron";
 import { API } from "./constants/api";
+import { mutate } from "swr";
+import { GET_ME } from "./api/auth";
 
 interface RetryRequestConfig extends AxiosRequestConfig {
   _retry?: boolean;
@@ -58,6 +60,7 @@ instance.interceptors.response.use(
 
         const newAccessToken = res.data.accessToken;
         await saveAccessToken(newAccessToken);
+        await mutate(GET_ME, undefined, true);
 
         originalRequest.headers = {
           ...originalRequest.headers,

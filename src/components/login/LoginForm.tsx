@@ -7,10 +7,11 @@ import {
   saveLoginEmail,
 } from "../../lib/electron/loginPref";
 import { ILoginBody } from "../../lib/types/auth";
-import { postLogin } from "../../lib/api/auth";
+import { GET_ME, postLogin } from "../../lib/api/auth";
 import { saveAccessToken, saveRefreshToken } from "../../lib/electron/authPref";
 import { isElectron } from "../../lib/electron/isElectron";
 import { useNavigate } from "react-router-dom";
+import { mutate } from "swr";
 
 export default function LoginForm() {
   const navigate = useNavigate();
@@ -48,6 +49,8 @@ export default function LoginForm() {
     } else {
       await clearLoginEmail();
     }
+
+    await mutate(GET_ME, undefined, true);
     navigate(-1);
   };
 

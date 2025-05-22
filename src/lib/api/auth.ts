@@ -1,5 +1,5 @@
 import { API } from "../constants/api";
-import { ILoginBody } from "../types/auth";
+import { ILoginBody, IUser } from "../types/auth";
 import { axiosInstance } from "../axiosInstance";
 
 export const POST_LOGIN = "postLogin";
@@ -25,4 +25,10 @@ export async function postLogout() {
     console.error("로그아웃 실패:", error);
     throw new Error("로그아웃 실패");
   }
+}
+
+export const GET_ME = "getMe";
+export async function getMe() {
+  const res = await axiosInstance.get<IUser>(API.USER.ME);
+  return res.data;
 }
