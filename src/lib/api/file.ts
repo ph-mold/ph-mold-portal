@@ -1,7 +1,8 @@
 import { API } from "../constants/api";
-import { fetcher } from "../fetcher";
+import { axiosInstance } from "../axiosInstance";
 
 export const UPLOAD_FILE = "uploadFile";
+
 export async function uploadFile(
   file: File
 ): Promise<{ path: string } | undefined> {
@@ -9,10 +10,18 @@ export async function uploadFile(
     console.error("PNG 파일만 업로드 가능합니다.");
     return;
   }
+
   const formData = new FormData();
   formData.append("image", file);
-  return await fetcher(API.FILE.UPLOAD_FILE, {
-    method: "POST",
-    body: formData,
-  });
+
+  try {
+    const res = await axiosInstance.post<{ path: string }>(
+      API.FILE.UPLOAD_FILE,
+      formData
+    );
+    return res.data;
+  } catch (error) {
+    console.error("파일 업로드 실패:", error);
+    return;
+  }
 }
