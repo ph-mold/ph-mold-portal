@@ -6,9 +6,9 @@
   "main": "dist-electron/main.js",
   "scripts": {
     "dev": "npm-run-all --parallel dev:react dev:electron",
-    "dev:react": "vite",
+    "dev:react": "vite --mode dev",
     "dev:electron": "npm run transpile:electron; cross-env NODE_ENV=development electron .",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build --mode prod",
     "lint": "eslint .",
     "preview": "vite preview",
     "transpile:electron": "tsc --project src/electron/tsconfig.json",
@@ -49,6 +49,7 @@
     "tailwindcss": "^4.1.4",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.26.1",
-    "vite": "^6.3.1"
+    "vite": "^6.3.1",
+    "vite-plugin-html": "^3.2.2"
   }
 }
