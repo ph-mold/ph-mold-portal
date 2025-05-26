@@ -1,13 +1,9 @@
-import { Link } from "react-router-dom";
 import { useHeader } from "../hooks/useHeader";
+import PortalToggle from "../components/domain/PortalToggle";
 
 export default function Home() {
   useHeader({
-    title: "홈",
+    leftSlot: <PortalToggle />,
   });
-  return (
-    <>
-      <Link to="/management/products">제품관리 이동</Link>
-    </>
-  );
+  return <>홈</>;
 }
