@@ -4,6 +4,7 @@ import {
   getAccessToken,
   getRefreshToken,
   saveAccessToken,
+  saveRefreshToken,
 } from "./electron/authPref";
 import { isElectron } from "./electron/isElectron";
 import { API } from "./constants/api";
@@ -60,6 +61,10 @@ instance.interceptors.response.use(
 
         const newAccessToken = res.data.accessToken;
         await saveAccessToken(newAccessToken);
+        if (res.data.refreshToken) {
+          const newRefreshToken = res.data.refreshToken;
+          await saveRefreshToken(newRefreshToken);
+        }
         await mutate(GET_ME, undefined, true);
 
         originalRequest.headers = {
