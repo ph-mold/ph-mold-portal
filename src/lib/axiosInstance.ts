@@ -8,8 +8,6 @@ import {
 } from "./electron/authPref";
 import { isElectron } from "./electron/isElectron";
 import { API } from "./constants/api";
-import { mutate } from "swr";
-import { GET_ME } from "./api/auth";
 
 interface RetryRequestConfig extends AxiosRequestConfig {
   _retry?: boolean;
@@ -82,12 +80,13 @@ instance.interceptors.response.use(
               platform: isElectron ? "desktop" : "web",
               "Content-Type": "application/json",
             },
+            withCredentials: true,
           }
         );
         const { accessToken: newAT, refreshToken: newRT } = res.data;
         await saveAccessToken(newAT);
         if (isElectron && newRT) await saveRefreshToken(newRT);
-        await mutate(GET_ME, undefined, true);
+        // await mutate(GET_ME, undefined, true);
 
         return newAT as string;
       })();
