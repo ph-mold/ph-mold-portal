@@ -11,16 +11,18 @@ interface Props {
 
 export default function Header({ title, prevLink, components }: Props) {
   return (
-    <div className="flex gap-2 items-center px-4 py-3 shrink-0 border-b-2 border-background2 min-h-16">
-      {prevLink && (
-        <Link to={prevLink}>
-          <Button className="!p-1" variant="text">
-            <ChevronLeft />
-          </Button>
-        </Link>
-      )}
-      <h1 className="text-xl">{title}</h1>
-      {components && components}
-    </div>
+    <header className="border-background2 fixed top-0 z-10 min-h-16 w-full border-b-2 bg-white/80 backdrop-blur-md">
+      <div className="flex gap-2 items-center px-4 py-3">
+        {prevLink && (
+          <Link to={prevLink}>
+            <Button className="!p-1" variant="text">
+              <ChevronLeft />
+            </Button>
+          </Link>
+        )}
+        <h1 className="text-xl">{title}</h1>
+        {components && components}
+      </div>
+    </header>
   );
 }

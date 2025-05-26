@@ -6,7 +6,6 @@ import {
   getProductsByCategory,
 } from "../../../lib/api/products";
 import ProductsTable from "../../../components/domain/table/ProductsTable";
-import Header from "../../../components/common/Header";
 
 export default function ManagementProductsPage() {
   const { data: products, isLoading: isProductsLoading } = useSWR<
@@ -18,14 +17,10 @@ export default function ManagementProductsPage() {
     navigate(`/management/products/${product.key}`);
   };
   return (
-    <div className="flex flex-col h-screen overflow-hidden">
-      <Header title="제품 관리" prevLink="/" />
-      {/* 테이블 영역 */}
-      <div className="flex-1 overflow-hidden">
-        {!isProductsLoading && products && (
-          <ProductsTable data={products} onDoubleClick={handleDoubleClick} />
-        )}
-      </div>
+    <div className="flex flex-col h-full">
+      {!isProductsLoading && products && (
+        <ProductsTable data={products} onDoubleClick={handleDoubleClick} />
+      )}
     </div>
   );
 }

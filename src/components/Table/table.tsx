@@ -72,7 +72,7 @@ export default function Table<T>({
       : 0;
 
   return (
-    <div ref={tableContainerRef} className="w-full h-full overflow-auto">
+    <div ref={tableContainerRef} className="flex-1 overflow-auto size-full">
       <table className="w-full">
         <thead className="sticky top-0 h-16 shadow-sm bg-background z-20">
           {table.getHeaderGroups().map((headerGroup) => (
