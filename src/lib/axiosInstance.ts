@@ -7,7 +7,7 @@ import {
   saveRefreshToken,
 } from "./electron/authPref";
 import { isElectron } from "./electron/isElectron";
-import { API } from "./constants/api";
+import { postRefresh } from "./api/auth";
 
 interface RetryRequestConfig extends AxiosRequestConfig {
   _retry?: boolean;
@@ -39,7 +39,7 @@ function processQueue(error: unknown, token?: string) {
 
 const instance: AxiosInstance = axios.create({
   baseURL: "",
-  withCredentials: true,
+  withCredentials: false,
   headers: {
     "Content-Type": "application/json",
   },
@@ -72,18 +72,9 @@ instance.interceptors.response.use(
       isRefreshing = true;
       refreshPromise = (async () => {
         const refreshToken = await getRefreshToken();
-        const res = await axios.post(
-          API.AUTH.REFRESH,
-          isElectron ? { refresh_token: refreshToken } : undefined,
-          {
-            headers: {
-              platform: isElectron ? "desktop" : "web",
-              "Content-Type": "application/json",
-            },
-            withCredentials: true,
-          }
+        const { accessToken: newAT, refreshToken: newRT } = await postRefresh(
+          isElectron ? { refresh_token: refreshToken } : undefined
         );
-        const { accessToken: newAT, refreshToken: newRT } = res.data;
         await saveAccessToken(newAT);
         if (isElectron && newRT) await saveRefreshToken(newRT);
         // await mutate(GET_ME, undefined, true);
