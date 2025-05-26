@@ -6,7 +6,7 @@ import { headerState } from "../../recoil/headerAtom";
 import { useUser } from "../../hooks/useUser";
 import { userState } from "../../recoil/authAtom";
 import { postLogout } from "../../lib/api/auth";
-import { clearToken, getRefreshToken } from "../../lib/electron/authPref";
+import { clearToken } from "../../lib/electron/authPref";
 import { useEffect } from "react";
 
 export default function Header() {
