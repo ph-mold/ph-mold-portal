@@ -14,7 +14,7 @@ import {
   getProductInfoByKey,
   patchProduct,
 } from "../../../../lib/api/products";
-import { useAlert } from "../../../../recoil/alert/useAlert";
+import { useAlert } from "../../../../hooks/useAlert";
 import ProductImageEditor from "../../../../components/management/products/ProductImageEditor";
 import ProductInfoPanel from "../../../../components/management/products/ProductInfoPanel";
 import { AxiosError } from "axios";

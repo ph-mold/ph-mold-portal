@@ -1,7 +1,7 @@
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useUser } from "../hooks/useUser";
 import { useResetRecoilState, useSetRecoilState } from "recoil";
-import { userState } from "../recoil/auth/authAtom";
+import { userState } from "../recoil/authAtom";
 import { useEffect } from "react";
 import Header from "../components/common/Header";
 import { Button } from "@ph-mold/ph-ui";
