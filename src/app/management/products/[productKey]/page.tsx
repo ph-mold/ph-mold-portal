@@ -18,6 +18,7 @@ import { useAlert } from "../../../../hooks/useAlert";
 import ProductImageEditor from "../../../../components/management/products/ProductImageEditor";
 import ProductInfoPanel from "../../../../components/management/products/ProductInfoPanel";
 import { AxiosError } from "axios";
+import { useHeader } from "../../../../hooks/useHeader";
 
 export default function ManagementProductPage() {
   const { productKey } = useParams<{ productKey: string }>();
@@ -79,6 +80,16 @@ export default function ManagementProductPage() {
     });
   };
 
+  useHeader({
+    title: product && product.name,
+    prevLink: "/management/products",
+    leftSlot: (
+      <Button onClick={handleOnModify} size="small">
+        제품 수정
+      </Button>
+    ),
+  });
+
   const handleOnSubmit = async () => {
     const values = getValues();
 
@@ -107,9 +118,6 @@ export default function ManagementProductPage() {
 
   return (
     <div className="flex flex-col h-full overflow-y-auto">
-      <Button onClick={handleOnModify} variant="text">
-        수정
-      </Button>
       <div className="mx-auto mb-10 flex w-full max-w-[1080px] flex-col gap-10 px-4 md:px-10">
         <div className="my-4 grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-4 md:gap-12">
           <ProductImageEditor field={imagesField} />
