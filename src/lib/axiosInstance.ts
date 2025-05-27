@@ -72,13 +72,12 @@ instance.interceptors.response.use(
       isRefreshing = true;
       refreshPromise = (async () => {
         const refreshToken = await getRefreshToken();
+
         const { accessToken: newAT, refreshToken: newRT } = await postRefresh(
           isElectron ? { refresh_token: refreshToken } : undefined
         );
         await saveAccessToken(newAT);
         if (isElectron && newRT) await saveRefreshToken(newRT);
-        // await mutate(GET_ME, undefined, true);
-
         return newAT as string;
       })();
 
@@ -86,13 +85,13 @@ instance.interceptors.response.use(
         const newToken = await refreshPromise;
         processQueue(null, newToken);
         return instance(originalRequest);
-      } catch (refreshError: unknown) {
+      } catch (refreshError) {
         const err = refreshError as AxiosError;
         const refreshStatus = err?.response?.status;
+
         if (refreshStatus === 401 || refreshStatus === 403) {
           processQueue(err);
           await clearToken();
-          window.location.href = "#/login";
         }
         return Promise.reject(refreshError);
       } finally {

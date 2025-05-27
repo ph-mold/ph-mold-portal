@@ -1,48 +1,35 @@
 import { API } from "../constants/api";
-import { ILoginBody, IRefreshBody, IUser } from "../types/auth";
+import { ILoginBody, ILoginData, IRefreshBody, IUser } from "../types/auth";
 import { axiosInstance } from "../axiosInstance";
+import axios from "axios";
+import { isElectron } from "../electron/isElectron";
 
 export const POST_LOGIN = "postLogin";
 
-export async function postLogin(data: ILoginBody) {
-  try {
-    const response = await axiosInstance.post(API.AUTH.LOGIN, data, {
-      withCredentials: true,
-    });
+export async function postLogin(body: ILoginBody): Promise<ILoginData> {
+  const { data } = await axiosInstance.post(API.AUTH.LOGIN, body, {
+    withCredentials: true,
+  });
 
-    return response.data;
-  } catch (error) {
-    console.error("로그인 실패:", error);
-    throw new Error("로그인 실패");
-  }
+  return data;
 }
 
 export const POST_LOGOUT = "postLogout";
 export async function postLogout() {
-  try {
-    const response = await axiosInstance.post(API.AUTH.LOGOUT, {
-      withCredentials: true,
-    });
-
-    return response.data;
-  } catch (error) {
-    console.error("로그아웃 실패:", error);
-    throw new Error("로그아웃 실패");
-  }
+  const { data } = await axiosInstance.post(API.AUTH.LOGOUT, {
+    withCredentials: true,
+  });
+  return data;
 }
 
 export const POST_REFRESH = "postRefresh";
-export async function postRefresh(data?: IRefreshBody) {
-  try {
-    const response = await axiosInstance.post(API.AUTH.REFRESH, data, {
-      withCredentials: true,
-    });
+export async function postRefresh(body?: IRefreshBody) {
+  const { data } = await axios.post(API.AUTH.REFRESH, body, {
+    withCredentials: true,
+    headers: { platform: isElectron ? "desktop" : "web" },
+  });
 
-    return response.data;
-  } catch (error) {
-    console.error("토큰 재발급 실패:", error);
-    throw new Error("토큰 재발급 실패");
-  }
+  return data;
 }
 
 export const GET_ME = "getMe";
