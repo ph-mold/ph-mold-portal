@@ -1,20 +1,14 @@
 import { Button } from "@ph-mold/ph-ui";
 import { ChevronLeft, CircleUserRound } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { headerState } from "../../recoil/headerAtom";
 import { useUser } from "../../hooks/useUser";
-import { userState } from "../../recoil/authAtom";
-import { useEffect } from "react";
 
 export default function Header() {
   const header = useRecoilValue(headerState);
   const { user } = useUser();
-  const setUser = useSetRecoilState(userState);
 
-  useEffect(() => {
-    setUser(user ?? null);
-  }, [user]);
   return (
     <header className="border-background2 fixed top-0 z-10 h-16 w-full border-b-2 bg-white/80 backdrop-blur-md">
       <div className="flex gap-2 items-center px-4 py-3 h-full">

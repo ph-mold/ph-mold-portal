@@ -15,3 +15,9 @@ export interface IUser {
   name: string;
   role: IRole;
 }
+
+export interface ILoginData {
+  accessToken: string;
+  refreshToken?: string;
+  user: IUser;
+}
