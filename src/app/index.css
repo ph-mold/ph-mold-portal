@@ -46,9 +46,8 @@ html {
 }
 
 body,
-main,
 #root {
-  @apply max-w-full font-sans antialiased min-h-screen  overflow-y-hidden;
+  @apply font-sans antialiased h-screen w-screen overflow-hidden;
 }
 
 * {

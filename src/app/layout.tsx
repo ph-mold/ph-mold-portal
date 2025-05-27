@@ -1,21 +1,17 @@
 import { Outlet } from "react-router-dom";
-import { useUser } from "../hooks/useUser";
-import { useSetRecoilState } from "recoil";
-import { userState } from "../recoil/auth/authAtom";
-import { useEffect } from "react";
+import Header from "../components/domain/Header";
+import RequireAuth from "../components/domain/RequireAuth";
 
 export default function RootLayout() {
-  const { user } = useUser();
-  const setUser = useSetRecoilState(userState);
-
-  useEffect(() => {
-    setUser(user ?? null);
-  }, [user]);
-
   return (
-    <>
-      <Outlet />
-      <div id="modal-root" />
-    </>
+    <RequireAuth>
+      <div className="flex flex-col h-screen w-screen overflow-hidden">
+        <Header />
+        <main className="mt-16 flex-1 overflow-hidden">
+          <Outlet />
+        </main>
+        <div id="modal-root" />
+      </div>
+    </RequireAuth>
   );
 }

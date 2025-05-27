@@ -10,11 +10,16 @@ import { ILoginBody } from "../../lib/types/auth";
 import { GET_ME, postLogin } from "../../lib/api/auth";
 import { saveAccessToken, saveRefreshToken } from "../../lib/electron/authPref";
 import { isElectron } from "../../lib/electron/isElectron";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
+import { userState } from "../../recoil/authAtom";
 import { mutate } from "swr";
 
 export default function LoginForm() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = (location.state as { from?: Location })?.from?.pathname ?? "/";
+  const setUser = useSetRecoilState(userState);
 
   const { register, handleSubmit, setValue } = useForm<ILoginBody>({
     defaultValues: {
@@ -35,13 +40,13 @@ export default function LoginForm() {
   }, []);
 
   const onSubmit = async (data: ILoginBody) => {
-    const result = await postLogin(data);
+    const { accessToken, refreshToken, user } = await postLogin(data);
 
-    if (result.accessToken) {
-      await saveAccessToken(result.accessToken);
+    if (accessToken) {
+      await saveAccessToken(accessToken);
     }
-    if (isElectron && result.refreshToken) {
-      await saveRefreshToken(result.refreshToken);
+    if (isElectron && refreshToken) {
+      await saveRefreshToken(refreshToken);
     }
 
     if (isSaveEmail) {
@@ -50,8 +55,10 @@ export default function LoginForm() {
       await clearLoginEmail();
     }
 
-    await mutate(GET_ME, undefined, true);
-    navigate(-1);
+    await mutate(GET_ME, user, false);
+    setUser(user);
+
+    navigate(from, { replace: true });
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

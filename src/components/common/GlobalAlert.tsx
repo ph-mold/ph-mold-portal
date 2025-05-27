@@ -1,6 +1,6 @@
 import { useRecoilState } from "recoil";
 import { Alert } from "@ph-mold/ph-ui";
-import { alertQueueState } from "../../recoil/alert/alertAtom";
+import { alertQueueState } from "../../recoil/alertAtom";
 
 export default function GlobalAlert() {
   const [queue, setQueue] = useRecoilState(alertQueueState);

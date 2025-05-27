@@ -1,18 +1,18 @@
-import { HashRouter } from "react-router-dom";
 import Routes from "./routes";
 import { SWRProvider } from "./swr-provider";
-import { RecoilRoot } from "recoil";
 import GlobalAlert from "../components/common/GlobalAlert";
+import { HashRouter } from "react-router-dom";
+import { RecoilRoot } from "recoil";
 
 export default function App() {
   return (
     <RecoilRoot>
-      <SWRProvider>
-        <HashRouter>
+      <HashRouter>
+        <SWRProvider>
           <Routes />
           <GlobalAlert />
-        </HashRouter>
-      </SWRProvider>
+        </SWRProvider>
+      </HashRouter>
     </RecoilRoot>
   );
 }

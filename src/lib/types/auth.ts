@@ -3,6 +3,10 @@ export interface ILoginBody {
   password: string;
 }
 
+export interface IRefreshBody {
+  refresh_token?: string;
+}
+
 export type IRole = "admin" | "user";
 
 export interface IUser {
@@ -10,4 +14,10 @@ export interface IUser {
   email: string;
   name: string;
   role: IRole;
+}
+
+export interface ILoginData {
+  accessToken: string;
+  refreshToken?: string;
+  user: IUser;
 }

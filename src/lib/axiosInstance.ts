@@ -4,25 +4,47 @@ import {
   getAccessToken,
   getRefreshToken,
   saveAccessToken,
+  saveRefreshToken,
 } from "./electron/authPref";
 import { isElectron } from "./electron/isElectron";
-import { API } from "./constants/api";
-import { mutate } from "swr";
-import { GET_ME } from "./api/auth";
+import { postRefresh } from "./api/auth";
 
 interface RetryRequestConfig extends AxiosRequestConfig {
   _retry?: boolean;
 }
 
+let isRefreshing = false;
+let refreshPromise: Promise<string> | undefined = undefined;
+
+type QueuedRequest = {
+  resolve: (value: unknown) => void;
+  reject: (error: unknown) => void;
+  config: RetryRequestConfig;
+};
+const failedQueue: QueuedRequest[] = [];
+function processQueue(error: unknown, token?: string) {
+  failedQueue.forEach(({ resolve, reject, config }) => {
+    if (token) {
+      config.headers = {
+        ...config.headers,
+        Authorization: `Bearer ${token}`,
+      };
+      resolve(instance(config));
+    } else {
+      reject(error);
+    }
+  });
+  failedQueue.length = 0;
+}
+
 const instance: AxiosInstance = axios.create({
   baseURL: "",
-  withCredentials: true,
+  withCredentials: false,
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-// accessToken 자동 삽입
 instance.interceptors.request.use(
   async (config) => {
     const token = await getAccessToken();
@@ -39,49 +61,48 @@ instance.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config as RetryRequestConfig;
-
     const status = error.response?.status;
 
-    if (status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-      try {
+    if (status !== 401 || originalRequest._retry) {
+      return Promise.reject(error);
+    }
+
+    originalRequest._retry = true;
+    if (!isRefreshing) {
+      isRefreshing = true;
+      refreshPromise = (async () => {
         const refreshToken = await getRefreshToken();
 
-        const res = await axios.post(
-          API.AUTH.REFRESH,
-          isElectron ? { refresh_token: refreshToken } : undefined,
-          {
-            headers: {
-              platform: isElectron ? "desktop" : "web",
-              "Content-Type": "application/json",
-            },
-          }
+        const { accessToken: newAT, refreshToken: newRT } = await postRefresh(
+          isElectron ? { refresh_token: refreshToken } : undefined
         );
+        await saveAccessToken(newAT);
+        if (isElectron && newRT) await saveRefreshToken(newRT);
+        return newAT as string;
+      })();
 
-        const newAccessToken = res.data.accessToken;
-        await saveAccessToken(newAccessToken);
-        await mutate(GET_ME, undefined, true);
-
-        originalRequest.headers = {
-          ...originalRequest.headers,
-          Authorization: `Bearer ${newAccessToken}`,
-        };
-
+      try {
+        const newToken = await refreshPromise;
+        processQueue(null, newToken);
         return instance(originalRequest);
-      } catch (refreshError: unknown) {
+      } catch (refreshError) {
         const err = refreshError as AxiosError;
         const refreshStatus = err?.response?.status;
 
         if (refreshStatus === 401 || refreshStatus === 403) {
+          processQueue(err);
           await clearToken();
-          window.location.href = "#/login";
         }
-
         return Promise.reject(refreshError);
+      } finally {
+        isRefreshing = false;
+        refreshPromise = undefined;
       }
     }
 
-    return Promise.reject(error);
+    return new Promise((resolve, reject) => {
+      failedQueue.push({ resolve, reject, config: originalRequest });
+    });
   }
 );
 export const axiosInstance = instance;

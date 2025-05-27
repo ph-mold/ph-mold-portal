@@ -1,5 +1,5 @@
 import { useSetRecoilState } from "recoil";
-import { alertQueueState, AlertState } from "./alertAtom";
+import { alertQueueState, AlertState } from "../recoil/alertAtom";
 
 export const useAlert = () => {
   const setQueue = useSetRecoilState(alertQueueState);

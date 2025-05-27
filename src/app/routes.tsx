@@ -1,9 +1,12 @@
 import { useRoutes } from "react-router-dom";
 import Home from "./page";
 import Layout from "./layout";
-import ManagementProductsPage from "./management/products/page";
-import ManagementProductPage from "./management/products/[productKey]/page";
+import ManagementProductsPage from "./cms/management/products/page";
+import ManagementProductPage from "./cms/management/products/[productKey]/page";
 import LoginPage from "./login/page";
+import CmsPage from "./cms/page";
+import ErpPage from "./erp/page";
+import UserPage from "./user/page";
 
 export default function Routes() {
   return useRoutes([
@@ -13,11 +16,22 @@ export default function Routes() {
       element: <Layout />,
       children: [
         { index: true, element: <Home /> },
-        { path: "management/products", element: <ManagementProductsPage /> },
-
+        { path: "user", element: <UserPage /> },
+        { path: "erp", element: <ErpPage /> },
         {
-          path: "management/products/:productKey",
-          element: <ManagementProductPage />,
+          path: "cms",
+          children: [
+            { index: true, element: <CmsPage /> },
+            {
+              path: "management/products",
+              element: <ManagementProductsPage />,
+            },
+
+            {
+              path: "management/products/:productKey",
+              element: <ManagementProductPage />,
+            },
+          ],
         },
       ],
     },

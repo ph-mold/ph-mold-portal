@@ -66,6 +66,7 @@ export default function ProductInfoPanel({
                   inputClassName="text-sm text-right"
                   placeholder="예) 10000"
                   {...register("moq", {
+                    valueAsNumber: true,
                     required: "MOQ를 입력해주세요.",
                     validate: (v: number) =>
                       v > 0 || "1개 이상의 수량을 입력해주세요.",
