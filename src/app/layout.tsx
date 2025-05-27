@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Header from "../components/domain/Header";
-import RequireAuth from "../components/common/RequireAuth";
+import RequireAuth from "../components/domain/RequireAuth";
 
 export default function RootLayout() {
   return (
