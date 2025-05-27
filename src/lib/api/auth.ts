@@ -15,10 +15,12 @@ export async function postLogin(body: ILoginBody): Promise<ILoginData> {
 }
 
 export const POST_LOGOUT = "postLogout";
-export async function postLogout() {
-  const { data } = await axiosInstance.post(API.AUTH.LOGOUT, {
+export async function postLogout(body?: IRefreshBody) {
+  const { data } = await axios.post(API.AUTH.LOGOUT, body, {
     withCredentials: true,
+    headers: { platform: isElectron ? "desktop" : "web" },
   });
+
   return data;
 }
 

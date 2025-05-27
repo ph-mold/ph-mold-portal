@@ -1,5 +1,5 @@
 import { Button } from "@ph-mold/ph-ui";
-import { ChevronLeft, CircleUserRound } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { headerState } from "../../recoil/headerAtom";
@@ -24,15 +24,12 @@ export default function Header() {
         <div className="w-fit ml-auto h-full flex items-center gap-0.5 text-sm">
           {header.rightSlot}
           {user ? (
-            <Button
-              size="small"
-              variant="text"
-              color="secondary"
-              startIcon={<CircleUserRound />}
-            >
-              {user.name}
-              <span className="text-foreground2">님</span>
-            </Button>
+            <Link to={"/user"}>
+              <Button size="small" variant="text" color="secondary">
+                {user.name}
+                <span className="text-foreground2">님</span>
+              </Button>
+            </Link>
           ) : (
             <Link to="/login">
               <Button size="small" variant="text">
