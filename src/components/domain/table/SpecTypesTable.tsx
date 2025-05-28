@@ -8,26 +8,24 @@ const columnHelper = createColumnHelper<ISpecType>();
 const getColumns = () => [
   columnHelper.accessor("id", {
     id: "id",
+    size: 40,
     header: () => <div>Id</div>,
-    cell: (info) => <div>{info.getValue()}</div>,
-    meta: { align: "left" } as CustomColumnMeta,
+    cell: (info) => info.getValue(),
   }),
   columnHelper.accessor("key", {
     id: "key",
     header: () => <div>Key</div>,
-    cell: (info) => <div>{info.getValue()}</div>,
-    meta: { align: "center" } as CustomColumnMeta,
+    cell: (info) => info.getValue(),
   }),
   columnHelper.accessor("label", {
     id: "label",
     header: () => <div>이름(보여지는 이름)</div>,
-    cell: (info) => <div>{info.getValue()}</div>,
-    meta: { align: "center" } as CustomColumnMeta,
+    cell: (info) => info.getValue(),
   }),
   columnHelper.accessor("unit", {
     id: "unit",
     header: () => <div>단위</div>,
-    cell: (info) => <div>{info.getValue()}</div>,
+    cell: (info) => info.getValue(),
     meta: { align: "center" } as CustomColumnMeta,
   }),
 ];

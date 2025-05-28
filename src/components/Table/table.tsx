@@ -73,20 +73,20 @@ export default function Table<T>({
 
   return (
     <div ref={tableContainerRef} className="flex-1 overflow-auto size-full">
-      <table className="w-full">
+      <table className="w-full border-collapse">
         <thead className="sticky top-0 h-16 shadow-sm bg-background z-20">
           {table.getHeaderGroups().map((headerGroup) => (
-            <tr className="h-full" key={headerGroup.id}>
+            <tr className="size-full" key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
                 const { className, style } = getPinnedClass(header);
                 return (
                   <th
                     key={header.id}
                     className={clsx(
-                      `px-2 text-xs text-thTxt first:pl-8 last:pr-8 py-8 transition-[width] bg-background `,
+                      `px-2 text-xs text-thTxt first:pl-8 last:pr-8 py-8 transition-[width] bg-background border-r border-background2`,
                       className
                     )}
-                    style={style}
+                    style={{ ...style, width: `${header.getSize()}px` }}
                     onClick={header.column.getToggleSortingHandler()}
                   >
                     <div
@@ -152,7 +152,7 @@ export default function Table<T>({
                     <td
                       key={cell.id}
                       className={clsx(
-                        `px-2 font-bold first:rounded-l-lg first:pl-8 last:rounded-r-lg last:pr-8 bg-background group-hover:bg-background2`,
+                        `px-2 font-bold first:rounded-l-lg first:pl-8 last:rounded-r-lg last:pr-8 bg-background group-hover:bg-background2 border border-background2`,
                         className
                       )}
                       style={style}
