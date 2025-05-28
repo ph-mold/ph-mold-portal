@@ -24,10 +24,10 @@ export const API = {
       `${API_BASE}/admin/products/${productId}`,
   },
   SPEC_TYPES: {
-    GET_SPEC_TYPES: `${API_BASE}/admin/product-spec`,
+    GET_SPEC_TYPES: `${API_BASE}/admin/spec`,
   },
   TAGS: {
-    GET_TAGS: `${API_BASE}/admin/product-tag`,
+    GET_TAGS: `${API_BASE}/admin/tag`,
   },
   FILE: {
     UPLOAD_FILE: `${API_BASE}/file`,
