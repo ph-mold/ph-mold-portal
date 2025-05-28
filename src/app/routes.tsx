@@ -7,6 +7,7 @@ import LoginPage from "./login/page";
 import CmsPage from "./cms/page";
 import ErpPage from "./erp/page";
 import UserPage from "./user/page";
+import SampleRequestPage from "./erp/sample-request/page";
 
 export default function Routes() {
   return useRoutes([
@@ -17,7 +18,13 @@ export default function Routes() {
       children: [
         { index: true, element: <Home /> },
         { path: "user", element: <UserPage /> },
-        { path: "erp", element: <ErpPage /> },
+        {
+          path: "erp",
+          children: [
+            { index: true, element: <ErpPage /> },
+            { path: "sample-request", element: <SampleRequestPage /> },
+          ],
+        },
         {
           path: "cms",
           children: [
