@@ -5,7 +5,7 @@ import {
   GET_PRODUCTS_BY_CATEGORY,
   getProductsByCategory,
 } from "../../../../lib/api/products";
-import ProductsTable from "../../../../components/domain/table/ProductsTable";
+import ProductsTable from "../../../../components/management/products/ProductsTable";
 import { useHeader } from "../../../../hooks/useHeader";
 
 export default function ManagementProductsPage() {
