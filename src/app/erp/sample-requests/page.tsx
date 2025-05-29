@@ -7,7 +7,7 @@ import {
 } from "../../../lib/api/sample-request";
 import SampleRequestTable from "../../../components/sample-request/SampleRequestTable";
 
-export default function SampleRequestPage() {
+export default function SampleRequestsPage() {
   const { data: SampleRequests, isLoading } = useSWR<ISampleRequest[]>(
     [GET_SAMPLE_REQUESTS],
     getSampleRequests

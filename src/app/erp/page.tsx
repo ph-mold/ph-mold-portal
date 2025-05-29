@@ -10,7 +10,7 @@ export default function ErpPage() {
   });
   return (
     <div className="mx-4 sm:mx-auto my-4">
-      <Link to="/erp/sample-request">
+      <Link to="/erp/sample-requests">
         <Button variant="text" startIcon={<MailQuestion />}>
           고객 샘플 요청
         </Button>
