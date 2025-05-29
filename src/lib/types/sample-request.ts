@@ -1,5 +1,8 @@
+import { IGetProduct } from "./product";
+
 export interface ISampleRequest {
   id: number;
+  product: IGetProduct;
   name: string;
   company: string;
   email: string;
