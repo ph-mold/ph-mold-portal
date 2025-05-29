@@ -20,6 +20,7 @@ interface TableProps<T> {
   onSelect?: (row: T) => boolean;
   onDoubleClick?: (row: T) => void;
   sortable?: boolean;
+  fullWidth?: boolean;
 }
 
 export default function Table<T>({
@@ -27,6 +28,7 @@ export default function Table<T>({
   columns,
   onDoubleClick,
   sortable = true,
+  fullWidth = true,
 }: TableProps<T>) {
   const initialPinnedColumns = useMemo(() => {
     const pinnedLeft: string[] = [];
@@ -73,25 +75,25 @@ export default function Table<T>({
 
   return (
     <div ref={tableContainerRef} className="flex-1 overflow-auto size-full">
-      <table className="w-full">
-        <thead className="sticky top-0 h-16 shadow-sm bg-background z-20">
+      <table className={clsx("border-collapse", { "w-full": fullWidth })}>
+        <thead className="sticky top-0 bg-background z-20 shadow-sm">
           {table.getHeaderGroups().map((headerGroup) => (
-            <tr className="h-full" key={headerGroup.id}>
+            <tr className="size-full" key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
                 const { className, style } = getPinnedClass(header);
                 return (
                   <th
                     key={header.id}
                     className={clsx(
-                      `px-2 text-xs text-thTxt first:pl-8 last:pr-8 py-8 transition-[width] bg-background `,
+                      `px-2 text-xs first:pl-8 last:pr-8 py-4 transition-[width] bg-background border-r border-background2`,
                       className
                     )}
-                    style={style}
+                    style={{ ...style, width: `${header.getSize()}px` }}
                     onClick={header.column.getToggleSortingHandler()}
                   >
                     <div
                       className={clsx(
-                        "relative flex flex-row w-fit items-center gap-1 text-right select-none",
+                        "relative flex flex-row w-fit items-center gap-1 text-right select-none text-nowrap",
                         getAlignClass(header)
                       )}
                     >
@@ -141,7 +143,7 @@ export default function Table<T>({
                 data-index={virtualRow.index}
                 key={row.id}
                 ref={(node) => rowVirtualizer.measureElement(node)}
-                className="h-16 group relative"
+                className="h-12 group relative"
                 onDoubleClick={() =>
                   onDoubleClick && onDoubleClick(row.original)
                 }
@@ -152,12 +154,16 @@ export default function Table<T>({
                     <td
                       key={cell.id}
                       className={clsx(
-                        `px-2 font-bold first:rounded-l-lg first:pl-8 last:rounded-r-lg last:pr-8 bg-background group-hover:bg-background2`,
+                        `px-2 first:rounded-l-lg first:pl-8 last:rounded-r-lg last:pr-8 bg-background group-hover:bg-background2 border border-background2 font-medium`,
                         className
                       )}
                       style={style}
                     >
-                      <div className={clsx("w-fit", getAlignClass(cell))}>
+                      <div
+                        className={clsx("w-fit", getAlignClass(cell), {
+                          "text-nowrap": !fullWidth,
+                        })}
+                      >
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()

@@ -10,7 +10,7 @@ export interface IGetProduct {
   thumbnailImageUrl: string;
   origin: string;
   moq: number;
-  tags: ITag[];
+  tags?: ITag[];
 }
 
 export interface ITag {
