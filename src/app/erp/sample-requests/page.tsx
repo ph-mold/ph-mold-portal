@@ -6,6 +6,7 @@ import {
   getSampleRequests,
 } from "../../../lib/api/sample-request";
 import SampleRequestTable from "../../../components/sample-request/SampleRequestTable";
+import { useNavigate } from "react-router-dom";
 
 export default function SampleRequestsPage() {
   const { data: SampleRequests, isLoading } = useSWR<ISampleRequest[]>(
@@ -18,12 +19,17 @@ export default function SampleRequestsPage() {
     prevLink: "/erp",
   });
 
+  const navigate = useNavigate();
+  const handleDoubleClick = (row: ISampleRequest) => {
+    navigate(`/erp/sample-requests/${row.id}`);
+  };
+
   return (
     <div className="flex flex-col h-full">
       {!isLoading && SampleRequests && (
         <SampleRequestTable
           data={SampleRequests}
-          // onDoubleClick={handleDoubleClick}
+          onDoubleClick={handleDoubleClick}
         />
       )}
     </div>

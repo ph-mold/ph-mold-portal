@@ -8,6 +8,7 @@ import CmsPage from "./cms/page";
 import ErpPage from "./erp/page";
 import UserPage from "./user/page";
 import SampleRequestsPage from "./erp/sample-requests/page";
+import SampleRequestDetailPage from "./erp/sample-requests/[requestId]/page";
 
 export default function Routes() {
   return useRoutes([
@@ -23,6 +24,10 @@ export default function Routes() {
           children: [
             { index: true, element: <ErpPage /> },
             { path: "sample-requests", element: <SampleRequestsPage /> },
+            {
+              path: "sample-requests/:requestId",
+              element: <SampleRequestDetailPage />,
+            },
           ],
         },
         {
