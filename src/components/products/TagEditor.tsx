@@ -1,7 +1,7 @@
 import { Button } from "@ph-mold/ph-ui";
 import { PlusSquareIcon, X } from "lucide-react";
 import { UseFieldArrayReturn } from "react-hook-form";
-import { IGetProductInfo, ITag } from "../../../lib/types/product";
+import { IGetProductInfo, ITag } from "../../lib/types/product";
 import { useState } from "react";
 import AddTagModal from "./AddTagModal";
 

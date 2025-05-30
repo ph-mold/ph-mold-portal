@@ -6,19 +6,19 @@ import { Button } from "@ph-mold/ph-ui";
 import {
   IGetProductImage,
   IGetProductInfo,
-} from "../../../../../lib/types/product";
+} from "../../../../lib/types/product";
 import {
   GET_PRODUCT_IMAGES_BY_KEY,
   GET_PRODUCT_INFO_BY_KEY,
   getProductImagesByKey,
   getProductInfoByKey,
   patchProduct,
-} from "../../../../../lib/api/products";
-import { useAlert } from "../../../../../hooks/useAlert";
-import ProductImageEditor from "../../../../../components/management/products/ProductImageEditor";
-import ProductInfoPanel from "../../../../../components/management/products/ProductInfoPanel";
+} from "../../../../lib/api/products";
+import { useAlert } from "../../../../hooks/useAlert";
+import ProductImageEditor from "../../../../components/products/ProductImageEditor";
+import ProductInfoPanel from "../../../../components/products/ProductInfoPanel";
 import { AxiosError } from "axios";
-import { useHeader } from "../../../../../hooks/useHeader";
+import { useHeader } from "../../../../hooks/useHeader";
 
 export default function ManagementProductPage() {
   const { productKey } = useParams<{ productKey: string }>();
@@ -82,7 +82,7 @@ export default function ManagementProductPage() {
 
   useHeader({
     title: product && product.name,
-    prevLink: "/cms/management/products",
+    prevLink: "/cms/products",
     leftSlot: (
       <Button onClick={handleOnModify} variant="text">
         제품 수정

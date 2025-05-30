@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { UseFieldArrayReturn } from "react-hook-form";
-import { IMAGE_BASE_URL } from "../../../lib/constants/api";
-import { IGetProductImage, IGetProductInfo } from "../../../lib/types/product";
+import { IMAGE_BASE_URL } from "../../lib/constants/api";
+import { IGetProductImage, IGetProductInfo } from "../../lib/types/product";
 import {
   ArrowLeft,
   ArrowRight,

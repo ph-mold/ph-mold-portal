@@ -10,7 +10,7 @@ export default function CmsPage() {
   });
   return (
     <div className="mx-4 sm:mx-auto my-4">
-      <Link to="/cms/management/products">
+      <Link to="/cms/products">
         <Button variant="text" startIcon={<PackageSearch />}>
           제품 관리
         </Button>

@@ -1,9 +1,9 @@
 import { Modal } from "@ph-mold/ph-ui";
 import { PlusSquare } from "lucide-react";
 import useSWR from "swr";
-import { ITag } from "../../../lib/types/product";
-import { GET_TAGS, getTags } from "../../../lib/api/tags";
-import TagsTable from "../../domain/table/TagsTable";
+import { ITag } from "../../lib/types/product";
+import { GET_TAGS, getTags } from "../../lib/api/tags";
+import TagsTable from "../domain/table/TagsTable";
 
 interface Props {
   open: boolean;
