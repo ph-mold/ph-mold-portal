@@ -9,6 +9,7 @@ import ErpPage from "./erp/page";
 import UserPage from "./user/page";
 import SampleRequestsPage from "./erp/sample-requests/page";
 import SampleRequestDetailPage from "./erp/sample-requests/[requestId]/page";
+import TagsPage from "./cms/tags/page";
 
 export default function Routes() {
   return useRoutes([
@@ -38,10 +39,13 @@ export default function Routes() {
               path: "products",
               element: <ManagementProductsPage />,
             },
-
             {
               path: "products/:productKey",
               element: <ManagementProductPage />,
+            },
+            {
+              path: "tags",
+              element: <TagsPage />,
             },
           ],
         },

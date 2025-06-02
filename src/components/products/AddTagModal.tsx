@@ -1,7 +1,7 @@
 import { Modal } from "@ph-mold/ph-ui";
 import { PlusSquare } from "lucide-react";
 import useSWR from "swr";
-import { ITag } from "../../lib/types/product";
+import { ITag } from "../../lib/types/tag";
 import { GET_TAGS, getTags } from "../../lib/api/tags";
 import TagsTable from "../domain/table/TagsTable";
 
@@ -26,7 +26,7 @@ export default function AddTagModal({ open, setOpen, addTagAction }: Props) {
       title={
         <div className="text-signature flex items-center gap-1">
           <PlusSquare />
-          스펙 추가
+          태그 추가
         </div>
       }
       bodyClassName="!p-0 !overflow-y-hidden mb-3"
