@@ -19,6 +19,7 @@ import ProductImageEditor from "../../../../components/products/ProductImageEdit
 import ProductInfoPanel from "../../../../components/products/ProductInfoPanel";
 import { AxiosError } from "axios";
 import { useHeader } from "../../../../hooks/useHeader";
+import { Pencil } from "lucide-react";
 
 export default function ManagementProductPage() {
   const { productKey } = useParams<{ productKey: string }>();
@@ -83,8 +84,14 @@ export default function ManagementProductPage() {
   useHeader({
     title: product && product.name,
     prevLink: "/cms/products",
-    leftSlot: (
-      <Button onClick={handleOnModify} variant="text">
+    rightSlot: (
+      <Button
+        variant="outlined"
+        className="mx-2"
+        size="small"
+        startIcon={<Pencil size={16} />}
+        onClick={handleOnModify}
+      >
         제품 수정
       </Button>
     ),

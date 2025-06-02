@@ -1,3 +1,5 @@
+import { ITag } from "./tag";
+
 export interface IGetProduct {
   id: number;
   key: string;
@@ -13,12 +15,6 @@ export interface IGetProduct {
   tags?: ITag[];
 }
 
-export interface ITag {
-  id: number;
-  key: string;
-  name: string;
-  flag?: ChangeFlag;
-}
 export interface IGetProductInfo extends IGetProduct {
   specs: ISpec[];
   images: IGetProductImage[];
@@ -47,4 +43,4 @@ export interface IGetProductImage {
   flag?: ChangeFlag;
 }
 
-type ChangeFlag = "new" | "update" | "delete" | undefined;
+export type ChangeFlag = "new" | "delete";
