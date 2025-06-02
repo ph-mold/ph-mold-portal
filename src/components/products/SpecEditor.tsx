@@ -5,7 +5,7 @@ import {
   UseFormRegister,
   useWatch,
 } from "react-hook-form";
-import { IGetProductInfo, ISpecType } from "../../../lib/types/product";
+import { IGetProductInfo, ISpecType } from "../../lib/types/product";
 import AddSpecModal from "./AddSpecModal";
 import { useState } from "react";
 

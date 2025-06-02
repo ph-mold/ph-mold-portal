@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import { IGetProduct } from "../../../../lib/types/product";
+import { IGetProduct } from "../../../lib/types/product";
 import useSWR from "swr";
 import {
   GET_PRODUCTS_BY_CATEGORY,
   getProductsByCategory,
-} from "../../../../lib/api/products";
-import ProductsTable from "../../../../components/management/products/ProductsTable";
-import { useHeader } from "../../../../hooks/useHeader";
+} from "../../../lib/api/products";
+import ProductsTable from "../../../components/products/ProductsTable";
+import { useHeader } from "../../../hooks/useHeader";
 
 export default function ManagementProductsPage() {
   const { data: products, isLoading: isProductsLoading } = useSWR<
@@ -15,7 +15,7 @@ export default function ManagementProductsPage() {
 
   const navigate = useNavigate();
   const handleDoubleClick = (product: IGetProduct) => {
-    navigate(`/cms/management/products/${product.key}`);
+    navigate(`/cms/products/${product.key}`);
   };
 
   useHeader({

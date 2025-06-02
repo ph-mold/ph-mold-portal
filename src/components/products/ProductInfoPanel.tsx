@@ -4,7 +4,7 @@ import {
   UseFieldArrayReturn,
   UseFormRegister,
 } from "react-hook-form";
-import { IGetProductInfo } from "../../../lib/types/product";
+import { IGetProductInfo } from "../../lib/types/product";
 import { Input } from "@ph-mold/ph-ui";
 import TagEditor from "./TagEditor";
 import SpecEditor from "./SpecEditor";

@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { Plus } from "lucide-react";
-import { uploadFile } from "../../../lib/api/file";
+import { uploadFile } from "../../lib/api/file";
 
 interface ImageUploaderProps {
   onUpload: (paths: string[]) => void;

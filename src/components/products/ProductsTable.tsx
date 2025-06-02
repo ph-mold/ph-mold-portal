@@ -1,7 +1,7 @@
 import { createColumnHelper } from "@tanstack/react-table";
-import { IGetProduct } from "../../../lib/types/product";
-import { CustomColumnMeta } from "../../Table/types";
-import { Table } from "../../Table";
+import { IGetProduct } from "../../lib/types/product";
+import { CustomColumnMeta } from "../Table/types";
+import { Table } from "../Table";
 
 const columnHelper = createColumnHelper<IGetProduct>();
 
