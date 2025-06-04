@@ -17,11 +17,19 @@ export async function uploadFile(
   try {
     const res = await axiosInstance.post<{ path: string }>(
       API.FILE.UPLOAD_FILE,
-      formData
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
     );
     return res.data;
   } catch (error) {
     console.error("파일 업로드 실패:", error);
+    if (error instanceof Error) {
+      console.error("에러 상세:", error.message);
+    }
     return;
   }
 }
