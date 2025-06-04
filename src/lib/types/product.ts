@@ -43,4 +43,4 @@ export interface IGetProductImage {
   flag?: ChangeFlag;
 }
 
-export type ChangeFlag = "new" | "delete";
+export type ChangeFlag = "new" | "delete" | "update" | undefined;
