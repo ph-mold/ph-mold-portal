@@ -38,7 +38,7 @@ const getColumns = () => [
     header: () => <div>태그</div>,
     cell: (info) => (
       <div className="flex flex-wrap space-y-1 space-x-1 py-1">
-        {info.getValue().map((tag) => (
+        {info.getValue()?.map((tag) => (
           <p
             key={tag.key}
             className="bg-background2 text-signature h-6 rounded-md px-1 py-[1px] text-sm text-nowrap"

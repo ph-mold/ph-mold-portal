@@ -1,4 +1,4 @@
-import { createColumnHelper } from "@tanstack/react-table";
+import { createColumnHelper, ColumnDef } from "@tanstack/react-table";
 import { ITag } from "../../../lib/types/tag";
 import { CustomColumnMeta } from "../../Table/types";
 import { Table } from "../../Table";
@@ -12,7 +12,7 @@ const getColumns = (
   onDelete?: (tag: ITag) => void,
   showActions?: boolean
 ) => {
-  const columns = [
+  const columns: ColumnDef<ITag, string>[] = [
     columnHelper.accessor("name", {
       id: "name",
       size: 200,

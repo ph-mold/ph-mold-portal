@@ -13,7 +13,8 @@ export default defineConfig(({ mode }) => {
         minify: true,
         inject: {
           data: {
-            apiUrl: env.VITE_API_BASE_URL,
+            apiUrl: env.VITE_API_URL,
+            fileUrl: env.VITE_IMAGE_BASE_URL.replace("/contents", ""),
           },
         },
       }),
