@@ -10,6 +10,9 @@ import UserPage from "./user/page";
 import SampleRequestsPage from "./erp/sample-requests/page";
 import SampleRequestDetailPage from "./erp/sample-requests/[requestId]/page";
 import TagsPage from "./cms/tags/page";
+import LabelStickerPage from "./erp/label-sticker/page";
+import LabelStickerLayout from "./erp/label-sticker/layout";
+import { Navigate } from "react-router-dom";
 
 export default function Routes() {
   return useRoutes([
@@ -28,6 +31,20 @@ export default function Routes() {
             {
               path: "sample-requests/:requestId",
               element: <SampleRequestDetailPage />,
+            },
+            {
+              path: "label-sticker",
+              element: <LabelStickerLayout />,
+              children: [
+                {
+                  path: "",
+                  element: <Navigate to="ls-3510" replace />,
+                },
+                {
+                  path: "ls-3510",
+                  element: <LabelStickerPage />,
+                },
+              ],
             },
           ],
         },
