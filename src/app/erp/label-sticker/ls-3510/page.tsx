@@ -8,6 +8,7 @@ import {
 } from "../../../../lib/types/label-sticker";
 import { postLS3510PDF } from "../../../../lib/api/label-sticker";
 import { PlusCircle, FileDown, FilePlus } from "lucide-react";
+import { useAlert } from "../../../../hooks/useAlert";
 
 export default function LS3510Page() {
   useHeader({
@@ -44,6 +45,8 @@ export default function LS3510Page() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
   const [pdfBlob, setPdfBlob] = useState<Blob | null>(null);
+
+  const alert = useAlert();
 
   // 새 데이터 추가
   const handleAddData = () => {
@@ -82,7 +85,11 @@ export default function LS3510Page() {
   // PDF 생성
   const handleGeneratePDF = async () => {
     if (!labelSticker.filename) {
-      alert("파일명을 입력해주세요.");
+      alert({
+        description: "파일명을 입력해주세요.",
+        acceptLabel: "확인",
+        showCancelButton: false,
+      });
       return;
     }
 
@@ -92,9 +99,18 @@ export default function LS3510Page() {
       const url = URL.createObjectURL(blob);
       setPdfUrl(url);
       setPdfBlob(blob);
-    } catch (error) {
-      console.error("PDF 생성 실패:", error);
-      alert("PDF 생성에 실패했습니다.");
+      alert({
+        description: "PDF가 생성되었습니다.",
+        acceptLabel: "확인",
+        showCancelButton: false,
+      });
+    } catch {
+      alert({
+        title: "오류",
+        description: "PDF 생성에 실패했습니다.",
+        acceptLabel: "확인",
+        showCancelButton: false,
+      });
     } finally {
       setIsGenerating(false);
     }
