@@ -41,6 +41,7 @@ export default function LS3510Page() {
 
   // PDF 생성 상태
   const [isGenerating, setIsGenerating] = useState(false);
+  const [pdfUrl, setPdfUrl] = useState<string | null>(null);
 
   // 새 데이터 추가
   const handleAddData = () => {
@@ -86,16 +87,16 @@ export default function LS3510Page() {
     try {
       setIsGenerating(true);
       const pdfBlob = await postLS3510PDF(labelSticker);
+      const url = URL.createObjectURL(pdfBlob);
+      setPdfUrl(url);
 
       // PDF 다운로드
-      const url = window.URL.createObjectURL(pdfBlob);
       const link = document.createElement("a");
       link.href = url;
       link.download = `${labelSticker.filename}.pdf`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
     } catch (error) {
       console.error("PDF 생성 실패:", error);
       alert("PDF 생성에 실패했습니다.");
@@ -120,97 +121,115 @@ export default function LS3510Page() {
         </Button>
       </div>
 
-      <div className="flex-1 flex items-center justify-center">
-        <div className="flex gap-10 h-[90%] max-w-[90%]">
-          {/* 왼쪽 5개 라벨 */}
-          <div className="flex-1">
-            <div className="h-full grid grid-rows-5 gap-4">
-              {labelSticker.data.map(
-                (data, index) =>
-                  index % 2 === 0 && (
-                    <div
-                      key={index}
-                      onClick={() => handleCardClick(index)}
-                      className="bg-white rounded-lg shadow-sm border border-gray-100 cursor-pointer hover:border-primary transition-colors h-full"
-                      style={{
-                        backgroundColor:
-                          "value1" in data
-                            ? (data as LabelData).backgroundColor
-                            : "white",
-                      }}
-                    >
-                      <div className="h-full aspect-[9/5]">
-                        <div className="p-4 h-full flex flex-col">
-                          {"value1" in data ? (
-                            <>
-                              <div className="font-medium">
-                                {(data as LabelData).value1}
+      <div className="flex-1 flex items-start gap-10">
+        {/* 라벨 카드 영역 */}
+        <div className="flex-1 flex items-center justify-center">
+          <div className="flex gap-10 h-[90%] max-w-[90%]">
+            {/* 왼쪽 5개 라벨 */}
+            <div className="flex-1">
+              <div className="h-full grid grid-rows-5 gap-4">
+                {labelSticker.data.map(
+                  (data, index) =>
+                    index % 2 === 0 && (
+                      <div
+                        key={index}
+                        onClick={() => handleCardClick(index)}
+                        className="bg-white rounded-lg shadow-sm border border-gray-100 cursor-pointer hover:border-primary transition-colors h-full"
+                        style={{
+                          backgroundColor:
+                            "value1" in data
+                              ? (data as LabelData).backgroundColor
+                              : "white",
+                        }}
+                      >
+                        <div className="h-full aspect-[9/5]">
+                          <div className="p-4 h-full flex flex-col">
+                            {"value1" in data ? (
+                              <>
+                                <div className="font-medium">
+                                  {(data as LabelData).value1}
+                                </div>
+                                <div>{(data as LabelData).value2}</div>
+                                <div>{(data as LabelData).value3}</div>
+                                <div className="mt-auto">
+                                  <div>{(data as LabelData).value4}</div>
+                                  <div>{(data as LabelData).value5}</div>
+                                  <div>{(data as LabelData).value6}</div>
+                                </div>
+                              </>
+                            ) : (
+                              <div className="h-full flex items-center justify-center text-gray-400">
+                                클릭하여 데이터 선택
                               </div>
-                              <div>{(data as LabelData).value2}</div>
-                              <div>{(data as LabelData).value3}</div>
-                              <div className="mt-auto">
-                                <div>{(data as LabelData).value4}</div>
-                                <div>{(data as LabelData).value5}</div>
-                                <div>{(data as LabelData).value6}</div>
-                              </div>
-                            </>
-                          ) : (
-                            <div className="h-full flex items-center justify-center text-gray-400">
-                              클릭하여 데이터 선택
-                            </div>
-                          )}
+                            )}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  )
-              )}
+                    )
+                )}
+              </div>
             </div>
-          </div>
 
-          {/* 오른쪽 5개 라벨 */}
-          <div className="flex-1">
-            <div className="h-full grid grid-rows-5 gap-4">
-              {labelSticker.data.map(
-                (data, index) =>
-                  index % 2 === 1 && (
-                    <div
-                      key={index}
-                      onClick={() => handleCardClick(index)}
-                      className="bg-white rounded-lg shadow-sm border border-gray-100 cursor-pointer hover:border-primary transition-colors h-full"
-                      style={{
-                        backgroundColor:
-                          "value1" in data
-                            ? (data as LabelData).backgroundColor
-                            : "white",
-                      }}
-                    >
-                      <div className="h-full aspect-[9/5]">
-                        <div className="p-4 h-full flex flex-col">
-                          {"value1" in data ? (
-                            <>
-                              <div className="font-medium">
-                                {(data as LabelData).value1}
+            {/* 오른쪽 5개 라벨 */}
+            <div className="flex-1">
+              <div className="h-full grid grid-rows-5 gap-4">
+                {labelSticker.data.map(
+                  (data, index) =>
+                    index % 2 === 1 && (
+                      <div
+                        key={index}
+                        onClick={() => handleCardClick(index)}
+                        className="bg-white rounded-lg shadow-sm border border-gray-100 cursor-pointer hover:border-primary transition-colors h-full"
+                        style={{
+                          backgroundColor:
+                            "value1" in data
+                              ? (data as LabelData).backgroundColor
+                              : "white",
+                        }}
+                      >
+                        <div className="h-full aspect-[9/5]">
+                          <div className="p-4 h-full flex flex-col">
+                            {"value1" in data ? (
+                              <>
+                                <div className="font-medium">
+                                  {(data as LabelData).value1}
+                                </div>
+                                <div>{(data as LabelData).value2}</div>
+                                <div>{(data as LabelData).value3}</div>
+                                <div className="mt-auto">
+                                  <div>{(data as LabelData).value4}</div>
+                                  <div>{(data as LabelData).value5}</div>
+                                  <div>{(data as LabelData).value6}</div>
+                                </div>
+                              </>
+                            ) : (
+                              <div className="h-full flex items-center justify-center text-gray-400">
+                                클릭하여 데이터 선택
                               </div>
-                              <div>{(data as LabelData).value2}</div>
-                              <div>{(data as LabelData).value3}</div>
-                              <div className="mt-auto">
-                                <div>{(data as LabelData).value4}</div>
-                                <div>{(data as LabelData).value5}</div>
-                                <div>{(data as LabelData).value6}</div>
-                              </div>
-                            </>
-                          ) : (
-                            <div className="h-full flex items-center justify-center text-gray-400">
-                              클릭하여 데이터 선택
-                            </div>
-                          )}
+                            )}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  )
-              )}
+                    )
+                )}
+              </div>
             </div>
           </div>
+        </div>
+
+        {/* PDF 뷰어 영역 */}
+        <div className="flex-1 bg-gray-50 rounded-lg p-4 h-[90vh]">
+          {pdfUrl ? (
+            <iframe
+              src={pdfUrl}
+              className="w-full h-full border-0"
+              title="PDF Preview"
+            />
+          ) : (
+            <div className="h-full flex items-center justify-center text-gray-400">
+              PDF를 생성하면 여기에 표시됩니다
+            </div>
+          )}
         </div>
       </div>
 
