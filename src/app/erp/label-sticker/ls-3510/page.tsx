@@ -7,6 +7,7 @@ import {
   LABEL_COLORS,
 } from "../../../../lib/types/label-sticker";
 import { postLS3510PDF } from "../../../../lib/api/label-sticker";
+import { PlusCircle, FileDown, FilePlus } from "lucide-react";
 
 export default function LS3510Page() {
   useHeader({
@@ -42,6 +43,7 @@ export default function LS3510Page() {
   // PDF 생성 상태
   const [isGenerating, setIsGenerating] = useState(false);
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
+  const [pdfBlob, setPdfBlob] = useState<Blob | null>(null);
 
   // 새 데이터 추가
   const handleAddData = () => {
@@ -77,7 +79,7 @@ export default function LS3510Page() {
     setIsSelectModalOpen(false);
   };
 
-  // PDF 생성 및 다운로드
+  // PDF 생성
   const handleGeneratePDF = async () => {
     if (!labelSticker.filename) {
       alert("파일명을 입력해주세요.");
@@ -86,17 +88,10 @@ export default function LS3510Page() {
 
     try {
       setIsGenerating(true);
-      const pdfBlob = await postLS3510PDF(labelSticker);
-      const url = URL.createObjectURL(pdfBlob);
+      const blob = await postLS3510PDF(labelSticker);
+      const url = URL.createObjectURL(blob);
       setPdfUrl(url);
-
-      // PDF 다운로드
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = `${labelSticker.filename}.pdf`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      setPdfBlob(blob);
     } catch (error) {
       console.error("PDF 생성 실패:", error);
       alert("PDF 생성에 실패했습니다.");
@@ -105,64 +100,127 @@ export default function LS3510Page() {
     }
   };
 
+  // PDF 다운로드
+  const handleDownloadPDF = () => {
+    if (!pdfBlob || !labelSticker.filename) return;
+
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(pdfBlob);
+    link.download = `${labelSticker.filename}.pdf`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <div className="h-full p-6 flex flex-col">
-      <div className="mb-6 flex items-center gap-4">
-        <Input
-          placeholder="파일명 입력"
-          value={labelSticker.filename}
-          onChange={(e) =>
-            setLabelSticker({ ...labelSticker, filename: e.target.value })
-          }
-        />
-        <Button onClick={() => setIsAddModalOpen(true)}>데이터 추가</Button>
-        <Button onClick={handleGeneratePDF} disabled={isGenerating}>
-          {isGenerating ? "생성 중..." : "PDF 생성"}
-        </Button>
+      <div className="mb-5 flex items-center justify-between shrink-0">
+        <div className="flex items-center gap-4">
+          <Input
+            placeholder="파일명 입력"
+            value={labelSticker.filename}
+            onChange={(e) =>
+              setLabelSticker({ ...labelSticker, filename: e.target.value })
+            }
+          />
+          <Button
+            onClick={() => setIsAddModalOpen(true)}
+            variant="outlined"
+            startIcon={<PlusCircle size={16} />}
+          >
+            데이터 추가
+          </Button>
+        </div>
+        <div className="flex items-center gap-3">
+          <Button
+            onClick={handleGeneratePDF}
+            disabled={isGenerating}
+            startIcon={<FilePlus size={16} />}
+          >
+            {isGenerating ? "생성 중..." : "PDF 생성"}
+          </Button>
+          <Button
+            onClick={handleDownloadPDF}
+            disabled={!pdfBlob}
+            variant="outlined"
+            startIcon={<FileDown size={16} />}
+          >
+            다운로드
+          </Button>
+        </div>
       </div>
 
-      <div className="flex-1 flex items-start gap-10">
+      <div className="flex-1 flex gap-6 min-h-0 overflow-hidden">
         {/* 라벨 카드 영역 */}
-        <div className="flex-1 flex items-center justify-center">
-          <div className="flex gap-10 h-[90%] max-w-[90%]">
+        <div className="h-full flex shrink-0">
+          <div className="flex gap-6 h-full">
             {/* 왼쪽 5개 라벨 */}
-            <div className="flex-1">
-              <div className="h-full grid grid-rows-5 gap-4">
+            <div className="h-full">
+              <div className="grid grid-rows-5 gap-4 h-full">
                 {labelSticker.data.map(
                   (data, index) =>
                     index % 2 === 0 && (
                       <div
                         key={index}
                         onClick={() => handleCardClick(index)}
-                        className="bg-white rounded-lg shadow-sm border border-gray-100 cursor-pointer hover:border-primary transition-colors h-full"
+                        className="rounded-lg border-2 hover:border-primary transition-colors h-full cursor-pointer relative overflow-hidden"
                         style={{
                           backgroundColor:
                             "value1" in data
                               ? (data as LabelData).backgroundColor
                               : "white",
+                          borderColor:
+                            "value1" in data
+                              ? (data as LabelData).backgroundColor
+                              : "#E2E8F0",
                         }}
                       >
-                        <div className="h-full aspect-[9/5]">
-                          <div className="p-4 h-full flex flex-col">
-                            {"value1" in data ? (
-                              <>
-                                <div className="font-medium">
-                                  {(data as LabelData).value1}
-                                </div>
-                                <div>{(data as LabelData).value2}</div>
-                                <div>{(data as LabelData).value3}</div>
-                                <div className="mt-auto">
-                                  <div>{(data as LabelData).value4}</div>
-                                  <div>{(data as LabelData).value5}</div>
-                                  <div>{(data as LabelData).value6}</div>
-                                </div>
-                              </>
-                            ) : (
-                              <div className="h-full flex items-center justify-center text-gray-400">
-                                클릭하여 데이터 선택
+                        <div className="h-full aspect-[7/4] flex p-2">
+                          {!("value1" in data) ? (
+                            <span className="text-gray-400 text-sm m-auto">
+                              클릭
+                            </span>
+                          ) : (
+                            <div className="w-full text-[10px] space-y-0.5 overflow-hidden">
+                              <div className="flex items-center gap-1 overflow-hidden">
+                                {(data as LabelData).value1 && (
+                                  <div className="font-medium truncate">
+                                    {(data as LabelData).value1}
+                                  </div>
+                                )}
+                                {(data as LabelData).value2 && (
+                                  <>
+                                    <div className="shrink-0">|</div>
+                                    <div className="truncate">
+                                      {(data as LabelData).value2}
+                                    </div>
+                                  </>
+                                )}
                               </div>
-                            )}
-                          </div>
+                              <div className="flex items-center gap-2 flex-wrap overflow-hidden">
+                                {(data as LabelData).value3 && (
+                                  <div className="truncate">
+                                    코드: {(data as LabelData).value3}
+                                  </div>
+                                )}
+                                {(data as LabelData).value4 && (
+                                  <div className="truncate">
+                                    수량: {(data as LabelData).value4}
+                                  </div>
+                                )}
+                                {(data as LabelData).value5 && (
+                                  <div className="truncate">
+                                    중량: {(data as LabelData).value5}
+                                  </div>
+                                )}
+                                {(data as LabelData).value6 && (
+                                  <div className="truncate">
+                                    납품일: {(data as LabelData).value6}
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          )}
                         </div>
                       </div>
                     )
@@ -171,43 +229,72 @@ export default function LS3510Page() {
             </div>
 
             {/* 오른쪽 5개 라벨 */}
-            <div className="flex-1">
-              <div className="h-full grid grid-rows-5 gap-4">
+            <div className="h-full">
+              <div className="grid grid-rows-5 gap-4 h-full">
                 {labelSticker.data.map(
                   (data, index) =>
                     index % 2 === 1 && (
                       <div
                         key={index}
                         onClick={() => handleCardClick(index)}
-                        className="bg-white rounded-lg shadow-sm border border-gray-100 cursor-pointer hover:border-primary transition-colors h-full"
+                        className="rounded-lg border-2 hover:border-primary transition-colors h-full cursor-pointer relative overflow-hidden"
                         style={{
                           backgroundColor:
                             "value1" in data
                               ? (data as LabelData).backgroundColor
                               : "white",
+                          borderColor:
+                            "value1" in data
+                              ? (data as LabelData).backgroundColor
+                              : "#E2E8F0",
                         }}
                       >
-                        <div className="h-full aspect-[9/5]">
-                          <div className="p-4 h-full flex flex-col">
-                            {"value1" in data ? (
-                              <>
-                                <div className="font-medium">
-                                  {(data as LabelData).value1}
-                                </div>
-                                <div>{(data as LabelData).value2}</div>
-                                <div>{(data as LabelData).value3}</div>
-                                <div className="mt-auto">
-                                  <div>{(data as LabelData).value4}</div>
-                                  <div>{(data as LabelData).value5}</div>
-                                  <div>{(data as LabelData).value6}</div>
-                                </div>
-                              </>
-                            ) : (
-                              <div className="h-full flex items-center justify-center text-gray-400">
-                                클릭하여 데이터 선택
+                        <div className="h-full aspect-[7/4] flex p-2">
+                          {!("value1" in data) ? (
+                            <span className="text-gray-400 text-sm m-auto">
+                              클릭
+                            </span>
+                          ) : (
+                            <div className="w-full text-[10px] space-y-0.5 overflow-hidden">
+                              <div className="flex items-center gap-1 overflow-hidden">
+                                {(data as LabelData).value1 && (
+                                  <div className="font-medium truncate">
+                                    {(data as LabelData).value1}
+                                  </div>
+                                )}
+                                {(data as LabelData).value2 && (
+                                  <>
+                                    <div className="shrink-0">|</div>
+                                    <div className="truncate">
+                                      {(data as LabelData).value2}
+                                    </div>
+                                  </>
+                                )}
                               </div>
-                            )}
-                          </div>
+                              <div className="flex items-center gap-2 flex-wrap overflow-hidden">
+                                {(data as LabelData).value3 && (
+                                  <div className="truncate">
+                                    코드: {(data as LabelData).value3}
+                                  </div>
+                                )}
+                                {(data as LabelData).value4 && (
+                                  <div className="truncate">
+                                    수량: {(data as LabelData).value4}
+                                  </div>
+                                )}
+                                {(data as LabelData).value5 && (
+                                  <div className="truncate">
+                                    중량: {(data as LabelData).value5}
+                                  </div>
+                                )}
+                                {(data as LabelData).value6 && (
+                                  <div className="truncate">
+                                    납품일: {(data as LabelData).value6}
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          )}
                         </div>
                       </div>
                     )
@@ -218,11 +305,11 @@ export default function LS3510Page() {
         </div>
 
         {/* PDF 뷰어 영역 */}
-        <div className="flex-1 bg-gray-50 rounded-lg p-4 h-[90vh]">
+        <div className="flex-1 bg-gray-50 rounded-lg overflow-hidden">
           {pdfUrl ? (
             <iframe
               src={pdfUrl}
-              className="w-full h-full border-0"
+              className="w-full h-full"
               title="PDF Preview"
             />
           ) : (
@@ -322,29 +409,64 @@ export default function LS3510Page() {
       >
         <div className="space-y-4">
           {addedData.length > 0 ? (
-            addedData.map((data, index) => (
-              <div
-                key={index}
-                onClick={() => handleSelectData(data)}
-                className="p-4 border rounded-lg cursor-pointer hover:border-primary"
-                style={{ backgroundColor: data.backgroundColor }}
-              >
-                <div className="font-medium">{data.value1}</div>
-                <div>{data.value2}</div>
-                <div>{data.value3}</div>
-                <div>{data.value4}</div>
-                <div>{data.value5}</div>
-                <div>{data.value6}</div>
-              </div>
-            ))
+            addedData.map((data, index) => {
+              const isSelected =
+                selectedCardIndex !== null &&
+                JSON.stringify(labelSticker.data[selectedCardIndex]) ===
+                  JSON.stringify(data);
+
+              return (
+                <div
+                  key={index}
+                  onClick={() => handleSelectData(data)}
+                  className={`p-4 border-2 rounded-lg cursor-pointer transition-colors ${
+                    isSelected
+                      ? "ring-2 ring-primary ring-offset-2"
+                      : "hover:border-primary"
+                  }`}
+                  style={{
+                    backgroundColor: data.backgroundColor,
+                    borderColor: data.backgroundColor,
+                  }}
+                >
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2">
+                      {data.value1 && (
+                        <div className="font-medium text-lg">{data.value1}</div>
+                      )}
+                      {data.value2 && (
+                        <>
+                          <div className="text-sm text-gray-600">|</div>
+                          <div className="text-sm text-gray-600">
+                            {data.value2}
+                          </div>
+                        </>
+                      )}
+                      {isSelected && (
+                        <div className="ml-auto px-2 py-0.5 bg-primary/10 text-primary text-xs rounded">
+                          선택됨
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-4 text-sm flex-wrap">
+                      {data.value3 && <div>코드: {data.value3}</div>}
+                      {data.value4 && <div>수량: {data.value4}</div>}
+                      {data.value5 && <div>중량: {data.value5}</div>}
+                      {data.value6 && <div>납품일: {data.value6}</div>}
+                    </div>
+                  </div>
+                </div>
+              );
+            })
           ) : (
-            <div className="text-center text-gray-500 py-4">
+            <div className="text-center text-gray-500 py-8">
               추가된 데이터가 없습니다
             </div>
           )}
-          <div className="flex justify-end">
+          <div className="flex justify-end gap-2">
             <Button
-              variant="text"
+              variant="outlined"
+              color="error"
               onClick={() => {
                 if (selectedCardIndex !== null) {
                   const newData = [...labelSticker.data];
