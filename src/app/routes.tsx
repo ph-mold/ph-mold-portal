@@ -10,8 +10,8 @@ import UserPage from "./user/page";
 import SampleRequestsPage from "./erp/sample-requests/page";
 import SampleRequestDetailPage from "./erp/sample-requests/[requestId]/page";
 import TagsPage from "./cms/tags/page";
-import LabelStickerPage from "./erp/label-sticker/page";
 import LabelStickerLayout from "./erp/label-sticker/layout";
+import LS3510Page from "./erp/label-sticker/ls-3510/page";
 import { Navigate } from "react-router-dom";
 
 export default function Routes() {
@@ -42,7 +42,7 @@ export default function Routes() {
                 },
                 {
                   path: "ls-3510",
-                  element: <LabelStickerPage />,
+                  element: <LS3510Page />,
                 },
               ],
             },

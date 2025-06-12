@@ -1,14 +1,8 @@
 import { Button } from "@ph-mold/ph-ui";
 import { useTabNavigation } from "../../../hooks/useTabNavigation";
-import { useHeader } from "../../../hooks/useHeader";
 import { Outlet } from "react-router-dom";
 
 export default function LabelStickerLayout() {
-  useHeader({
-    title: "라벨 스티커 생성",
-    prevLink: "/erp",
-  });
-
   const tabItems = [
     { label: "LS-3510", value: "ls-3510" },
     { label: "LS-3509", value: "ls-3509", disabled: true },
