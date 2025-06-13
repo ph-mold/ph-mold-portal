@@ -24,7 +24,7 @@ export function LabelCard({ data, onClick }: LabelCardProps) {
           : undefined
       }
     >
-      <div className="h-full aspect-[7/4] flex p-4">
+      <div className="h-full aspect-[7/4] flex p-2">
         {!hasData ? (
           <span className="text-gray-400 text-sm m-auto">클릭</span>
         ) : (
