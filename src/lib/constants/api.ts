@@ -36,4 +36,7 @@ export const API = {
   FILE: {
     UPLOAD_FILE: `${API_BASE}/file`,
   },
+  LABEL_STICKER: {
+    LS_3510: `${API_BASE}/admin/label-sticker/ls-3510`,
+  },
 };

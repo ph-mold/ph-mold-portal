@@ -2,7 +2,7 @@ import { useHeader } from "../../hooks/useHeader";
 import PortalToggle from "../../components/domain/PortalToggle";
 import { Link } from "react-router-dom";
 import { Button } from "@ph-mold/ph-ui";
-import { MailQuestion } from "lucide-react";
+import { MailQuestion, Sticker } from "lucide-react";
 
 export default function ErpPage() {
   useHeader({
@@ -13,6 +13,11 @@ export default function ErpPage() {
       <Link to="/erp/sample-requests">
         <Button variant="text" startIcon={<MailQuestion />}>
           고객 샘플 요청
+        </Button>
+      </Link>
+      <Link to="/erp/label-sticker">
+        <Button variant="text" startIcon={<Sticker />}>
+          라벨 스티커 생성
         </Button>
       </Link>
     </div>
