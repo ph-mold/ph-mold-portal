@@ -24,7 +24,10 @@ export const getLabelStickerHistories = async (
 };
 
 export const POST_LS_3510_PDF_REGENERATE = "postLS3510PDFRegenerate";
-export const postLS3510PDFRegenerate = async (data: LabelSticker) => {
+export const postLS3510PDFRegenerate = async (
+  data: LabelSticker,
+  signal?: AbortSignal
+) => {
   const response = await axiosInstance.post(
     API.LABEL_STICKER.LS_3510_REGENERATE,
     data,
@@ -33,6 +36,7 @@ export const postLS3510PDFRegenerate = async (data: LabelSticker) => {
       headers: {
         Accept: "application/pdf",
       },
+      signal,
     }
   );
   return response.data;

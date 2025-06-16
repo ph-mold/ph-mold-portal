@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { LabelSticker } from "../../../lib/types/label-sticker";
 import { useAlert } from "../../../hooks/useAlert";
+import { isCanceled } from "@/lib/axiosInstance";
 
 export interface Props {
-  generatePdfFn: (params: LabelSticker) => Promise<Blob>;
+  generatePdfFn: (params: LabelSticker, signal?: AbortSignal) => Promise<Blob>;
 }
 
 export function usePDF({ generatePdfFn }: Props) {
@@ -13,7 +14,10 @@ export function usePDF({ generatePdfFn }: Props) {
 
   const alert = useAlert();
 
-  const generatePDF = async (labelSticker: LabelSticker) => {
+  const generatePDF = async (
+    labelSticker: LabelSticker,
+    signal?: AbortSignal
+  ) => {
     if (!labelSticker.filename) {
       alert({
         description: "파일명을 입력해주세요.",
@@ -25,7 +29,7 @@ export function usePDF({ generatePdfFn }: Props) {
 
     try {
       setIsGenerating(true);
-      const blob = await generatePdfFn(labelSticker);
+      const blob = await generatePdfFn(labelSticker, signal);
       const url = URL.createObjectURL(blob);
       setPdfUrl(url);
       setPdfBlob(blob);
@@ -34,7 +38,8 @@ export function usePDF({ generatePdfFn }: Props) {
         acceptLabel: "확인",
         showCancelButton: false,
       });
-    } catch {
+    } catch (e) {
+      if (isCanceled(e)) return;
       alert({
         title: "오류",
         description: "PDF 생성에 실패했습니다.",

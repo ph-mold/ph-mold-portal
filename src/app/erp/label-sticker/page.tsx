@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useHeader } from "@/hooks/useHeader";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import useSWR from "swr";
@@ -31,6 +31,7 @@ export default function LabelStickerPage() {
   const [isPdfModalOpen, setIsPdfModalOpen] = useState(false);
   const [selectedLabel, setSelectedLabel] =
     useState<LabelStickerHistory | null>(null);
+  const abortRef = useRef<AbortController | null>(null);
 
   const currentPage = Number(searchParams.get("page")) || 1;
 
@@ -54,10 +55,16 @@ export default function LabelStickerPage() {
   const handlePdfView = (item: LabelStickerHistory) => {
     setSelectedLabel(item);
     setIsPdfModalOpen(true);
-    generatePDF({
-      filename: item.fileName,
-      data: item.labelData,
-    });
+    // 이전 요청이 있다면 취소
+    if (abortRef.current) abortRef.current.abort();
+    abortRef.current = new AbortController();
+    generatePDF(
+      {
+        filename: item.fileName,
+        data: item.labelData,
+      },
+      abortRef.current.signal
+    );
   };
 
   // 복사 작성 버튼 클릭 시
@@ -97,7 +104,10 @@ export default function LabelStickerPage() {
       />
       <HistoryModal
         open={isPdfModalOpen}
-        onClose={() => setIsPdfModalOpen(false)}
+        onClose={() => {
+          setIsPdfModalOpen(false);
+          if (abortRef.current) abortRef.current.abort();
+        }}
         title={selectedLabel?.fileName || ""}
         isGenerating={isGenerating}
         pdfUrl={pdfUrl}

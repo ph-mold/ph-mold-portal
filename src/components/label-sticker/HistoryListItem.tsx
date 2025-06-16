@@ -24,16 +24,16 @@ export function HistoryListItem({ item, onPdfView, onCopyWrite }: Props) {
           <Button
             variant="outlined"
             size="small"
-            onClick={() => onPdfView(item)}
+            onClick={() => onCopyWrite(item)}
           >
-            PDF 보기
+            복사 작성
           </Button>
           <Button
             variant="contained"
             size="small"
-            onClick={() => onCopyWrite(item)}
+            onClick={() => onPdfView(item)}
           >
-            복사 작성
+            PDF 보기
           </Button>
         </div>
       </div>
