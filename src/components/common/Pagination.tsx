@@ -3,9 +3,15 @@ import {
   ChevronLeft,
   ChevronRight,
   ChevronsLeft,
-  ChevronsRight
+  ChevronsRight,
 } from "lucide-react";
 
+export interface IPaginated<T> {
+  items: T[];
+  total: number;
+  page: number;
+  limit: number;
+}
 interface PaginationProps {
   currentPage: number;
   totalPages: number;
@@ -15,7 +21,7 @@ interface PaginationProps {
 export function Pagination({
   currentPage,
   totalPages,
-  onPageChange
+  onPageChange,
 }: PaginationProps) {
   const maxVisiblePages = 5;
   const halfVisiblePages = Math.floor(maxVisiblePages / 2);
