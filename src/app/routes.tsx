@@ -13,6 +13,7 @@ import TagsPage from "./cms/tags/page";
 import LabelStickerLayout from "./erp/label-sticker/layout";
 import LS3510Page from "./erp/label-sticker/ls-3510/page";
 import { Navigate } from "react-router-dom";
+import LabelStickerPage from "./erp/label-sticker/page";
 
 export default function Routes() {
   return useRoutes([
@@ -38,7 +39,7 @@ export default function Routes() {
               children: [
                 {
                   path: "",
-                  element: <Navigate to="ls-3510" replace />,
+                  element: <LabelStickerPage />,
                 },
                 {
                   path: "ls-3510",

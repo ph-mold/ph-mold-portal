@@ -4,6 +4,7 @@ import { Outlet } from "react-router-dom";
 
 export default function LabelStickerLayout() {
   const tabItems = [
+    { label: "메인", value: "" },
     { label: "LS-3510", value: "ls-3510" },
     { label: "LS-3509", value: "ls-3509", disabled: true },
   ];
