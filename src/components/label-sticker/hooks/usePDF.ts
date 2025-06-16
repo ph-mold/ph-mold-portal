@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { LabelSticker } from "../../../../lib/types/label-sticker";
-import { useAlert } from "../../../../hooks/useAlert";
+import { LabelSticker } from "../../../lib/types/label-sticker";
+import { useAlert } from "../../../hooks/useAlert";
 
 export interface Props {
   generatePdfFn: (params: LabelSticker) => Promise<Blob>;

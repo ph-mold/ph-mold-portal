@@ -14,9 +14,9 @@ import {
   postLS3510PDFRegenerate,
 } from "@/lib/api/label-sticker";
 import { formatKoreanDateTime } from "@/utils/format";
-import { PDFViewer } from "@/components/label-sticker/ls-3510";
+import { PDFViewer } from "@/components/label-sticker";
 import { Loader2 } from "lucide-react";
-import { usePDF } from "@/components/label-sticker/ls-3510/hooks";
+import { usePDF } from "@/components/label-sticker/hooks";
 
 const ITEMS_PER_PAGE = 5;
 

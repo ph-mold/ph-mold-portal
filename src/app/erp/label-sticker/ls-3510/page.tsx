@@ -3,15 +3,15 @@ import {
   LabelGrid,
   AddDataModal,
   SelectDataModal,
-  PDFViewer,
   LSHeader,
 } from "@/components/label-sticker/ls-3510";
 import {
   useLabelData,
   useModals,
   usePDF,
-} from "@/components/label-sticker/ls-3510/hooks";
+} from "@/components/label-sticker/hooks";
 import { postLS3510PDF } from "@/lib/api/label-sticker";
+import { PDFViewer } from "@/components/label-sticker";
 
 export default function LS3510Page() {
   useHeader({
