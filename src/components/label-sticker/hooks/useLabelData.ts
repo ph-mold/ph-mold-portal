@@ -77,6 +77,7 @@ export function useLabelData() {
     newData,
     setNewData,
     addedData,
+    setAddedData,
     selectedCardIndex,
     setSelectedCardIndex,
     handleAddData,

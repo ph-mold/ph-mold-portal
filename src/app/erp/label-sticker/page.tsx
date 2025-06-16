@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useHeader } from "@/hooks/useHeader";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import useSWR from "swr";
 import {
   GET_LABEL_STICKER_HISTORIES,
@@ -14,8 +14,8 @@ import {
 import { usePDF } from "@/components/label-sticker/hooks";
 import {
   PDFViewer,
-  HistoryList,
   HistoryModal,
+  HistoryList,
 } from "@/components/label-sticker";
 
 const ITEMS_PER_PAGE = 5;
@@ -26,6 +26,7 @@ export default function LabelStickerPage() {
     prevLink: "/erp",
   });
 
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [isPdfModalOpen, setIsPdfModalOpen] = useState(false);
   const [selectedLabel, setSelectedLabel] =
@@ -59,6 +60,25 @@ export default function LabelStickerPage() {
     });
   };
 
+  // 복사 작성 버튼 클릭 시
+  const handleCopyWrite = (item: LabelStickerHistory) => {
+    // labelData 중복 제거 (JSON.stringify 기준)
+    const uniqueData = item.labelData
+      .filter((data) => Object.keys(data).length > 0)
+      .filter(
+        (data, idx, arr) =>
+          idx ===
+          arr.findIndex((d) => JSON.stringify(d) === JSON.stringify(data))
+      );
+    navigate("/erp/label-sticker/ls-3510", {
+      state: {
+        filename: item.fileName,
+        data: item.labelData,
+        uniqueData,
+      },
+    });
+  };
+
   // 페이지 변경
   const handlePageChange = (page: number) => {
     setSearchParams({ page: page.toString() });
@@ -70,6 +90,7 @@ export default function LabelStickerPage() {
       <HistoryList
         items={currentItems}
         onPdfView={handlePdfView}
+        onCopyWrite={handleCopyWrite}
         currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={handlePageChange}

@@ -12,6 +12,8 @@ import {
 } from "@/components/label-sticker/hooks";
 import { postLS3510PDF } from "@/lib/api/label-sticker";
 import { PDFViewer } from "@/components/label-sticker";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 export default function LS3510Page() {
   useHeader({
@@ -19,6 +21,7 @@ export default function LS3510Page() {
     prevLink: "/erp",
   });
 
+  const location = useLocation();
   // 라벨 데이터 관리
   const {
     labelSticker,
@@ -26,12 +29,24 @@ export default function LS3510Page() {
     newData,
     setNewData,
     addedData,
+    setAddedData,
     setSelectedCardIndex,
     handleAddData,
     handleSelectData,
     handleClearData,
     selectedData,
   } = useLabelData();
+
+  // location.state로부터 데이터 받아서 카드에 배치
+  useEffect(() => {
+    if (location.state && location.state.filename && location.state.data) {
+      setLabelSticker({
+        filename: location.state.filename,
+        data: location.state.data,
+      });
+      setAddedData(location.state.uniqueData);
+    }
+  }, [location.state, setLabelSticker, setAddedData]);
 
   // 모달 상태 관리
   const {
