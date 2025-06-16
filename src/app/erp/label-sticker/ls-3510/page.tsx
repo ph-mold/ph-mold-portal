@@ -11,6 +11,7 @@ import {
   useModals,
   usePDF,
 } from "@/components/label-sticker/ls-3510/hooks";
+import { postLS3510PDF } from "@/lib/api/label-sticker";
 
 export default function LS3510Page() {
   useHeader({
@@ -43,7 +44,9 @@ export default function LS3510Page() {
   } = useModals();
 
   // PDF 관리
-  const { isGenerating, pdfUrl, pdfBlob, generatePDF, downloadPDF } = usePDF();
+  const { isGenerating, pdfUrl, pdfBlob, generatePDF, downloadPDF } = usePDF({
+    generatePdfFn: postLS3510PDF,
+  });
 
   // 라벨 카드 클릭 핸들러
   const handleCardClick = (index: number) => {
