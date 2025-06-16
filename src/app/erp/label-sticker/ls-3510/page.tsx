@@ -10,10 +10,14 @@ import {
   useModals,
   usePDF,
 } from "@/components/label-sticker/hooks";
-import { postLS3510PDF } from "@/lib/api/label-sticker";
+import {
+  GET_LABEL_STICKER_HISTORIES,
+  postLS3510PDF,
+} from "@/lib/api/label-sticker";
 import { PDFViewer } from "@/components/label-sticker";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { mutate } from "swr";
 
 export default function LS3510Page() {
   useHeader({
@@ -63,6 +67,15 @@ export default function LS3510Page() {
     generatePdfFn: postLS3510PDF,
   });
 
+  // PDF 생성 버튼 클릭 시 히스토리 캐시 초기화
+  const handleGeneratePDF = async () => {
+    await generatePDF(labelSticker);
+    mutate(
+      (key) => Array.isArray(key) && key[0] === GET_LABEL_STICKER_HISTORIES,
+      undefined
+    );
+  };
+
   // 라벨 카드 클릭 핸들러
   const handleCardClick = (index: number) => {
     setSelectedCardIndex(index);
@@ -78,7 +91,7 @@ export default function LS3510Page() {
           setLabelSticker({ ...labelSticker, filename })
         }
         onAddClick={openAddModal}
-        onGenerateClick={() => generatePDF(labelSticker)}
+        onGenerateClick={handleGeneratePDF}
         onDownloadClick={() => downloadPDF(labelSticker.filename)}
         isGenerating={isGenerating}
         canDownload={!!pdfBlob}
