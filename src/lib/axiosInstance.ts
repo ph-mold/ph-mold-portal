@@ -1,4 +1,9 @@
-import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
+import axios, {
+  AxiosError,
+  AxiosInstance,
+  AxiosRequestConfig,
+  CanceledError,
+} from "axios";
 import {
   clearToken,
   getAccessToken,
@@ -105,4 +110,15 @@ instance.interceptors.response.use(
     });
   }
 );
+
+export function isCanceled(err: unknown): err is CanceledError<unknown> {
+  return (
+    axios.isCancel(err) ||
+    (typeof err === "object" &&
+      err !== null &&
+      "code" in err &&
+      (err as { code?: string }).code === "ERR_CANCELED")
+  );
+}
+
 export const axiosInstance = instance;

@@ -1,16 +1,23 @@
 import { useState } from "react";
-import { LabelSticker } from "../../../../lib/types/label-sticker";
-import { postLS3510PDF } from "../../../../lib/api/label-sticker";
-import { useAlert } from "../../../../hooks/useAlert";
+import { LabelSticker } from "../../../lib/types/label-sticker";
+import { useAlert } from "../../../hooks/useAlert";
+import { isCanceled } from "@/lib/axiosInstance";
 
-export function usePDF() {
+export interface Props {
+  generatePdfFn: (params: LabelSticker, signal?: AbortSignal) => Promise<Blob>;
+}
+
+export function usePDF({ generatePdfFn }: Props) {
   const [isGenerating, setIsGenerating] = useState(false);
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
   const [pdfBlob, setPdfBlob] = useState<Blob | null>(null);
 
   const alert = useAlert();
 
-  const generatePDF = async (labelSticker: LabelSticker) => {
+  const generatePDF = async (
+    labelSticker: LabelSticker,
+    signal?: AbortSignal
+  ) => {
     if (!labelSticker.filename) {
       alert({
         description: "파일명을 입력해주세요.",
@@ -22,7 +29,7 @@ export function usePDF() {
 
     try {
       setIsGenerating(true);
-      const blob = await postLS3510PDF(labelSticker);
+      const blob = await generatePdfFn(labelSticker, signal);
       const url = URL.createObjectURL(blob);
       setPdfUrl(url);
       setPdfBlob(blob);
@@ -31,7 +38,8 @@ export function usePDF() {
         acceptLabel: "확인",
         showCancelButton: false,
       });
-    } catch {
+    } catch (e) {
+      if (isCanceled(e)) return;
       alert({
         title: "오류",
         description: "PDF 생성에 실패했습니다.",

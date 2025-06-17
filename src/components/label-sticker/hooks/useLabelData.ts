@@ -3,7 +3,7 @@ import {
   LabelData,
   LabelSticker,
   LABEL_COLORS,
-} from "../../../../lib/types/label-sticker";
+} from "../../../lib/types/label-sticker";
 
 export function useLabelData() {
   // 메인 라벨 스티커 데이터
@@ -77,6 +77,7 @@ export function useLabelData() {
     newData,
     setNewData,
     addedData,
+    setAddedData,
     selectedCardIndex,
     setSelectedCardIndex,
     handleAddData,
