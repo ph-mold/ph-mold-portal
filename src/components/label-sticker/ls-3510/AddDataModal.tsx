@@ -74,7 +74,7 @@ export function AddDataModal({
                 <div
                   className={`w-6 h-6 rounded-full border-2 ${
                     data.backgroundColor === color.value
-                      ? "border-primary"
+                      ? "border-border-strong"
                       : "border-transparent"
                   }`}
                   style={{ backgroundColor: color.value }}

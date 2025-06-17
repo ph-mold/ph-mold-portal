@@ -1,61 +1,40 @@
 @import "tailwindcss";
-
-@layer utilities {
-  .scrollbar-hide {
-    -ms-overflow-style: none; /* IE, Edge */
-    scrollbar-width: none; /* Firefox */
-  }
-
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera */
-  }
-}
-
-@layer base {
-  :root {
-    --font-sans: "Noto Sans KR", sans-serif;
-    --pm-background: #ffffff;
-    --pm-background2: #f3f8fc;
-    --pm-foreground: #171717;
-    --pm-foreground2: #6d6d6d;
-    --pm-reverseForeground: #ffffff;
-    --pm-signature: #0f9bff;
-    --pm-error: #ff3f2d;
-  }
-
-  input[type="number"]::-webkit-inner-spin-button,
-  input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-}
+@import "../../node_modules/@ph-mold/ph-ui/dist/ph-ui.css";
 
 @theme {
+  /* Font */
   --font-family: var(--font-sans);
-  --color-background: var(--pm-background);
-  --color-background2: var(--pm-background2);
-  --color-foreground: var(--pm-foreground);
-  --color-foreground2: var(--pm-foreground2);
-  --color-reverseForeground: var(--pm-reverseForeground);
-  --color-signature: var(--pm-signature);
-  --color-error: var(--pm-error);
-}
 
-html {
-  @apply text-foreground bg-background;
-}
+  /* Base Theme Colors */
+  --color-background: var(--color-base-white);
+  --color-background2: var(--color-base-light);
+  --color-reverseBackground: var(--color-base-dark);
+  --color-foreground: var(--color-base-dark);
+  --color-foreground2: var(--color-base-muted);
+  --color-reverseForeground: var(--color-base-white);
+  --color-skeleton: var(--color-base-skeleton);
 
-body,
-#root {
-  @apply font-sans antialiased h-screen w-screen overflow-hidden;
-}
+  /* Border Theme Colors */
+  --color-border: var(--color-border-default);
+  --color-border-light: var(--color-border-light);
+  --color-border-strong: var(--color-border-strong);
 
-* {
-  @apply box-border;
-}
+  /* Brand Theme Colors */
+  --color-signature: var(--color-brand-primary);
+  --color-error: var(--color-brand-error);
 
-a {
-  @apply no-underline;
+  /* Status Theme Colors */
+  --color-status-pending-bg: var(--color-status-pending-bg);
+  --color-status-pending-text: var(--color-status-pending-text);
+  --color-status-complete-bg: var(--color-status-complete-bg);
+  --color-status-complete-text: var(--color-status-complete-text);
+
+  /* Interactive Theme Colors */
+  --color-hover-link: var(--color-hover-link);
+
+  /* Background Effects Theme Colors */
+  --color-mist-primary: var(--color-mist-primary);
+  --color-mist-secondary: var(--color-mist-secondary);
 }
 
 @keyframes mist {

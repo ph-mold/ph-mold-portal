@@ -18,7 +18,7 @@ export default function LabelStickerLayout() {
   return (
     <div className="flex h-full gap-6">
       {/* 왼쪽 탭 네비게이션 */}
-      <div className="flex flex-col gap-2 min-w-[200px] p-4  border-r border-background2 shadow-sm">
+      <div className="flex flex-col gap-2 min-w-[200px] p-4  border-r border-border-light shadow-sm">
         {tabItems.map((tab) => (
           <Button
             key={tab.value}

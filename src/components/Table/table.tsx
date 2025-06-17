@@ -85,7 +85,7 @@ export default function Table<T>({
                   <th
                     key={header.id}
                     className={clsx(
-                      `px-2 text-xs first:pl-8 last:pr-8 py-4 transition-[width] bg-background border-r border-background2`,
+                      `px-2 text-xs first:pl-8 last:pr-8 py-4 transition-[width] bg-background border-r border-border-strong`,
                       className
                     )}
                     style={{ ...style, width: `${header.getSize()}px` }}
@@ -154,7 +154,7 @@ export default function Table<T>({
                     <td
                       key={cell.id}
                       className={clsx(
-                        `px-2 first:rounded-l-lg first:pl-8 last:rounded-r-lg last:pr-8 bg-background group-hover:bg-background2 border border-background2 font-medium`,
+                        `px-2 first:rounded-l-lg first:pl-8 last:rounded-r-lg last:pr-8 bg-background group-hover:bg-background2 border border-border-strong font-medium`,
                         className
                       )}
                       style={style}

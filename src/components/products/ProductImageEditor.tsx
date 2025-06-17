@@ -174,8 +174,8 @@ export default function ProductImageEditor({ field }: Props) {
           <Button
             key={idx}
             variant="text"
-            className={`relative overflow-hidden group !bg-background2 aspect-square border-2 !p-0 ${
-              idx === currentIndex ? "border-signature" : "border-transparent"
+            className={`relative overflow-hidden group !bg-background2 aspect-square border-1 !p-0 ${
+              idx === currentIndex ? "border-signature" : "border-border-strong"
             }`}
           >
             <>

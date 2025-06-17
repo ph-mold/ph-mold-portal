@@ -16,7 +16,7 @@ export function LabelCard({ data, onClick }: LabelCardProps) {
         "rounded-lg border-2 cursor-pointer transition-colors h-full relative overflow-hidden",
         hasData
           ? "bg-[var(--card-bg)] border-[var(--card-bg)]"
-          : "bg-white border-[#E2E8F0] hover:border-primary"
+          : "bg-background border-border-strong hover:border-signature"
       )}
       style={
         hasData
