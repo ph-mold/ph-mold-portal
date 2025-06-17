@@ -1,11 +1,10 @@
 import { useRecoilValue, useResetRecoilState } from "recoil";
 import { userState } from "../../recoil/authAtom";
-import { Button, Input } from "@ph-mold/ph-ui";
+import { Button, Input, useAlert } from "@ph-mold/ph-ui";
 import { postLogout } from "../../lib/api/auth";
 import { useNavigate } from "react-router-dom";
 import { clearToken, getRefreshToken } from "../../lib/electron/authPref";
 import { isElectron } from "../../lib/electron/isElectron";
-import { useAlert } from "../../hooks/useAlert";
 import { useHeader } from "../../hooks/useHeader";
 
 export default function UserPage() {
@@ -38,7 +37,7 @@ export default function UserPage() {
   return (
     <>
       {user && (
-        <div className="border-background2 bg-background my-4 w-full rounded-xl p-4 sm:mx-auto sm:border-2 space-y-3 sm:!w-100">
+        <div className="border-border-light bg-background my-4 w-full rounded-xl p-4 sm:mx-auto sm:border-2 space-y-3 sm:!w-100">
           <Input label="이름" readOnly value={user?.name} />
           <Input label="이메일" readOnly value={user?.email} />
           <Input label="권한" readOnly value={user?.role} />

@@ -1,5 +1,4 @@
-import { IPaginated } from "@/components/common/Pagination";
-
+import { IPaginated } from "@ph-mold/ph-ui";
 export interface LabelData {
   value1: string; // 입고처
   value2: string; // 품명

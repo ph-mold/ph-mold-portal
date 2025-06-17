@@ -7,10 +7,9 @@ import {
   deleteTag,
   GET_TAGS,
 } from "../../../lib/api/tags";
-import { Button } from "@ph-mold/ph-ui";
+import { Button, useAlert } from "@ph-mold/ph-ui";
 import { ITag } from "../../../lib/types/tag";
 import { useHeader } from "../../../hooks/useHeader";
-import { useAlert } from "../../../hooks/useAlert";
 import TagsTable from "../../../components/domain/table/TagsTable";
 import TagFormModal from "../../../components/domain/modal/TagFormModal";
 import { Plus } from "lucide-react";

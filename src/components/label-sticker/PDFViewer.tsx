@@ -4,7 +4,7 @@ interface PDFViewerProps {
 
 export function PDFViewer({ pdfUrl }: PDFViewerProps) {
   return (
-    <div className="flex-1 bg-gray-50 rounded-lg overflow-hidden h-full">
+    <div className="flex-1 rounded-lg overflow-hidden h-full">
       {pdfUrl ? (
         <iframe src={pdfUrl} className="w-full h-full" title="PDF Preview" />
       ) : (

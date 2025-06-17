@@ -10,7 +10,7 @@ interface Props {
 
 export function HistoryListItem({ item, onPdfView, onCopyWrite }: Props) {
   return (
-    <div className="border-2 border-[#E2E8F0] rounded-lg px-4 py-3 hover:shadow-sm transition-shadow bg-white">
+    <div className="border border-border-strong rounded-lg px-4 py-3 hover:shadow-sm transition-shadow bg-background">
       <div className="flex items-center justify-between">
         <div className="flex-1">
           <h3 className="font-medium text-base">{item.fileName}</h3>

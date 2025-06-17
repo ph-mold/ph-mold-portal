@@ -1,6 +1,6 @@
 import { LabelStickerHistory } from "@/lib/types/label-sticker";
-import { Pagination } from "@/components/common/Pagination";
 import { HistoryListItem } from ".";
+import { Pagination } from "@ph-mold/ph-ui";
 
 interface Props {
   items: LabelStickerHistory[];

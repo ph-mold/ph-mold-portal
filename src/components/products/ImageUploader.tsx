@@ -56,7 +56,7 @@ export default function ImageUploader({ onUpload }: ImageUploaderProps) {
         }}
         onDragLeave={() => setIsDragging(false)}
         className={`relative flex items-center justify-center border-2 border-dashed rounded-xl aspect-square transition-colors cursor-pointer hover:bg-signature/10 border-signature 
-          ${isDragging ? "bg-signature/30" : "border-background2"}`}
+          ${isDragging ? "bg-signature/30" : "border-border"}`}
       >
         <Plus
           size={36}

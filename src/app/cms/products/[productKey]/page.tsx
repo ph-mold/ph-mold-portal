@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import useSWR, { mutate } from "swr";
 import { useFieldArray, useForm } from "react-hook-form";
 import { useEffect } from "react";
-import { Button } from "@ph-mold/ph-ui";
+import { Button, useAlert } from "@ph-mold/ph-ui";
 import {
   IGetProductImage,
   IGetProductInfo,
@@ -14,7 +14,6 @@ import {
   getProductInfoByKey,
   patchProduct,
 } from "../../../../lib/api/products";
-import { useAlert } from "../../../../hooks/useAlert";
 import ProductImageEditor from "../../../../components/products/ProductImageEditor";
 import ProductInfoPanel from "../../../../components/products/ProductInfoPanel";
 import { AxiosError } from "axios";
