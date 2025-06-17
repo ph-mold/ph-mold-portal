@@ -33,8 +33,8 @@ export function SelectDataModal({
                 key={index}
                 onClick={() => onSelect(data)}
                 className={clsx(
-                  "p-4 border-0 rounded-lg cursor-pointer transition-colors hover:border-signature border-border",
-                  { "border-2 ": isSelected }
+                  "p-4 border-2 rounded-lg cursor-pointer transition-colors hover:border-signature border-border-light",
+                  { "border-border-strong ": isSelected }
                 )}
                 style={{
                   backgroundColor: data.backgroundColor,
@@ -47,10 +47,8 @@ export function SelectDataModal({
                     )}
                     {data.value2 && (
                       <>
-                        <div className="text-sm text-gray-600">|</div>
-                        <div className="text-sm text-gray-600">
-                          {data.value2}
-                        </div>
+                        <div className="text-sm">|</div>
+                        <div className="text-sm">{data.value2}</div>
                       </>
                     )}
                     {isSelected && (
