@@ -1,11 +1,10 @@
 import { useRecoilValue, useResetRecoilState } from "recoil";
 import { userState } from "../../recoil/authAtom";
-import { Button, Input } from "@ph-mold/ph-ui";
+import { Button, Input, useAlert } from "@ph-mold/ph-ui";
 import { postLogout } from "../../lib/api/auth";
 import { useNavigate } from "react-router-dom";
 import { clearToken, getRefreshToken } from "../../lib/electron/authPref";
 import { isElectron } from "../../lib/electron/isElectron";
-import { useAlert } from "../../hooks/useAlert";
 import { useHeader } from "../../hooks/useHeader";
 
 export default function UserPage() {

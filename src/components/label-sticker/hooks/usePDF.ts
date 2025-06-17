@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { LabelSticker } from "../../../lib/types/label-sticker";
-import { useAlert } from "../../../hooks/useAlert";
 import { isCanceled } from "@/lib/axiosInstance";
+import { useAlert } from "@ph-mold/ph-ui";
 
 export interface Props {
   generatePdfFn: (params: LabelSticker, signal?: AbortSignal) => Promise<Blob>;

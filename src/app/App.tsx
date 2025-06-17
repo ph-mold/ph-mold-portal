@@ -1,6 +1,6 @@
 import Routes from "./routes";
+import { GlobalAlert } from "@ph-mold/ph-ui";
 import { SWRProvider } from "./swr-provider";
-import GlobalAlert from "../components/common/GlobalAlert";
 import { HashRouter } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 
