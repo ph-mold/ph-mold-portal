@@ -62,7 +62,8 @@ function SummaryCard({ req }: { req: ISampleRequest }) {
       </div>
 
       <p className="text-sm text-foreground2 mt-6">
-        요청일 / 시간&nbsp;:&nbsp;{formatKoreanDateTime(req.createdAt)}
+        요청일 / 시간&nbsp;:&nbsp;
+        {formatKoreanDateTime(req.createdAt.toString())}
       </p>
     </section>
   );

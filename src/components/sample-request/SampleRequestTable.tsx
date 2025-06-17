@@ -11,7 +11,7 @@ const getColumns = () => [
     id: "createdAt",
     size: 200,
     header: () => <span>요청 날짜</span>,
-    cell: ({ getValue }) => formatKoreanDateTime(getValue()),
+    cell: ({ getValue }) => formatKoreanDateTime(getValue().toString()),
   }),
   columnHelper.accessor("company", {
     id: "company",
