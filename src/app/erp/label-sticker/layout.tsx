@@ -6,7 +6,7 @@ export default function LabelStickerLayout() {
   const tabItems = [
     { label: "메인", value: "" },
     { label: "LS-3510", value: "ls-3510" },
-    { label: "LS-3509", value: "ls-3509", disabled: true },
+    { label: "LS-3509", value: "ls-3509" },
   ];
 
   const { activeTab, handleTabClick } = useTabNavigation({
@@ -26,7 +26,6 @@ export default function LabelStickerLayout() {
             variant="text"
             onClick={() => handleTabClick(tab.value)}
             className="w-full justify-start"
-            disabled={tab.disabled}
           >
             {tab.label}
           </Button>
