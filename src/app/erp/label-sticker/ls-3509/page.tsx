@@ -4,7 +4,8 @@ import {
   AddDataModal,
   SelectDataModal,
   LSHeader,
-} from "@/components/label-sticker/ls-3509";
+} from "@/components/label-sticker";
+import { LabelCard } from "@/components/label-sticker/ls-3509";
 import {
   useLabelData,
   useModals,
@@ -103,7 +104,12 @@ export default function LS3509Page() {
       />
 
       <div className="flex-1 flex gap-6 min-h-0 overflow-hidden">
-        <LabelGrid data={labelSticker.data} onCardClick={handleCardClick} />
+        <LabelGrid
+          data={labelSticker.data}
+          onCardClick={handleCardClick}
+          labelType={LABEL_TYPES.LS_3509}
+          LabelCardComponent={LabelCard}
+        />
 
         {/* PDF 미리보기 */}
         <PDFViewer pdfUrl={pdfUrl} />
@@ -116,6 +122,7 @@ export default function LS3509Page() {
         onAdd={() => handleAddData(closeAddModal)}
         data={newData}
         onChange={setNewData}
+        labelType={LABEL_TYPES.LS_3509}
       />
 
       {/* 기존 데이터 선택 모달 */}
@@ -129,6 +136,7 @@ export default function LS3509Page() {
         }}
         addedData={addedData}
         selectedData={selectedData}
+        labelType={LABEL_TYPES.LS_3509}
       />
     </div>
   );
