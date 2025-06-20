@@ -33,7 +33,7 @@ export default function LabelStickerPage() {
               variant="outlined"
               size="large"
               onClick={() => handleLabelTypeClick(LABEL_TYPES.LS_3510)}
-              className="group relative flex flex-col items-center gap-4 px-8 py-8 min-w-[160px] hover:shadow-lg transition-all duration-200 border-2 hover:border-signature"
+              className="group relative flex flex-col items-center gap-4 px-8 py-8 min-w-[160px] hover:shadow-lg transition-all duration-200 border-2 !border-blue-300 hover:!border-blue-500"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-indigo-50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-lg" />
               <div className="relative z-10">
@@ -45,7 +45,7 @@ export default function LabelStickerPage() {
               variant="outlined"
               size="large"
               onClick={() => handleLabelTypeClick(LABEL_TYPES.LS_3509)}
-              className="group relative flex flex-col items-center gap-4 px-8 py-8 min-w-[160px] hover:shadow-lg transition-all duration-200 border-2 hover:border-signature"
+              className="group relative flex flex-col items-center gap-4 px-8 py-8 min-w-[160px] hover:shadow-lg transition-all duration-200 border-2 !border-green-300 hover:!border-green-500"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-green-50 to-emerald-50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-lg" />
               <div className="relative z-10">

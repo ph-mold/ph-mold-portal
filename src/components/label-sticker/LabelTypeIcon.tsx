@@ -18,6 +18,15 @@ export function LabelTypeIcon({
     }
   };
 
+  // 라벨 타입별 색상 설정
+  const getBorderColor = () => {
+    if (labelType === "ls-3510") {
+      return "border-blue-500";
+    } else {
+      return "border-green-500";
+    }
+  };
+
   const { width, height } = getLabelDimensions();
 
   return (
@@ -26,12 +35,16 @@ export function LabelTypeIcon({
         {labelType.toUpperCase()}
       </span>
       <div
-        className="border-2 border-signature rounded-sm bg-transparent"
+        className={`border-2 rounded-sm bg-transparent ${getBorderColor()} relative flex items-center justify-center`}
         style={{
           width: `${width * 16}px`,
           height: `${height * 16}px`,
         }}
-      />
+      >
+        <span className="text-xs font-medium text-gray-600">
+          {width}×{height}
+        </span>
+      </div>
     </div>
   );
 }
