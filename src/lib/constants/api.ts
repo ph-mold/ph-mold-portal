@@ -40,5 +40,7 @@ export const API = {
     GET_HISTORIES: `${API_BASE}/admin/label-sticker/histories`,
     LS_3510: `${API_BASE}/admin/label-sticker/ls-3510`,
     LS_3510_REGENERATE: `${API_BASE}/admin/label-sticker/ls-3510/regenerate`,
+    LS_3509: `${API_BASE}/admin/label-sticker/ls-3509`,
+    LS_3509_REGENERATE: `${API_BASE}/admin/label-sticker/ls-3509/regenerate`,
   },
 };

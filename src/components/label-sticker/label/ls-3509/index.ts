@@ -1,0 +1,1 @@
+export { LabelCard } from "./LabelCard";

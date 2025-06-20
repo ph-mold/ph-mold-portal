@@ -1,5 +1,6 @@
 import { Button, Modal } from "@ph-mold/ph-ui";
-import { LabelData } from "../../../lib/types/label-sticker";
+import { LabelData, LabelType } from "../../../lib/types/label-sticker";
+import { LABEL_TYPE_CONFIGS } from "./constants";
 import { clsx } from "clsx";
 
 interface SelectDataModalProps {
@@ -9,6 +10,7 @@ interface SelectDataModalProps {
   onClear: () => void;
   addedData: LabelData[];
   selectedData?: LabelData;
+  labelType: LabelType;
 }
 
 export function SelectDataModal({
@@ -18,7 +20,30 @@ export function SelectDataModal({
   onClear,
   addedData,
   selectedData,
+  labelType,
 }: SelectDataModalProps) {
+  const config = LABEL_TYPE_CONFIGS[labelType];
+
+  const renderDataValues = (data: LabelData) => {
+    const values = [];
+
+    for (let i = 3; i <= config.valueCount; i++) {
+      const key = `value${i}` as keyof LabelData;
+      const value = data[key] as string;
+      const title = config.titles[key];
+
+      if (value) {
+        values.push(
+          <div key={key} className="text-sm">
+            {title}: {value}
+          </div>
+        );
+      }
+    }
+
+    return values;
+  };
+
   return (
     <Modal open={open} onClose={onClose} title="데이터 선택">
       <div className="space-y-4">
@@ -58,10 +83,7 @@ export function SelectDataModal({
                     )}
                   </div>
                   <div className="flex items-center gap-4 text-sm flex-wrap">
-                    {data.value3 && <div>코드: {data.value3}</div>}
-                    {data.value4 && <div>수량: {data.value4}</div>}
-                    {data.value5 && <div>중량: {data.value5}</div>}
-                    {data.value6 && <div>납품일: {data.value6}</div>}
+                    {renderDataValues(data)}
                   </div>
                 </div>
               </div>

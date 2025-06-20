@@ -1,5 +1,6 @@
 import { Button, Input, Modal } from "@ph-mold/ph-ui";
-import { LabelData, LABEL_COLORS } from "../../../lib/types/label-sticker";
+import { LabelData, LabelType } from "../../../lib/types/label-sticker";
+import { LABEL_TYPE_CONFIGS, LABEL_COLORS } from "./constants";
 
 interface AddDataModalProps {
   open: boolean;
@@ -7,6 +8,7 @@ interface AddDataModalProps {
   onAdd: (data: LabelData) => void;
   data: LabelData;
   onChange: (data: LabelData) => void;
+  labelType: LabelType;
 }
 
 export function AddDataModal({
@@ -15,41 +17,37 @@ export function AddDataModal({
   onAdd,
   data,
   onChange,
+  labelType,
 }: AddDataModalProps) {
+  const config = LABEL_TYPE_CONFIGS[labelType];
+
+  const renderInputs = () => {
+    const inputs = [];
+
+    for (let i = 1; i <= config.valueCount; i++) {
+      const key = `value${i}` as keyof LabelData;
+      const title = config.titles[key];
+      const value = data[key] as string;
+      const isDateField = labelType === "ls-3510" && i === 6;
+
+      inputs.push(
+        <Input
+          key={key}
+          label={title}
+          type={isDateField ? "date" : "text"}
+          value={value}
+          onChange={(e) => onChange({ ...data, [key]: e.target.value })}
+        />
+      );
+    }
+
+    return inputs;
+  };
+
   return (
     <Modal open={open} onClose={onClose} title="라벨 데이터 추가">
       <div className="space-y-4">
-        <Input
-          label="입고처"
-          value={data.value1}
-          onChange={(e) => onChange({ ...data, value1: e.target.value })}
-        />
-        <Input
-          label="품명"
-          value={data.value2}
-          onChange={(e) => onChange({ ...data, value2: e.target.value })}
-        />
-        <Input
-          label="코드"
-          value={data.value3}
-          onChange={(e) => onChange({ ...data, value3: e.target.value })}
-        />
-        <Input
-          label="수량"
-          value={data.value4}
-          onChange={(e) => onChange({ ...data, value4: e.target.value })}
-        />
-        <Input
-          label="중량"
-          value={data.value5}
-          onChange={(e) => onChange({ ...data, value5: e.target.value })}
-        />
-        <Input
-          label="납품일"
-          type="date"
-          value={data.value6}
-          onChange={(e) => onChange({ ...data, value6: e.target.value })}
-        />
+        {renderInputs()}
         <div>
           <div className="mb-2">배경색</div>
           <div className="flex gap-4 flex-wrap">

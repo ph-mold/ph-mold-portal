@@ -5,7 +5,7 @@ import {
   SelectDataModal,
   LSHeader,
 } from "@/components/label-sticker/label";
-import { LabelCard } from "@/components/label-sticker/label/ls-3510";
+import { LabelCard } from "@/components/label-sticker/label/ls-3509";
 import {
   useLabelData,
   useModals,
@@ -21,9 +21,9 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { mutate } from "swr";
 
-export default function LS3510Page() {
+export default function LS3509Page() {
   useHeader({
-    title: "LS-3510 라벨 생성",
+    title: "LS-3509 라벨 생성",
     prevLink: "/erp/label-sticker",
   });
 
@@ -41,7 +41,7 @@ export default function LS3510Page() {
     handleSelectData,
     handleClearData,
     selectedData,
-  } = useLabelData({ labelType: LABEL_TYPES.LS_3510 });
+  } = useLabelData({ labelType: LABEL_TYPES.LS_3509 });
 
   // location.state로부터 데이터 받아서 카드에 배치
   useEffect(() => {
@@ -49,7 +49,7 @@ export default function LS3510Page() {
       setLabelSticker({
         filename: location.state.filename,
         data: location.state.data,
-        labelType: LABEL_TYPES.LS_3510,
+        labelType: LABEL_TYPES.LS_3509,
       });
       setAddedData(location.state.uniqueData);
     }
@@ -104,11 +104,10 @@ export default function LS3510Page() {
       />
 
       <div className="flex-1 flex gap-6 min-h-0 overflow-hidden">
-        {/* 라벨 카드 그리드: 2열 5행의 라벨 카드 표시 */}
         <LabelGrid
           data={labelSticker.data}
           onCardClick={handleCardClick}
-          labelType={LABEL_TYPES.LS_3510}
+          labelType={LABEL_TYPES.LS_3509}
           LabelCardComponent={LabelCard}
         />
 
@@ -123,7 +122,7 @@ export default function LS3510Page() {
         onAdd={() => handleAddData(closeAddModal)}
         data={newData}
         onChange={setNewData}
-        labelType={LABEL_TYPES.LS_3510}
+        labelType={LABEL_TYPES.LS_3509}
       />
 
       {/* 기존 데이터 선택 모달 */}
@@ -137,7 +136,7 @@ export default function LS3510Page() {
         }}
         addedData={addedData}
         selectedData={selectedData}
-        labelType={LABEL_TYPES.LS_3510}
+        labelType={LABEL_TYPES.LS_3509}
       />
     </div>
   );

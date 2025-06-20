@@ -1,22 +1,35 @@
-import { LabelData } from "../../../lib/types/label-sticker";
-import { LabelCard } from "./LabelCard";
+import { LabelData, LabelType } from "../../../lib/types/label-sticker";
+import { LABEL_TYPE_CONFIGS } from "./constants";
 
 interface LabelGridProps {
   data: Partial<LabelData>[];
+  labelType: LabelType;
   onCardClick: (index: number) => void;
+  LabelCardComponent: React.ComponentType<{
+    data: Partial<LabelData>;
+    onClick: () => void;
+  }>;
 }
 
-export function LabelGrid({ data, onCardClick }: LabelGridProps) {
+export function LabelGrid({
+  data,
+  labelType,
+  onCardClick,
+  LabelCardComponent,
+}: LabelGridProps) {
+  const config = LABEL_TYPE_CONFIGS[labelType];
+  const rowsPerColumn = Math.ceil(config.labelCount / 2);
+
   return (
     <div className="h-full flex shrink-0">
       <div className="flex gap-6 h-full">
-        {/* 왼쪽 5개 라벨 */}
+        {/* 왼쪽 라벨들 */}
         <div className="h-full">
-          <div className="grid grid-rows-5 gap-4 h-full">
+          <div className={`grid grid-rows-${rowsPerColumn} gap-4 h-full`}>
             {data.map(
               (item, index) =>
                 index % 2 === 0 && (
-                  <LabelCard
+                  <LabelCardComponent
                     key={index}
                     data={item}
                     onClick={() => onCardClick(index)}
@@ -26,13 +39,13 @@ export function LabelGrid({ data, onCardClick }: LabelGridProps) {
           </div>
         </div>
 
-        {/* 오른쪽 5개 라벨 */}
+        {/* 오른쪽 라벨들 */}
         <div className="h-full">
-          <div className="grid grid-rows-5 gap-4 h-full">
+          <div className={`grid grid-rows-${rowsPerColumn} gap-4 h-full`}>
             {data.map(
               (item, index) =>
                 index % 2 === 1 && (
-                  <LabelCard
+                  <LabelCardComponent
                     key={index}
                     data={item}
                     onClick={() => onCardClick(index)}

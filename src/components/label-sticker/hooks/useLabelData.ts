@@ -2,26 +2,25 @@ import { useState } from "react";
 import {
   LabelData,
   LabelSticker,
-  LABEL_COLORS,
+  LabelType,
 } from "../../../lib/types/label-sticker";
+import { createEmptyDataArray, createInitialData } from "../label/utils";
 
-export function useLabelData() {
+interface Props {
+  labelType: LabelType;
+}
+export function useLabelData({ labelType }: Props) {
   // 메인 라벨 스티커 데이터
   const [labelSticker, setLabelSticker] = useState<LabelSticker>({
     filename: "",
-    data: Array(10).fill({}),
+    data: createEmptyDataArray(labelType),
+    labelType,
   });
 
   // 새로운 데이터 입력을 위한 상태
-  const [newData, setNewData] = useState<LabelData>({
-    value1: "",
-    value2: "",
-    value3: "",
-    value4: "",
-    value5: "",
-    value6: "",
-    backgroundColor: LABEL_COLORS[0].value,
-  });
+  const [newData, setNewData] = useState<LabelData>(
+    createInitialData(labelType)
+  );
 
   // 추가된 데이터 목록
   const [addedData, setAddedData] = useState<LabelData[]>([]);
@@ -34,15 +33,7 @@ export function useLabelData() {
   // 새 데이터 추가
   const handleAddData = (onComplete?: () => void) => {
     setAddedData([...addedData, newData]);
-    setNewData({
-      value1: "",
-      value2: "",
-      value3: "",
-      value4: "",
-      value5: "",
-      value6: "",
-      backgroundColor: LABEL_COLORS[0].value,
-    });
+    setNewData(createInitialData(labelType));
     onComplete?.();
   };
 
