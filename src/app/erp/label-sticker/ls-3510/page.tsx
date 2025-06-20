@@ -4,13 +4,13 @@ import {
   AddDataModal,
   SelectDataModal,
   LSHeader,
-} from "@/components/label-sticker";
-import { LabelCard } from "@/components/label-sticker/ls-3510";
+} from "@/components/label-sticker/label";
+import { LabelCard } from "@/components/label-sticker/label/ls-3510";
 import {
   useLabelData,
   useModals,
   usePDF,
-} from "@/components/label-sticker/hooks";
+} from "@/components/label-sticker/label/hooks";
 import {
   GET_LABEL_STICKER_HISTORIES,
   getPDFGenerateFunction,

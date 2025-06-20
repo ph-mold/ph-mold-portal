@@ -1,4 +1,4 @@
-import { LabelData, LabelType } from "../../lib/types/label-sticker";
+import { LabelData, LabelType } from "../../../lib/types/label-sticker";
 import { LABEL_TYPE_CONFIGS, LABEL_COLORS } from "./constants";
 
 // 라벨 타입별 초기 데이터 생성

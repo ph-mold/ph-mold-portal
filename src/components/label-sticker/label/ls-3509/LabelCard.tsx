@@ -1,4 +1,4 @@
-import { LabelData3509 } from "../../../lib/types/label-sticker";
+import { LabelData3509 } from "../../../../lib/types/label-sticker";
 import { clsx } from "clsx";
 
 interface LabelCardProps {

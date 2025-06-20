@@ -1,5 +1,5 @@
 import { Button, Modal } from "@ph-mold/ph-ui";
-import { LabelData, LabelType } from "../../lib/types/label-sticker";
+import { LabelData, LabelType } from "../../../lib/types/label-sticker";
 import { LABEL_TYPE_CONFIGS } from "./constants";
 import { clsx } from "clsx";
 

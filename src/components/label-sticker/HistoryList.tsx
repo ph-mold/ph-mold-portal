@@ -1,5 +1,5 @@
 import { LabelStickerHistory } from "@/lib/types/label-sticker";
-import { HistoryListItem } from ".";
+import { HistoryListItem } from "./";
 import { Pagination } from "@ph-mold/ph-ui";
 
 interface Props {

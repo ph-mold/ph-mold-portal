@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { LabelSticker } from "../../../lib/types/label-sticker";
+import { LabelSticker } from "../../../../lib/types/label-sticker";
 import { isCanceled } from "@/lib/axiosInstance";
 import { useAlert } from "@ph-mold/ph-ui";
 

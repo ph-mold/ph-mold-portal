@@ -1,5 +1,5 @@
 import { Button, Input, Modal } from "@ph-mold/ph-ui";
-import { LabelData, LabelType } from "../../lib/types/label-sticker";
+import { LabelData, LabelType } from "../../../lib/types/label-sticker";
 import { LABEL_TYPE_CONFIGS, LABEL_COLORS } from "./constants";
 
 interface AddDataModalProps {
