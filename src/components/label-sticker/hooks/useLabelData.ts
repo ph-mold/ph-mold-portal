@@ -3,8 +3,8 @@ import {
   LabelData,
   LabelSticker,
   LabelType,
-} from "../../../../lib/types/label-sticker";
-import { createEmptyDataArray, createInitialData } from "../utils";
+} from "../../../lib/types/label-sticker";
+import { createEmptyDataArray, createInitialData } from "../label/utils";
 
 interface Props {
   labelType: LabelType;

@@ -12,7 +12,7 @@ import {
   LabelStickerListResponse,
   LABEL_TYPES,
 } from "@/lib/types/label-sticker";
-import { usePDF } from "@/components/label-sticker/label/hooks";
+import { usePDF } from "@/components/label-sticker/hooks";
 import {
   PDFViewer,
   HistoryModal,

@@ -10,7 +10,7 @@ import {
   useLabelData,
   useModals,
   usePDF,
-} from "@/components/label-sticker/label/hooks";
+} from "@/components/label-sticker/hooks";
 import {
   GET_LABEL_STICKER_HISTORIES,
   getPDFGenerateFunction,
