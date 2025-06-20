@@ -62,6 +62,30 @@ export const postLS3509PDFRegenerate = async (
   return response.data;
 };
 
+// 라벨 타입에 따라 PDF 생성 함수 선택
+export const getPDFGenerateFunction = (labelType: "ls-3509" | "ls-3510") => {
+  switch (labelType) {
+    case "ls-3509":
+      return postLS3509PDF;
+    case "ls-3510":
+      return postLS3510PDF;
+    default:
+      throw new Error(`Unknown label type: ${labelType}`);
+  }
+};
+
+// 라벨 타입에 따라 PDF 재생성 함수 선택
+export const getPDFRegenerateFunction = (labelType: "ls-3509" | "ls-3510") => {
+  switch (labelType) {
+    case "ls-3509":
+      return postLS3509PDFRegenerate;
+    case "ls-3510":
+      return postLS3510PDFRegenerate;
+    default:
+      throw new Error(`Unknown label type: ${labelType}`);
+  }
+};
+
 export const GET_LABEL_STICKER_HISTORIES = "getLabelStickerHistories";
 export const getLabelStickerHistories = async (
   params: LabelStickerListParams

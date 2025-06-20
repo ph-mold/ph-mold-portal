@@ -1,4 +1,5 @@
 import { LabelData } from "../../../lib/types/label-sticker";
+import { LabelGrid as CommonLabelGrid } from "../LabelGrid";
 import { LabelCard } from "./LabelCard";
 
 interface LabelGridProps {
@@ -8,40 +9,11 @@ interface LabelGridProps {
 
 export function LabelGrid({ data, onCardClick }: LabelGridProps) {
   return (
-    <div className="h-full flex shrink-0">
-      <div className="flex gap-6 h-full">
-        {/* 왼쪽 9개 라벨 */}
-        <div className="h-full">
-          <div className="grid grid-rows-9 gap-4 h-full">
-            {data.map(
-              (item, index) =>
-                index % 2 === 0 && (
-                  <LabelCard
-                    key={index}
-                    data={item}
-                    onClick={() => onCardClick(index)}
-                  />
-                )
-            )}
-          </div>
-        </div>
-
-        {/* 오른쪽 9개 라벨 */}
-        <div className="h-full">
-          <div className="grid grid-rows-9 gap-4 h-full">
-            {data.map(
-              (item, index) =>
-                index % 2 === 1 && (
-                  <LabelCard
-                    key={index}
-                    data={item}
-                    onClick={() => onCardClick(index)}
-                  />
-                )
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
+    <CommonLabelGrid
+      data={data}
+      labelType="ls-3509"
+      onCardClick={onCardClick}
+      LabelCardComponent={LabelCard}
+    />
   );
 }

@@ -12,7 +12,7 @@ import {
 } from "@/components/label-sticker/hooks";
 import {
   GET_LABEL_STICKER_HISTORIES,
-  postLS3510PDF,
+  getPDFGenerateFunction,
 } from "@/lib/api/label-sticker";
 import { PDFViewer } from "@/components/label-sticker";
 import { useEffect } from "react";
@@ -39,7 +39,7 @@ export default function LS3509Page() {
     handleSelectData,
     handleClearData,
     selectedData,
-  } = useLabelData();
+  } = useLabelData({ labelType: "ls-3509" });
 
   // location.state로부터 데이터 받아서 카드에 배치
   useEffect(() => {
@@ -47,6 +47,7 @@ export default function LS3509Page() {
       setLabelSticker({
         filename: location.state.filename,
         data: location.state.data,
+        labelType: "ls-3509",
       });
       setAddedData(location.state.uniqueData);
     }
@@ -62,9 +63,12 @@ export default function LS3509Page() {
     closeSelectModal,
   } = useModals();
 
-  // PDF 관리
+  // PDF 관리 (동적으로 함수 선택)
   const { isGenerating, pdfUrl, pdfBlob, generatePDF, downloadPDF } = usePDF({
-    generatePdfFn: postLS3510PDF,
+    generatePdfFn: (data) => {
+      const generateFunction = getPDFGenerateFunction(data.labelType);
+      return generateFunction(data);
+    },
   });
 
   // PDF 생성 버튼 클릭 시 히스토리 캐시 초기화

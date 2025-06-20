@@ -1,8 +1,8 @@
-import { LabelData } from "../../../lib/types/label-sticker";
+import { LabelData3509 } from "../../../lib/types/label-sticker";
 import { clsx } from "clsx";
 
 interface LabelCardProps {
-  data: Partial<LabelData>;
+  data: Partial<LabelData3509>;
   onClick: () => void;
 }
 

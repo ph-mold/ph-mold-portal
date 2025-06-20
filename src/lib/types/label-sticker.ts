@@ -1,5 +1,16 @@
 import { IPaginated } from "@ph-mold/ph-ui";
-export interface LabelData {
+
+// 3509 라벨 데이터 타입 (value1~4)
+export interface LabelData3509 {
+  value1: string; // 업체명
+  value2: string; // 제품명
+  value3: string; // 규격
+  value4: string; // 수량
+  backgroundColor: string;
+}
+
+// 3510 라벨 데이터 타입 (value1~6)
+export interface LabelData3510 {
   value1: string; // 입고처
   value2: string; // 품명
   value3: string; // 코드
@@ -9,23 +20,14 @@ export interface LabelData {
   backgroundColor: string;
 }
 
+// 통합 라벨 데이터 타입
+export type LabelData = LabelData3509 | LabelData3510;
+
 export interface LabelSticker {
   filename: string;
   data: (LabelData | Record<string, never>)[];
+  labelType: "ls-3509" | "ls-3510";
 }
-
-export interface ColorOption {
-  label: string;
-  value: string;
-}
-
-export const LABEL_COLORS: ColorOption[] = [
-  { label: "빨간색", value: "#ff3b3b" },
-  { label: "파란색", value: "#3b82f6" },
-  { label: "초록색", value: "#22c55e" },
-  { label: "노란색", value: "#eab308" },
-  { label: "보라색", value: "#a855f7" },
-];
 
 // 라벨 스티커 이력 아이템 타입
 export interface LabelStickerHistory {
@@ -33,7 +35,7 @@ export interface LabelStickerHistory {
   fileName: string;
   operator: string;
   createdAt: string;
-  labelType: string;
+  labelType: "ls-3509" | "ls-3510";
   labelData: (LabelData | Record<string, never>)[];
 }
 
@@ -42,5 +44,6 @@ export interface LabelStickerListParams {
   page: number;
   limit: number;
 }
+
 // 라벨 스티커 목록 응답 타입
 export type LabelStickerListResponse = IPaginated<LabelStickerHistory>;

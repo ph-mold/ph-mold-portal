@@ -5,7 +5,7 @@ import useSWR from "swr";
 import {
   GET_LABEL_STICKER_HISTORIES,
   getLabelStickerHistories,
-  postLS3510PDFRegenerate,
+  getPDFRegenerateFunction,
 } from "@/lib/api/label-sticker";
 import {
   LabelStickerHistory,
@@ -46,9 +46,12 @@ export default function LabelStickerPage() {
     (labelStickerHistories?.total || 0) / ITEMS_PER_PAGE
   );
 
-  // PDF 관련 커스텀 훅
+  // PDF 관련 커스텀 훅 (동적으로 함수 선택)
   const { isGenerating, pdfUrl, generatePDF, downloadPDF } = usePDF({
-    generatePdfFn: postLS3510PDFRegenerate,
+    generatePdfFn: (data, signal) => {
+      const regenerateFunction = getPDFRegenerateFunction(data.labelType);
+      return regenerateFunction(data, signal);
+    },
   });
 
   // PDF 보기 버튼 클릭 시
@@ -62,6 +65,7 @@ export default function LabelStickerPage() {
       {
         filename: item.fileName,
         data: item.labelData,
+        labelType: item.labelType,
       },
       abortRef.current.signal
     );
@@ -77,7 +81,14 @@ export default function LabelStickerPage() {
           idx ===
           arr.findIndex((d) => JSON.stringify(d) === JSON.stringify(data))
       );
-    navigate("/erp/label-sticker/ls-3510", {
+
+    // 라벨 타입에 따라 적절한 경로로 이동
+    const targetPath =
+      item.labelType === "ls-3509"
+        ? "/erp/label-sticker/ls-3509"
+        : "/erp/label-sticker/ls-3510";
+
+    navigate(targetPath, {
       state: {
         filename: item.fileName,
         data: item.labelData,
