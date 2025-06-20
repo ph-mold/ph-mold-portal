@@ -24,7 +24,7 @@ import { mutate } from "swr";
 export default function LS3510Page() {
   useHeader({
     title: "LS-3510 라벨 생성",
-    prevLink: "/erp",
+    prevLink: "/erp/label-sticker",
   });
 
   const location = useLocation();
