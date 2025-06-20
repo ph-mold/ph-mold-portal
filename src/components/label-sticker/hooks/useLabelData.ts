@@ -1,9 +1,13 @@
 import { useState } from "react";
-import { LabelData, LabelSticker } from "../../../lib/types/label-sticker";
+import {
+  LabelData,
+  LabelSticker,
+  LabelType,
+} from "../../../lib/types/label-sticker";
 import { createEmptyDataArray, createInitialData } from "../utils";
 
 interface Props {
-  labelType: "ls-3509" | "ls-3510";
+  labelType: LabelType;
 }
 export function useLabelData({ labelType }: Props) {
   // 메인 라벨 스티커 데이터

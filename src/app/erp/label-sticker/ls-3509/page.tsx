@@ -14,6 +14,7 @@ import {
   GET_LABEL_STICKER_HISTORIES,
   getPDFGenerateFunction,
 } from "@/lib/api/label-sticker";
+import { LABEL_TYPES } from "@/lib/types/label-sticker";
 import { PDFViewer } from "@/components/label-sticker";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
@@ -39,7 +40,7 @@ export default function LS3509Page() {
     handleSelectData,
     handleClearData,
     selectedData,
-  } = useLabelData({ labelType: "ls-3509" });
+  } = useLabelData({ labelType: LABEL_TYPES.LS_3509 });
 
   // location.state로부터 데이터 받아서 카드에 배치
   useEffect(() => {
@@ -47,7 +48,7 @@ export default function LS3509Page() {
       setLabelSticker({
         filename: location.state.filename,
         data: location.state.data,
-        labelType: "ls-3509",
+        labelType: LABEL_TYPES.LS_3509,
       });
       setAddedData(location.state.uniqueData);
     }

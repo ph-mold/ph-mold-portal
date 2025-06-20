@@ -1,4 +1,4 @@
-import { LabelData } from "../../../lib/types/label-sticker";
+import { LabelData, LABEL_TYPES } from "../../../lib/types/label-sticker";
 import { AddDataModal as CommonAddDataModal } from "../AddDataModal";
 
 interface AddDataModalProps {
@@ -23,7 +23,7 @@ export function AddDataModal({
       onAdd={onAdd}
       data={data}
       onChange={onChange}
-      labelType="ls-3509"
+      labelType={LABEL_TYPES.LS_3509}
     />
   );
 }

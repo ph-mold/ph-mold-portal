@@ -1,13 +1,15 @@
+import { LabelType } from "../../lib/types/label-sticker";
+
 // 라벨 타입별 설정
 export interface LabelTypeConfig {
-  type: "ls-3509" | "ls-3510";
+  type: LabelType;
   labelCount: number;
   valueCount: number;
   titles: Record<string, string>;
   aspectRatio: string;
 }
 
-export const LABEL_TYPE_CONFIGS: Record<string, LabelTypeConfig> = {
+export const LABEL_TYPE_CONFIGS: Record<LabelType, LabelTypeConfig> = {
   "ls-3509": {
     type: "ls-3509",
     labelCount: 18,

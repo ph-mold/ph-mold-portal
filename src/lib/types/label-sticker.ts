@@ -1,5 +1,13 @@
 import { IPaginated } from "@ph-mold/ph-ui";
 
+// 라벨 타입 상수
+export const LABEL_TYPES = {
+  LS_3509: "ls-3509",
+  LS_3510: "ls-3510",
+} as const;
+
+export type LabelType = (typeof LABEL_TYPES)[keyof typeof LABEL_TYPES];
+
 // 3509 라벨 데이터 타입 (value1~4)
 export interface LabelData3509 {
   value1: string; // 업체명
@@ -26,7 +34,7 @@ export type LabelData = LabelData3509 | LabelData3510;
 export interface LabelSticker {
   filename: string;
   data: (LabelData | Record<string, never>)[];
-  labelType: "ls-3509" | "ls-3510";
+  labelType: LabelType;
 }
 
 // 라벨 스티커 이력 아이템 타입
@@ -35,7 +43,7 @@ export interface LabelStickerHistory {
   fileName: string;
   operator: string;
   createdAt: string;
-  labelType: "ls-3509" | "ls-3510";
+  labelType: LabelType;
   labelData: (LabelData | Record<string, never>)[];
 }
 

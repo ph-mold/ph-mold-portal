@@ -10,6 +10,7 @@ import {
 import {
   LabelStickerHistory,
   LabelStickerListResponse,
+  LABEL_TYPES,
 } from "@/lib/types/label-sticker";
 import { usePDF } from "@/components/label-sticker/hooks";
 import {
@@ -84,7 +85,7 @@ export default function LabelStickerPage() {
 
     // 라벨 타입에 따라 적절한 경로로 이동
     const targetPath =
-      item.labelType === "ls-3509"
+      item.labelType === LABEL_TYPES.LS_3509
         ? "/erp/label-sticker/ls-3509"
         : "/erp/label-sticker/ls-3510";
 

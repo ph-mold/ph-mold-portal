@@ -1,4 +1,4 @@
-import { LabelData } from "../../../lib/types/label-sticker";
+import { LabelData, LABEL_TYPES } from "../../../lib/types/label-sticker";
 import { LabelGrid as CommonLabelGrid } from "../LabelGrid";
 import { LabelCard } from "./LabelCard";
 
@@ -11,7 +11,7 @@ export function LabelGrid({ data, onCardClick }: LabelGridProps) {
   return (
     <CommonLabelGrid
       data={data}
-      labelType="ls-3510"
+      labelType={LABEL_TYPES.LS_3510}
       onCardClick={onCardClick}
       LabelCardComponent={LabelCard}
     />

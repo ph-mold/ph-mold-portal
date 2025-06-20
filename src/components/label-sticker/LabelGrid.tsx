@@ -1,9 +1,9 @@
-import { LabelData } from "../../lib/types/label-sticker";
+import { LabelData, LabelType } from "../../lib/types/label-sticker";
 import { LABEL_TYPE_CONFIGS } from "./constants";
 
 interface LabelGridProps {
   data: Partial<LabelData>[];
-  labelType: "ls-3509" | "ls-3510";
+  labelType: LabelType;
   onCardClick: (index: number) => void;
   LabelCardComponent: React.ComponentType<{
     data: Partial<LabelData>;

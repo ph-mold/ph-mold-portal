@@ -1,5 +1,5 @@
 import { Button, Input, Modal } from "@ph-mold/ph-ui";
-import { LabelData } from "../../lib/types/label-sticker";
+import { LabelData, LabelType } from "../../lib/types/label-sticker";
 import { LABEL_TYPE_CONFIGS, LABEL_COLORS } from "./constants";
 
 interface AddDataModalProps {
@@ -8,7 +8,7 @@ interface AddDataModalProps {
   onAdd: (data: LabelData) => void;
   data: LabelData;
   onChange: (data: LabelData) => void;
-  labelType: "ls-3509" | "ls-3510";
+  labelType: LabelType;
 }
 
 export function AddDataModal({

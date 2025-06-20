@@ -1,10 +1,8 @@
-import { LabelData } from "../../lib/types/label-sticker";
+import { LabelData, LabelType } from "../../lib/types/label-sticker";
 import { LABEL_TYPE_CONFIGS, LABEL_COLORS } from "./constants";
 
 // 라벨 타입별 초기 데이터 생성
-export const createInitialData = (
-  labelType: "ls-3509" | "ls-3510"
-): LabelData => {
+export const createInitialData = (labelType: LabelType): LabelData => {
   const config = LABEL_TYPE_CONFIGS[labelType];
   const initialData: Record<string, string> = {
     backgroundColor: LABEL_COLORS[0].value,
@@ -19,7 +17,7 @@ export const createInitialData = (
 
 // 라벨 타입별 빈 데이터 배열 생성
 export const createEmptyDataArray = (
-  labelType: "ls-3509" | "ls-3510"
+  labelType: LabelType
 ): (LabelData | Record<string, never>)[] => {
   const config = LABEL_TYPE_CONFIGS[labelType];
   return Array(config.labelCount).fill({});

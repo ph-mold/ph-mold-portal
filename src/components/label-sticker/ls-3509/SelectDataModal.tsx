@@ -1,4 +1,4 @@
-import { LabelData } from "../../../lib/types/label-sticker";
+import { LabelData, LABEL_TYPES } from "../../../lib/types/label-sticker";
 import { SelectDataModal as CommonSelectDataModal } from "../SelectDataModal";
 
 interface SelectDataModalProps {
@@ -26,7 +26,7 @@ export function SelectDataModal({
       onClear={onClear}
       addedData={addedData}
       selectedData={selectedData}
-      labelType="ls-3509"
+      labelType={LABEL_TYPES.LS_3509}
     />
   );
 }
