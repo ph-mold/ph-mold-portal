@@ -1,5 +1,5 @@
 import { LabelStickerHistory } from "@/lib/types/label-sticker";
-import { Button } from "@ph-mold/ph-ui";
+import { Button, useAlert } from "@ph-mold/ph-ui";
 import { formatKoreanDateTime } from "@/utils/format";
 import { Popover } from "../common/Popover";
 import { MoreVertical } from "lucide-react";
@@ -20,6 +20,7 @@ export function HistoryListItem({
 }: Props) {
   const [isHovered, setIsHovered] = useState(false);
   const [isMoreButtonHovered, setIsMoreButtonHovered] = useState(false);
+  const alert = useAlert();
 
   // 첫 번째 유효한 데이터에서 value1 추출
   const firstValidData = item.labelData.find(
@@ -69,6 +70,16 @@ export function HistoryListItem({
 
   const handleMoreButtonMouseLeave = () => {
     setIsMoreButtonHovered(false);
+  };
+
+  const handleDelete = () => {
+    alert({
+      title: "이력 삭제",
+      description: `"${item.fileName}"을 삭제하시겠습니까?`,
+      onAccept: () => onDelete(item),
+      acceptLabel: "삭제",
+      cancelLabel: "취소",
+    });
   };
 
   return (
@@ -132,7 +143,7 @@ export function HistoryListItem({
               </Button>
               <Button
                 variant="text"
-                onClick={() => onDelete(item)}
+                onClick={handleDelete}
                 color="error"
                 size="small"
                 className="!py-2.5"

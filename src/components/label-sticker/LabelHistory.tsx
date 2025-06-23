@@ -1,7 +1,8 @@
 import { useState, useRef } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 import {
+  deleteLabelStickerHistory,
   GET_LABEL_STICKER_HISTORIES,
   getLabelStickerHistories,
   getPDFRegenerateFunction,
@@ -92,8 +93,12 @@ export function LabelHistory() {
     });
   };
 
-  const handleDelete = (item: LabelStickerHistory) => {
-    console.log(item);
+  const handleDelete = async (item: LabelStickerHistory) => {
+    await deleteLabelStickerHistory(item.id);
+    mutate(
+      (key) => Array.isArray(key) && key[0] === GET_LABEL_STICKER_HISTORIES,
+      undefined
+    );
   };
 
   // 페이지 변경

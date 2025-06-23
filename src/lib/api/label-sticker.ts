@@ -101,3 +101,11 @@ export const getLabelStickerHistories = async (
   });
   return response.data;
 };
+
+export const DELETE_LABEL_STICKER_HISTORY = "deleteLabelStickerHistory";
+export const deleteLabelStickerHistory = async (id: string) => {
+  const response = await axiosInstance.delete(
+    API.LABEL_STICKER.DELETE_HISTORIES(id)
+  );
+  return response.data;
+};
