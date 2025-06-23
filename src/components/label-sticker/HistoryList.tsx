@@ -6,6 +6,7 @@ interface Props {
   items: LabelStickerHistory[];
   onPdfView: (item: LabelStickerHistory) => void;
   onCopyWrite: (item: LabelStickerHistory) => void;
+  onDelete: (item: LabelStickerHistory) => void;
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
@@ -15,6 +16,7 @@ export function HistoryList({
   items,
   onPdfView,
   onCopyWrite,
+  onDelete,
   currentPage,
   totalPages,
   onPageChange,
@@ -28,6 +30,7 @@ export function HistoryList({
             item={item}
             onPdfView={onPdfView}
             onCopyWrite={onCopyWrite}
+            onDelete={onDelete}
           />
         ))}
       </div>

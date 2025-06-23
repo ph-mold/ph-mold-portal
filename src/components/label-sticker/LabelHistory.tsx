@@ -92,6 +92,10 @@ export function LabelHistory() {
     });
   };
 
+  const handleDelete = (item: LabelStickerHistory) => {
+    console.log(item);
+  };
+
   // 페이지 변경
   const handlePageChange = (page: number) => {
     setSearchParams({ page: page.toString() });
@@ -104,6 +108,7 @@ export function LabelHistory() {
         items={currentItems}
         onPdfView={handlePdfView}
         onCopyWrite={handleCopyWrite}
+        onDelete={handleDelete}
         currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={handlePageChange}

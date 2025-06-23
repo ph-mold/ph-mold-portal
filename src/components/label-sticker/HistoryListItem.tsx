@@ -1,14 +1,26 @@
 import { LabelStickerHistory } from "@/lib/types/label-sticker";
 import { Button } from "@ph-mold/ph-ui";
 import { formatKoreanDateTime } from "@/utils/format";
+import { Popover } from "../common/Popover";
+import { MoreVertical } from "lucide-react";
+import { useState } from "react";
 
 interface Props {
   item: LabelStickerHistory;
   onPdfView: (item: LabelStickerHistory) => void;
   onCopyWrite: (item: LabelStickerHistory) => void;
+  onDelete: (item: LabelStickerHistory) => void;
 }
 
-export function HistoryListItem({ item, onPdfView, onCopyWrite }: Props) {
+export function HistoryListItem({
+  item,
+  onPdfView,
+  onCopyWrite,
+  onDelete,
+}: Props) {
+  const [isHovered, setIsHovered] = useState(false);
+  const [isMoreButtonHovered, setIsMoreButtonHovered] = useState(false);
+
   // 첫 번째 유효한 데이터에서 value1 추출
   const firstValidData = item.labelData.find(
     (data) =>
@@ -25,14 +37,53 @@ export function HistoryListItem({ item, onPdfView, onCopyWrite }: Props) {
     }
   };
 
+  // 라벨 타입별 오버레이 색상 설정
+  const getOverlayStyle = () => {
+    if (item.labelType === "ls-3510") {
+      return "bg-blue-500/8";
+    } else {
+      return "bg-green-500/8";
+    }
+  };
+
+  // 라벨 타입별 텍스트 박스 색상 설정
+  const getTextBoxStyle = () => {
+    if (item.labelType === "ls-3510") {
+      return "bg-blue-50/90 border-blue-200/30 text-blue-700";
+    } else {
+      return "bg-green-50/90 border-green-200/30 text-green-700";
+    }
+  };
+
+  const handleItemClick = () => {
+    onPdfView(item);
+  };
+
+  const handlePopoverClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+  };
+
+  const handleMoreButtonMouseEnter = () => {
+    setIsMoreButtonHovered(true);
+  };
+
+  const handleMoreButtonMouseLeave = () => {
+    setIsMoreButtonHovered(false);
+  };
+
   return (
-    <div className="border border-border-strong rounded-lg px-4 py-3 hover:shadow-sm transition-shadow bg-background">
-      <div className="flex items-center justify-between">
-        <div className="flex-1">
-          <div className="flex items-center gap-2 mb-1">
-            <h3 className="font-medium text-base">{item.fileName}</h3>
+    <div
+      className="relative border border-border-strong rounded-lg px-4 py-3 hover:shadow-sm transition-shadow bg-background cursor-pointer group"
+      onClick={handleItemClick}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div className="flex items-start justify-between">
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-3 mb-2">
+            <h3 className="font-medium text-base truncate">{item.fileName}</h3>
             <span
-              className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ${getTagStyle()}`}
+              className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border flex-shrink-0 ${getTagStyle()}`}
             >
               {item.labelType.toUpperCase()}
             </span>
@@ -40,32 +91,71 @@ export function HistoryListItem({ item, onPdfView, onCopyWrite }: Props) {
           <div className="flex items-center gap-3 text-sm text-gray-600">
             {value1 && (
               <>
-                <span className="font-medium text-gray-800">{value1}</span>
-                <span>•</span>
+                <span className="font-medium text-gray-800 truncate">
+                  {value1}
+                </span>
+                <span className="text-gray-400">•</span>
               </>
             )}
             <span>{formatKoreanDateTime(item.createdAt)}</span>
-            <span>•</span>
+            <span className="text-gray-400">•</span>
             <span>{item.operator}</span>
           </div>
         </div>
-        <div className="flex gap-2">
-          <Button
-            variant="outlined"
-            size="small"
-            onClick={() => onCopyWrite(item)}
+        <div
+          className="relative z-10 ml-3"
+          onClick={handlePopoverClick}
+          onMouseEnter={handleMoreButtonMouseEnter}
+          onMouseLeave={handleMoreButtonMouseLeave}
+        >
+          <Popover
+            trigger={
+              <Button
+                variant="text"
+                size="small"
+                className="!p-2 hover:bg-gray-100 rounded-full"
+              >
+                <MoreVertical size={16} />
+              </Button>
+            }
+            placement="bottom-right"
           >
-            복사 작성
-          </Button>
-          <Button
-            variant="contained"
-            size="small"
-            onClick={() => onPdfView(item)}
-          >
-            PDF 보기
-          </Button>
+            <div className="flex flex-col p-2 gap-1 w-40">
+              <Button
+                variant="text"
+                color="secondary"
+                size="small"
+                onClick={() => onCopyWrite(item)}
+                className="!py-2.5"
+              >
+                복사 작성
+              </Button>
+              <Button
+                variant="text"
+                onClick={() => onDelete(item)}
+                color="error"
+                size="small"
+                className="!py-2.5"
+              >
+                삭제
+              </Button>
+            </div>
+          </Popover>
         </div>
       </div>
+
+      {/* Hover 오버레이 - 더보기 버튼에 마우스가 없을 때만 표시 */}
+      {isHovered && !isMoreButtonHovered && (
+        <div
+          className={`absolute inset-0 ${getOverlayStyle()} backdrop-blur-[2px] rounded-lg flex items-center justify-center z-9 pointer-events-none transition-all duration-200`}
+        >
+          <div
+            className={`${getTextBoxStyle()} backdrop-blur-md px-3 py-1.5 rounded-md shadow-sm border`}
+          >
+            <span className="text-xs font-medium tracking-wide">PDF 보기</span>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
