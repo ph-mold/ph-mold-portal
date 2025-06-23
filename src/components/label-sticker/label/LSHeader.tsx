@@ -1,10 +1,11 @@
 import { Button, Input } from "@ph-mold/ph-ui";
-import { PlusCircle, FileDown, FilePlus } from "lucide-react";
+import { PlusCircle, FileDown, FilePlus, CopyCheck } from "lucide-react";
 
 interface LSHeaderProps {
   filename: string;
   onFilenameChange: (filename: string) => void;
   onAddClick: () => void;
+  onBulkApplyClick: () => void;
   onGenerateClick: () => void;
   onDownloadClick: () => void;
   isGenerating: boolean;
@@ -15,6 +16,7 @@ export function LSHeader({
   filename,
   onFilenameChange,
   onAddClick,
+  onBulkApplyClick,
   onGenerateClick,
   onDownloadClick,
   isGenerating,
@@ -36,6 +38,14 @@ export function LSHeader({
           className="w-full sm:w-fit"
         >
           데이터 추가
+        </Button>
+        <Button
+          onClick={onBulkApplyClick}
+          variant="outlined"
+          startIcon={<CopyCheck size={16} />}
+          className="w-full sm:w-fit"
+        >
+          일괄 적용
         </Button>
       </div>
       <div className="flex items-center gap-3 w-full sm:w-fit">

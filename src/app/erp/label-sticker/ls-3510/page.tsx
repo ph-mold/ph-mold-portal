@@ -40,6 +40,7 @@ export default function LS3510Page() {
     handleAddData,
     handleSelectData,
     handleClearData,
+    handleBulkApplyData,
     selectedData,
   } = useLabelData({ labelType: LABEL_TYPES.LS_3510 });
 
@@ -59,10 +60,13 @@ export default function LS3510Page() {
   const {
     isAddModalOpen,
     isSelectModalOpen,
+    isBulkApplyModalOpen,
     openAddModal,
     closeAddModal,
     openSelectModal,
     closeSelectModal,
+    openBulkApplyModal,
+    closeBulkApplyModal,
   } = useModals();
 
   // PDF 관리 (동적으로 함수 선택)
@@ -97,6 +101,7 @@ export default function LS3510Page() {
           setLabelSticker({ ...labelSticker, filename })
         }
         onAddClick={openAddModal}
+        onBulkApplyClick={openBulkApplyModal}
         onGenerateClick={handleGeneratePDF}
         onDownloadClick={() => downloadPDF(labelSticker.filename)}
         isGenerating={isGenerating}
@@ -136,6 +141,23 @@ export default function LS3510Page() {
         onClear={() => {
           handleClearData();
           closeSelectModal();
+        }}
+        addedData={addedData}
+        selectedData={selectedData}
+        labelType={LABEL_TYPES.LS_3510}
+      />
+
+      {/* 데이터 일괄 적용 모달 */}
+      <SelectDataModal
+        open={isBulkApplyModalOpen}
+        onClose={closeBulkApplyModal}
+        onSelect={(data) => {
+          handleBulkApplyData(data);
+          closeBulkApplyModal();
+        }}
+        onClear={() => {
+          handleClearData(true);
+          closeBulkApplyModal();
         }}
         addedData={addedData}
         selectedData={selectedData}

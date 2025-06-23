@@ -41,6 +41,7 @@ export default function LS3509Page() {
     handleSelectData,
     handleClearData,
     selectedData,
+    handleBulkApplyData,
   } = useLabelData({ labelType: LABEL_TYPES.LS_3509 });
 
   // location.state로부터 데이터 받아서 카드에 배치
@@ -59,6 +60,9 @@ export default function LS3509Page() {
   const {
     isAddModalOpen,
     isSelectModalOpen,
+    isBulkApplyModalOpen,
+    openBulkApplyModal,
+    closeBulkApplyModal,
     openAddModal,
     closeAddModal,
     openSelectModal,
@@ -97,6 +101,7 @@ export default function LS3509Page() {
           setLabelSticker({ ...labelSticker, filename })
         }
         onAddClick={openAddModal}
+        onBulkApplyClick={openBulkApplyModal}
         onGenerateClick={handleGeneratePDF}
         onDownloadClick={() => downloadPDF(labelSticker.filename)}
         isGenerating={isGenerating}
@@ -135,6 +140,23 @@ export default function LS3509Page() {
         onClear={() => {
           handleClearData();
           closeSelectModal();
+        }}
+        addedData={addedData}
+        selectedData={selectedData}
+        labelType={LABEL_TYPES.LS_3509}
+      />
+
+      {/* 데이터 일괄 적용 모달 */}
+      <SelectDataModal
+        open={isBulkApplyModalOpen}
+        onClose={closeBulkApplyModal}
+        onSelect={(data) => {
+          handleBulkApplyData(data);
+          closeBulkApplyModal();
+        }}
+        onClear={() => {
+          handleClearData(true);
+          closeBulkApplyModal();
         }}
         addedData={addedData}
         selectedData={selectedData}
