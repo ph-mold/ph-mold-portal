@@ -50,9 +50,9 @@ export function HistoryListItem({
   // 라벨 타입별 텍스트 박스 색상 설정
   const getTextBoxStyle = () => {
     if (item.labelType === "ls-3510") {
-      return "bg-blue-50/90 border-blue-200/30 text-blue-700";
+      return "bg-blue-50/90 border-blue-200/30 text-blue-700 !border-blue-200";
     } else {
-      return "bg-green-50/90 border-green-200/30 text-green-700";
+      return "bg-green-50/90 border-green-200/30 text-green-700 !border-green-200";
     }
   };
 
