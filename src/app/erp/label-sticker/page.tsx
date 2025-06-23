@@ -19,7 +19,7 @@ export default function LabelStickerPage() {
   return (
     <div className="h-full flex flex-col overflow-y-auto">
       {/* 상단 라벨 타입 선택 영역 */}
-      <div className="p-8 border-b border-border-light bg-gradient-to-b from-gray-50 to-white">
+      <div className="py-8 px-4 sm:px-6 border-b border-border-light bg-gradient-to-b from-gray-50 to-white">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-gray-900 mb-2">

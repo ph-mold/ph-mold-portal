@@ -89,7 +89,7 @@ export default function LS3509Page() {
   };
 
   return (
-    <div className="h-full p-6 flex flex-col">
+    <div className="h-full py-8 px-4 sm:px-6 flex flex-col sm:overflow-hidden overflow-auto">
       {/* 헤더: 파일명 입력, PDF 생성/다운로드 버튼 */}
       <LSHeader
         filename={labelSticker.filename}
@@ -103,7 +103,7 @@ export default function LS3509Page() {
         canDownload={!!pdfBlob}
       />
 
-      <div className="flex-1 flex gap-6 min-h-0 overflow-hidden">
+      <div className="flex-1 flex gap-6 min-h-0 flex-col sm:!flex-row">
         <LabelGrid
           data={labelSticker.data}
           onCardClick={handleCardClick}
@@ -112,7 +112,9 @@ export default function LS3509Page() {
         />
 
         {/* PDF 미리보기 */}
-        <PDFViewer pdfUrl={pdfUrl} />
+        <div className="w-full aspect-[1/1.4142] sm:aspect-auto">
+          <PDFViewer pdfUrl={pdfUrl} />
+        </div>
       </div>
 
       {/* 새로운 데이터 추가 모달 */}
