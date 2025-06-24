@@ -1,5 +1,5 @@
 # 1단계: 빌드 스테이지
-FROM node:20-alpine AS builder
+FROM node:20-slim AS builder
 
 WORKDIR /app
 COPY package*.json ./
@@ -14,11 +14,12 @@ ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
 RUN npm run build
 
 # 2단계: 런타임 스테이지
-FROM node:20-alpine
+FROM node:20-slim
 
 WORKDIR /app
 
 COPY --from=builder /app/dist-react ./dist-react
+COPY --from=builder /app/package*.json ./
 RUN npm install --omit=dev
 
 # Vite preview 서버 실행
