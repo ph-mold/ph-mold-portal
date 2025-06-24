@@ -35,11 +35,5 @@ export default defineConfig(({ mode }) => {
       host: "0.0.0.0",
       disableHostCheck: true,
     },
-    preview: {
-      port: 5123,
-      strictPort: true,
-      host: "0.0.0.0",
-      disableHostCheck: true,
-    },
   };
 });

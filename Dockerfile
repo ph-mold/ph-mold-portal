@@ -22,9 +22,11 @@ WORKDIR /app
 
 COPY --from=builder /app/dist-react ./dist-react
 COPY --from=builder /app/package*.json ./
-COPY --from=builder /app/vite.config.ts ./
 
 RUN npm install --omit=dev
+
+# 환경 변수 설정
+ENV VITE_PREVIEW_ALLOWED_HOSTS=portal.phmold.co.kr
 
 # Vite preview 서버 실행
 CMD ["npm", "run", "start"]
