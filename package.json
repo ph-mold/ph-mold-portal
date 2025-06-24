@@ -54,6 +54,7 @@
     "vite-plugin-html": "^3.2.2"
   },
   "optionalDependencies": {
+    "@parcel/css-linux-x64-gnu": "^1.13.1",
     "@rollup/rollup-linux-x64-gnu": "^4.44.0"
   }
 }
