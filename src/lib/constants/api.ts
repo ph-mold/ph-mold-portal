@@ -38,6 +38,8 @@ export const API = {
   },
   LABEL_STICKER: {
     GET_HISTORIES: `${API_BASE}/admin/label-sticker/histories`,
+    DELETE_HISTORIES: (id: string) =>
+      `${API_BASE}/admin/label-sticker/histories/${id}`,
     LS_3510: `${API_BASE}/admin/label-sticker/ls-3510`,
     LS_3510_REGENERATE: `${API_BASE}/admin/label-sticker/ls-3510/regenerate`,
     LS_3509: `${API_BASE}/admin/label-sticker/ls-3509`,

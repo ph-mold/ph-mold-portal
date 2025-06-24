@@ -41,6 +41,7 @@ export default function LS3509Page() {
     handleSelectData,
     handleClearData,
     selectedData,
+    handleBulkApplyData,
   } = useLabelData({ labelType: LABEL_TYPES.LS_3509 });
 
   // location.state로부터 데이터 받아서 카드에 배치
@@ -59,6 +60,9 @@ export default function LS3509Page() {
   const {
     isAddModalOpen,
     isSelectModalOpen,
+    isBulkApplyModalOpen,
+    openBulkApplyModal,
+    closeBulkApplyModal,
     openAddModal,
     closeAddModal,
     openSelectModal,
@@ -89,7 +93,7 @@ export default function LS3509Page() {
   };
 
   return (
-    <div className="h-full p-6 flex flex-col">
+    <div className="h-full py-8 px-4 sm:px-6 flex flex-col sm:overflow-hidden overflow-auto">
       {/* 헤더: 파일명 입력, PDF 생성/다운로드 버튼 */}
       <LSHeader
         filename={labelSticker.filename}
@@ -97,13 +101,14 @@ export default function LS3509Page() {
           setLabelSticker({ ...labelSticker, filename })
         }
         onAddClick={openAddModal}
+        onBulkApplyClick={openBulkApplyModal}
         onGenerateClick={handleGeneratePDF}
         onDownloadClick={() => downloadPDF(labelSticker.filename)}
         isGenerating={isGenerating}
         canDownload={!!pdfBlob}
       />
 
-      <div className="flex-1 flex gap-6 min-h-0 overflow-hidden">
+      <div className="flex-1 flex gap-6 min-h-0 flex-col sm:!flex-row">
         <LabelGrid
           data={labelSticker.data}
           onCardClick={handleCardClick}
@@ -112,7 +117,9 @@ export default function LS3509Page() {
         />
 
         {/* PDF 미리보기 */}
-        <PDFViewer pdfUrl={pdfUrl} />
+        <div className="w-full aspect-[1/1.4142] sm:aspect-auto">
+          <PDFViewer pdfUrl={pdfUrl} />
+        </div>
       </div>
 
       {/* 새로운 데이터 추가 모달 */}
@@ -133,6 +140,23 @@ export default function LS3509Page() {
         onClear={() => {
           handleClearData();
           closeSelectModal();
+        }}
+        addedData={addedData}
+        selectedData={selectedData}
+        labelType={LABEL_TYPES.LS_3509}
+      />
+
+      {/* 데이터 일괄 적용 모달 */}
+      <SelectDataModal
+        open={isBulkApplyModalOpen}
+        onClose={closeBulkApplyModal}
+        onSelect={(data) => {
+          handleBulkApplyData(data);
+          closeBulkApplyModal();
+        }}
+        onClear={() => {
+          handleClearData(true);
+          closeBulkApplyModal();
         }}
         addedData={addedData}
         selectedData={selectedData}

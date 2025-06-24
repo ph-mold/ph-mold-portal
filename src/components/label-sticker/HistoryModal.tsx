@@ -21,13 +21,7 @@ export function HistoryModal({
   children,
 }: HistoryModalProps) {
   return (
-    <Modal
-      open={open}
-      onClose={onClose}
-      title={title}
-      className="max-w-[90vw]"
-      bodyClassName="!p-4"
-    >
+    <Modal open={open} onClose={onClose} title={title} bodyClassName="!p-4">
       <div
         className="w-full mx-auto"
         style={{

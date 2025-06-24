@@ -40,6 +40,7 @@ export default function LS3510Page() {
     handleAddData,
     handleSelectData,
     handleClearData,
+    handleBulkApplyData,
     selectedData,
   } = useLabelData({ labelType: LABEL_TYPES.LS_3510 });
 
@@ -59,10 +60,13 @@ export default function LS3510Page() {
   const {
     isAddModalOpen,
     isSelectModalOpen,
+    isBulkApplyModalOpen,
     openAddModal,
     closeAddModal,
     openSelectModal,
     closeSelectModal,
+    openBulkApplyModal,
+    closeBulkApplyModal,
   } = useModals();
 
   // PDF 관리 (동적으로 함수 선택)
@@ -89,7 +93,7 @@ export default function LS3510Page() {
   };
 
   return (
-    <div className="h-full p-6 flex flex-col">
+    <div className="h-full py-8 px-4 sm:px-6 flex flex-col sm:overflow-hidden overflow-auto">
       {/* 헤더: 파일명 입력, PDF 생성/다운로드 버튼 */}
       <LSHeader
         filename={labelSticker.filename}
@@ -97,13 +101,14 @@ export default function LS3510Page() {
           setLabelSticker({ ...labelSticker, filename })
         }
         onAddClick={openAddModal}
+        onBulkApplyClick={openBulkApplyModal}
         onGenerateClick={handleGeneratePDF}
         onDownloadClick={() => downloadPDF(labelSticker.filename)}
         isGenerating={isGenerating}
         canDownload={!!pdfBlob}
       />
 
-      <div className="flex-1 flex gap-6 min-h-0 overflow-hidden">
+      <div className="flex-1 flex gap-6 min-h-0 flex-col sm:!flex-row">
         {/* 라벨 카드 그리드: 2열 5행의 라벨 카드 표시 */}
         <LabelGrid
           data={labelSticker.data}
@@ -113,7 +118,9 @@ export default function LS3510Page() {
         />
 
         {/* PDF 미리보기 */}
-        <PDFViewer pdfUrl={pdfUrl} />
+        <div className="w-full aspect-[1/1.4142] sm:aspect-auto">
+          <PDFViewer pdfUrl={pdfUrl} />
+        </div>
       </div>
 
       {/* 새로운 데이터 추가 모달 */}
@@ -134,6 +141,23 @@ export default function LS3510Page() {
         onClear={() => {
           handleClearData();
           closeSelectModal();
+        }}
+        addedData={addedData}
+        selectedData={selectedData}
+        labelType={LABEL_TYPES.LS_3510}
+      />
+
+      {/* 데이터 일괄 적용 모달 */}
+      <SelectDataModal
+        open={isBulkApplyModalOpen}
+        onClose={closeBulkApplyModal}
+        onSelect={(data) => {
+          handleBulkApplyData(data);
+          closeBulkApplyModal();
+        }}
+        onClear={() => {
+          handleClearData(true);
+          closeBulkApplyModal();
         }}
         addedData={addedData}
         selectedData={selectedData}

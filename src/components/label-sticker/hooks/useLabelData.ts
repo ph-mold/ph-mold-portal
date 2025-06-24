@@ -5,6 +5,7 @@ import {
   LabelType,
 } from "../../../lib/types/label-sticker";
 import { createEmptyDataArray, createInitialData } from "../label/utils";
+import { LABEL_TYPE_CONFIGS } from "../label/constants";
 
 interface Props {
   labelType: LabelType;
@@ -50,16 +51,26 @@ export function useLabelData({ labelType }: Props) {
     onComplete?.();
   };
 
-  // 선택된 데이터 비우기
-  const handleClearData = () => {
-    if (selectedCardIndex !== null) {
-      const newLabelData = [...labelSticker.data];
-      newLabelData[selectedCardIndex] = {};
-      setLabelSticker({
-        ...labelSticker,
-        data: newLabelData,
-      });
+  // 데이터 전체 초기화
+  const handleClearData = (isBulk = false) => {
+    if (isBulk) {
+      setLabelSticker((prev) => ({
+        ...prev,
+        data: Array(LABEL_TYPE_CONFIGS[labelType].labelCount).fill({}),
+      }));
+    } else if (selectedCardIndex !== null) {
+      const newData = [...labelSticker.data];
+      newData[selectedCardIndex] = {};
+      setLabelSticker({ ...labelSticker, data: newData });
     }
+  };
+
+  // 데이터 일괄 적용
+  const handleBulkApplyData = (data: Partial<LabelData>) => {
+    setLabelSticker((prev) => ({
+      ...prev,
+      data: Array(prev.data.length).fill(data),
+    }));
   };
 
   return {
@@ -74,6 +85,7 @@ export function useLabelData({ labelType }: Props) {
     handleAddData,
     handleSelectData,
     handleClearData,
+    handleBulkApplyData,
     selectedData:
       selectedCardIndex !== null
         ? (labelSticker.data[selectedCardIndex] as LabelData)

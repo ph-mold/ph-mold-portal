@@ -13,7 +13,7 @@ export function LabelCard({ data, onClick }: LabelCardProps) {
     <div
       onClick={onClick}
       className={clsx(
-        "rounded-lg border-2 cursor-pointer transition-colors h-full relative overflow-hidden group",
+        "rounded-lg border-2 cursor-pointer transition-colors sm:h-full w-full relative overflow-hidden group",
         hasData
           ? "bg-[var(--card-bg)] border-[var(--card-bg)]"
           : "bg-background border-border-strong hover:border-signature"
@@ -24,7 +24,7 @@ export function LabelCard({ data, onClick }: LabelCardProps) {
           : undefined
       }
     >
-      <div className="h-full aspect-[3/1] flex p-2">
+      <div className="sm:h-full w-full aspect-[3/1] flex p-2">
         {!hasData ? (
           <span className="text-foreground2 text-sm m-auto group-hover:!text-signature">
             클릭

@@ -1,7 +1,8 @@
 import { useState, useRef } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 import {
+  deleteLabelStickerHistory,
   GET_LABEL_STICKER_HISTORIES,
   getLabelStickerHistories,
   getPDFRegenerateFunction,
@@ -92,18 +93,27 @@ export function LabelHistory() {
     });
   };
 
+  const handleDelete = async (item: LabelStickerHistory) => {
+    await deleteLabelStickerHistory(item.id);
+    mutate(
+      (key) => Array.isArray(key) && key[0] === GET_LABEL_STICKER_HISTORIES,
+      undefined
+    );
+  };
+
   // 페이지 변경
   const handlePageChange = (page: number) => {
     setSearchParams({ page: page.toString() });
   };
 
   return (
-    <div className="p-6 max-w-3xl mx-auto">
+    <div className="py-8 px-4 sm:px-6 max-w-3xl mx-auto">
       <h1 className="text-2xl font-bold mb-6">라벨 스티커 이력</h1>
       <HistoryList
         items={currentItems}
         onPdfView={handlePdfView}
         onCopyWrite={handleCopyWrite}
+        onDelete={handleDelete}
         currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={handlePageChange}
