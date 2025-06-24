@@ -33,6 +33,7 @@ export default defineConfig(({ mode }) => {
       port: 5123,
       strictPort: true,
       host: true,
+      allowedHosts: ["portal.phmold.co.kr"],
     },
   };
 });
