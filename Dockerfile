@@ -6,6 +6,12 @@ COPY package*.json ./
 RUN npm install
 COPY . .
 
+ARG VITE_API_URL
+ARG VITE_IMAGE_BASE_URL
+
+ENV VITE_API_URL=$VITE_API_URL
+ENV VITE_IMAGE_BASE_URL=$VITE_IMAGE_BASE_URL
+
 # 웹 버전으로 빌드 (Electron 제외)
 RUN npm run build
 
