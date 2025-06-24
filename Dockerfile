@@ -22,6 +22,8 @@ WORKDIR /app
 
 COPY --from=builder /app/dist-react ./dist-react
 COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/vite.config.ts ./
+
 RUN npm install --omit=dev
 
 # Vite preview 서버 실행
