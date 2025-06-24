@@ -1,5 +1,5 @@
 # 1단계: 빌드 스테이지
-FROM node:20-slim AS builder
+FROM node:20-alpine AS builder
 
 WORKDIR /app
 COPY package*.json ./
@@ -14,7 +14,7 @@ ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
 RUN npm run build
 
 # 2단계: 런타임 스테이지
-FROM node:20-slim
+FROM node:20-alpine
 
 WORKDIR /app
 
