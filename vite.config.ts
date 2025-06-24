@@ -32,14 +32,14 @@ export default defineConfig(({ mode }) => {
     server: {
       port: 5123,
       strictPort: true,
-      host: true,
-      allowedHosts: ["portal.phmold.co.kr"],
+      host: "0.0.0.0",
+      disableHostCheck: true,
     },
     preview: {
       port: 5123,
       strictPort: true,
-      host: true,
-      disableHostCheck: true,
+      host: "0.0.0.0",
+      allowedHosts: ["portal.phmold.co.kr"],
     },
   };
 });
