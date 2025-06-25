@@ -22,6 +22,8 @@ jobs:
       - name: Build and push Docker image with commit SHA tag
         run: |
           docker build \
+            --build-arg VITE_API_URL=${{ secrets.VITE_API_URL }} \
+            --build-arg VITE_IMAGE_BASE_URL=${{ secrets.VITE_IMAGE_BASE_URL }} \
             -t ghcr.io/ph-mold/ph-mold-portal:${{ env.IMAGE_TAG }} .
           docker push ghcr.io/ph-mold/ph-mold-portal:${{ env.IMAGE_TAG }}
 
