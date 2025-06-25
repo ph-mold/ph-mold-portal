@@ -1,7 +1,6 @@
 import { LabelStickerHistory } from "@/lib/types/label-sticker";
-import { Button, useAlert } from "@ph-mold/ph-ui";
+import { Button, Popover, useAlert } from "@ph-mold/ph-ui";
 import { formatKoreanDateTime } from "@/utils/format";
-import { Popover } from "../common/Popover";
 import { MoreVertical } from "lucide-react";
 import { useState } from "react";
 
