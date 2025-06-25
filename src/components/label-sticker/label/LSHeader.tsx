@@ -51,7 +51,7 @@ export function LSHeader({
       <div className="flex items-center gap-3 w-full sm:w-fit">
         <Button
           onClick={onGenerateClick}
-          disabled={isGenerating}
+          loading={isGenerating}
           startIcon={<FilePlus size={16} />}
           className="w-full sm:w-fit"
         >

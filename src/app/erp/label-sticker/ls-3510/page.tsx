@@ -108,7 +108,7 @@ export default function LS3510Page() {
         canDownload={!!pdfBlob}
       />
 
-      <div className="flex-1 flex gap-6 min-h-0 flex-col sm:!flex-row">
+      <div className="flex-1 flex gap-6 flex-col sm:!flex-row">
         {/* 라벨 카드 그리드: 2열 5행의 라벨 카드 표시 */}
         <LabelGrid
           data={labelSticker.data}

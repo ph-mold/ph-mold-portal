@@ -108,7 +108,7 @@ export default function LS3509Page() {
         canDownload={!!pdfBlob}
       />
 
-      <div className="flex-1 flex gap-6 min-h-0 flex-col sm:!flex-row">
+      <div className="flex-1 flex gap-6 flex-col sm:!flex-row">
         <LabelGrid
           data={labelSticker.data}
           onCardClick={handleCardClick}
@@ -117,7 +117,7 @@ export default function LS3509Page() {
         />
 
         {/* PDF 미리보기 */}
-        <div className="w-full aspect-[1/1.4142] sm:aspect-auto">
+        <div className="w-full aspect-[1/1.4142] sm:aspect-auto ">
           <PDFViewer pdfUrl={pdfUrl} />
         </div>
       </div>
