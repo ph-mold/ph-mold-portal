@@ -17,5 +17,6 @@ RUN npm run build
 
 # 2단계: Nginx 정적 파일 서버
 FROM nginx:alpine
+WORKDIR /app
 COPY --from=builder /app/dist-react /usr/share/nginx/html
 COPY ./nginx/portal-nginx.conf /etc/nginx/conf.d/default.conf
