@@ -29,7 +29,7 @@ export default function LoginBanner() {
   }, []);
   return (
     <div className="basis-1/2 flex-1 w-full min-h-svh items-center justify-center border-r border-border-light flex">
-      <div className="w-full text-center">
+      <div className="w-full text-center collapse sm:visible">
         <div className="relative flex h-[52px] items-center justify-center lg:h-[80px]">
           {TITLES.map((text, index) => {
             const isActive = currentIndex === index;

@@ -84,8 +84,8 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="basis-1/2 max-w-[400px] w-full bg-white/70 backdrop-blur-md flex min-h-svh items-center justify-center">
-      <div className="flex flex-col gap-4 w-full px-8">
+    <div className="basis-1/2 absolute sm:!relative sm:max-w-[400px] w-full bg-white/40 sm:!bg-white/70 backdrop-blur-sm flex min-h-svh items-center justify-center">
+      <div className="flex flex-col gap-4 w-full px-8 max-w-[400px]">
         <p className="text-2xl font-semibold text-center">로그인</p>
         <Formik<ILoginBody>
           initialValues={initFormValues}
