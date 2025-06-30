@@ -13,7 +13,7 @@ export function LabelCard({ data, onClick }: LabelCardProps) {
     <div
       onClick={onClick}
       className={clsx(
-        "rounded-lg border-2 cursor-pointer transition-colors sm:h-full w-full relative overflow-hidden group",
+        "rounded-lg border-2 cursor-pointer transition-colors sm:h-full w-full relative overflow-hidden group ",
         hasData
           ? "bg-[var(--card-bg)] border-[var(--card-bg)]"
           : "bg-background border-border-strong hover:border-signature"
@@ -24,13 +24,13 @@ export function LabelCard({ data, onClick }: LabelCardProps) {
           : undefined
       }
     >
-      <div className="sm:h-full w-full aspect-[3/1] flex p-2">
+      <div className="sm:h-full w-full aspect-[3/1] flex p-2 relative overflow-hidden">
         {!hasData ? (
           <span className="text-foreground2 text-sm m-auto group-hover:!text-signature">
             클릭
           </span>
         ) : (
-          <div className="w-full space-y-1">
+          <div className="space-y-1 w-full overflow-hidden absolute left-2 top-2">
             <div className="flex items-center gap-1">
               {data.value1 && (
                 <div className="font-medium text-base truncate">
@@ -44,7 +44,7 @@ export function LabelCard({ data, onClick }: LabelCardProps) {
                 </>
               )}
             </div>
-            <div className="flex items-center gap-2 text-xs flex-wrap">
+            <div className="text-xs flex-col gap-1">
               {data.value3 && <div>규격: {data.value3}</div>}
               {data.value4 && <div>수량: {data.value4}</div>}
             </div>
