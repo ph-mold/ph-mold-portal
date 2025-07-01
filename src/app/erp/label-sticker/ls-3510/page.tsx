@@ -32,8 +32,6 @@ export default function LS3510Page() {
   const {
     labelSticker,
     setLabelSticker,
-    newData,
-    setNewData,
     addedData,
     setAddedData,
     setSelectedCardIndex,
@@ -127,9 +125,7 @@ export default function LS3510Page() {
       <AddDataModal
         open={isAddModalOpen}
         onClose={closeAddModal}
-        onAdd={() => handleAddData(closeAddModal)}
-        data={newData}
-        onChange={setNewData}
+        onAdd={(data) => handleAddData(data)}
         labelType={LABEL_TYPES.LS_3510}
       />
 
