@@ -85,6 +85,7 @@ export default function TagsPage() {
     const confirmed = await new Promise<boolean>((resolve) => {
       alert({
         description: "정말 삭제하시겠습니까?",
+        acceptLabel: "삭제",
         onAccept: () => resolve(true),
         onCancel: () => resolve(false),
       });

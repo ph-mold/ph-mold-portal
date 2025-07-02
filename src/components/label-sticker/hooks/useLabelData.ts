@@ -4,7 +4,7 @@ import {
   LabelSticker,
   LabelType,
 } from "../../../lib/types/label-sticker";
-import { createEmptyDataArray, createInitialData } from "../label/utils";
+import { createEmptyDataArray } from "../label/utils";
 import { LABEL_TYPE_CONFIGS } from "../label/constants";
 
 interface Props {
@@ -18,11 +18,6 @@ export function useLabelData({ labelType }: Props) {
     labelType,
   });
 
-  // 새로운 데이터 입력을 위한 상태
-  const [newData, setNewData] = useState<LabelData>(
-    createInitialData(labelType)
-  );
-
   // 추가된 데이터 목록
   const [addedData, setAddedData] = useState<LabelData[]>([]);
 
@@ -32,10 +27,8 @@ export function useLabelData({ labelType }: Props) {
   );
 
   // 새 데이터 추가
-  const handleAddData = (onComplete?: () => void) => {
+  const handleAddData = (newData: LabelData) => {
     setAddedData([...addedData, newData]);
-    setNewData(createInitialData(labelType));
-    onComplete?.();
   };
 
   // 데이터 선택
@@ -76,8 +69,6 @@ export function useLabelData({ labelType }: Props) {
   return {
     labelSticker,
     setLabelSticker,
-    newData,
-    setNewData,
     addedData,
     setAddedData,
     selectedCardIndex,
