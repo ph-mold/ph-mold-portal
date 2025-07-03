@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import useSWR, { mutate } from "swr";
 import { useEffect, useRef, useState } from "react";
-import { Button, useAlert } from "@ph-mold/ph-ui";
+import { Button, useAlert, WithSkeleton } from "@ph-mold/ph-ui";
 import {
   IGetProductImage,
   IGetProductInfo,
@@ -20,6 +20,8 @@ import { Pencil } from "lucide-react";
 import { Form, Formik, FormikProps } from "formik";
 import * as yup from "yup";
 import { AxiosError } from "axios";
+import ProductImageGallerySkeleton from "@/components/products/ProductImageGallery.skeleton";
+import ProductInfoPanelSkeleton from "@/components/products/ProductInfoPanel.skeleton";
 
 const validate = yup.object({
   name: yup.string().required("제품명을 입력해주세요."),
@@ -37,14 +39,16 @@ const validate = yup.object({
 export default function ManagementProductPage() {
   const { productKey } = useParams<{ productKey: string }>();
 
-  const { data: product } = useSWR<IGetProductInfo | undefined>(
-    productKey ? [GET_PRODUCT_INFO_BY_KEY, productKey] : null,
-    () => getProductInfoByKey(productKey)
+  const { data: product, isLoading: isLoadingProduct } = useSWR<
+    IGetProductInfo | undefined
+  >(productKey ? [GET_PRODUCT_INFO_BY_KEY, productKey] : null, () =>
+    getProductInfoByKey(productKey)
   );
 
-  const { data: images } = useSWR<IGetProductImage[] | undefined>(
-    productKey ? [GET_PRODUCT_IMAGES_BY_KEY, productKey] : null,
-    () => getProductImagesByKey(productKey)
+  const { data: images, isLoading: isLoadingImages } = useSWR<
+    IGetProductImage[] | undefined
+  >(productKey ? [GET_PRODUCT_IMAGES_BY_KEY, productKey] : null, () =>
+    getProductImagesByKey(productKey)
   );
 
   const formikRef = useRef<FormikProps<IGetProductInfo> | null>(null);
@@ -135,8 +139,18 @@ export default function ManagementProductPage() {
         >
           {(props) => (
             <Form className="my-4 grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-4 md:gap-12">
-              <ProductImageEditor {...props} />
-              <ProductInfoPanel {...props} />
+              <WithSkeleton
+                isLoading={isLoadingImages}
+                skeleton={<ProductImageGallerySkeleton />}
+              >
+                <ProductImageEditor {...props} />
+              </WithSkeleton>
+              <WithSkeleton
+                isLoading={isLoadingProduct}
+                skeleton={<ProductInfoPanelSkeleton />}
+              >
+                <ProductInfoPanel product={product} {...props} />
+              </WithSkeleton>
             </Form>
           )}
         </Formik>

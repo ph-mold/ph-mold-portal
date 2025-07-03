@@ -4,9 +4,12 @@ import TagEditor from "./TagEditor";
 import SpecEditor from "./SpecEditor";
 import { FormikProps } from "formik";
 
-type Props = FormikProps<IGetProductInfo>;
+interface Props extends FormikProps<IGetProductInfo> {
+  product?: IGetProductInfo;
+}
 
 export default function ProductInfoPanel({
+  product,
   values,
   handleChange,
   handleBlur,
@@ -19,7 +22,7 @@ export default function ProductInfoPanel({
       {values && (
         <div className="flex flex-col gap-3">
           <div>
-            <p className="text-foreground2 text-sm">{values.code}</p>
+            <p className="text-foreground2 text-sm">{product?.code}</p>
             <Input
               required
               name="name"
@@ -39,11 +42,11 @@ export default function ProductInfoPanel({
           <div className="flex flex-col gap-4 p-2">
             <div className="flex flex-row justify-between">
               <p className="text-sm font-semibold">재질</p>
-              <p className="text-sm">{values.material}</p>
+              <p className="text-sm">{product?.material}</p>
             </div>
             <div className="flex flex-row justify-between">
               <p className="text-sm font-semibold">제조국</p>
-              <p className="text-sm">{values.origin}</p>
+              <p className="text-sm">{product?.origin}</p>
             </div>
             <div className="gap-2 flex flex-col ">
               <div className="flex flex-row justify-between items-center">
