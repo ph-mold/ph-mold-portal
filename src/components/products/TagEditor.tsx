@@ -1,27 +1,37 @@
 import { Button } from "@ph-mold/ph-ui";
 import { PlusSquareIcon, X } from "lucide-react";
-import { UseFieldArrayReturn } from "react-hook-form";
 import { IGetProductInfo } from "../../lib/types/product";
 import { ITag } from "../../lib/types/tag";
 import { useState } from "react";
 import AddTagModal from "./AddTagModal";
+import { FormikErrors } from "formik";
 
-interface Props {
-  field: UseFieldArrayReturn<IGetProductInfo, "tags", "fieldId">;
-}
+type Props = {
+  values: IGetProductInfo;
+  setFieldValue: (
+    field: string,
+    value: unknown,
+    shouldValidate?: boolean
+  ) => Promise<void | FormikErrors<IGetProductInfo>>;
+};
 
-export default function TagEditor({ field }: Props) {
+export default function TagEditor({ values, setFieldValue }: Props) {
   const [openAddTag, setOpenAddTag] = useState(false);
 
   const handleRemove = (idx: number) => {
-    const current = field.fields[idx];
-    if (current.flag === "new") {
-      field.remove(idx);
+    const current = values?.tags?.[idx];
+    if (current?.flag === "new") {
+      setFieldValue(
+        "tags",
+        values?.tags?.filter((_, i) => i !== idx)
+      );
     } else {
-      field.update(idx, {
-        ...current,
-        flag: "delete",
-      });
+      setFieldValue(
+        "tags",
+        values?.tags?.map((tag, i) =>
+          i === idx ? { ...tag, flag: "delete" } : tag
+        )
+      );
     }
   };
 
@@ -31,15 +41,18 @@ export default function TagEditor({ field }: Props) {
         open={openAddTag}
         setOpen={setOpenAddTag}
         addTagAction={(tag: ITag) =>
-          field.append({
-            ...tag,
-            flag: "new",
-          })
+          setFieldValue("tags", [
+            ...(values?.tags ?? []),
+            {
+              ...tag,
+              flag: "new",
+            },
+          ])
         }
       />
       <div className="flex flex-wrap space-y-1 space-x-1 py-2">
-        {field.fields
-          .map((tag, idx) => ({ tag, idx }))
+        {values?.tags
+          ?.map((tag, idx) => ({ tag, idx }))
           .filter(({ tag }) => tag.flag !== "delete")
           .map(({ tag, idx }) => (
             <p
