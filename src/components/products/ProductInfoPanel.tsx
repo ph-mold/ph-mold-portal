@@ -1,58 +1,49 @@
-import {
-  Control,
-  FieldErrors,
-  UseFieldArrayReturn,
-  UseFormRegister,
-} from "react-hook-form";
 import { IGetProductInfo } from "../../lib/types/product";
 import { Input } from "@ph-mold/ph-ui";
 import TagEditor from "./TagEditor";
 import SpecEditor from "./SpecEditor";
+import { FormikProps } from "formik";
 
-interface Props {
-  register: UseFormRegister<IGetProductInfo>;
-  control: Control<IGetProductInfo, unknown, IGetProductInfo> | undefined;
-  errors: FieldErrors<IGetProductInfo>;
-  product: IGetProductInfo | undefined;
-  tagsField: UseFieldArrayReturn<IGetProductInfo, "tags", "fieldId">;
-  specsField: UseFieldArrayReturn<IGetProductInfo, "specs", "fieldId">;
-}
+type Props = FormikProps<IGetProductInfo>;
 
 export default function ProductInfoPanel({
-  register,
-  control,
+  values,
+  handleChange,
+  handleBlur,
   errors,
-  product,
-  tagsField,
-  specsField,
+  touched,
+  ...props
 }: Props) {
   return (
     <>
-      {product && (
+      {values && (
         <div className="flex flex-col gap-3">
           <div>
-            <p className="text-foreground2 text-sm">{product.code}</p>
+            <p className="text-foreground2 text-sm">{values.code}</p>
             <Input
               required
+              name="name"
               fullWidth
               placeholder="예) 3ml PP 주사기"
+              value={values.name}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={!!(errors.name && touched.name)}
+              helperText={errors.name && touched.name ? errors.name : undefined}
               className="[&>*]:!p-0 [&>*]:!border-signature/30"
-              {...register("name", { required: "제품명을 입력해주세요." })}
-              error={!!errors.name}
-              helperText={errors.name?.message}
               inputClassName="text-lg font-bold"
               variant="outlined"
             />
-            <TagEditor field={tagsField} />
+            <TagEditor values={values} setFieldValue={props.setFieldValue} />
           </div>
           <div className="flex flex-col gap-4 p-2">
             <div className="flex flex-row justify-between">
               <p className="text-sm font-semibold">재질</p>
-              <p className="text-sm">{product.material}</p>
+              <p className="text-sm">{values.material}</p>
             </div>
             <div className="flex flex-row justify-between">
               <p className="text-sm font-semibold">제조국</p>
-              <p className="text-sm">{product.origin}</p>
+              <p className="text-sm">{values.origin}</p>
             </div>
             <div className="gap-2 flex flex-col ">
               <div className="flex flex-row justify-between items-center">
@@ -62,24 +53,29 @@ export default function ProductInfoPanel({
                 <Input
                   required
                   type="number"
+                  name="moq"
+                  placeholder="예) 10000"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.moq}
+                  error={!!(errors.moq && touched.moq)}
+                  helperText={
+                    errors.moq && touched.moq ? errors.moq : undefined
+                  }
                   className="[&>*]:!p-1 !w-50 [&>*]:!border-signature/30 "
                   inputClassName="text-sm text-right"
-                  placeholder="예) 10000"
-                  {...register("moq", {
-                    valueAsNumber: true,
-                    required: "MOQ를 입력해주세요.",
-                    validate: (v: number) =>
-                      v > 0 || "1개 이상의 수량을 입력해주세요.",
-                  })}
-                  error={!!errors.moq}
-                  helperText={errors.moq?.message}
                   variant="outlined"
                 />
               </div>
               <SpecEditor
-                register={register}
-                field={specsField}
-                control={control}
+                formikProps={{
+                  values,
+                  handleChange,
+                  handleBlur,
+                  errors,
+                  touched,
+                  ...props,
+                }}
               />
             </div>
           </div>
