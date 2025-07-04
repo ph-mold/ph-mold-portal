@@ -9,7 +9,8 @@ type Props = {
 };
 
 export default function SpecEditor({ formikProps }: Props) {
-  const { values, setFieldValue, errors, touched } = formikProps;
+  const { values, setFieldValue, setFieldTouched, errors, touched } =
+    formikProps;
   const [openAddSpec, setOpenAddSpec] = useState(false);
 
   const handleValueChange = (idx: number, newValue: string) => {
@@ -25,6 +26,10 @@ export default function SpecEditor({ formikProps }: Props) {
     } else if (isChanged && current.flag === "new") {
       setFieldValue(`specs.${idx}.value`, newValue);
     }
+  };
+
+  const handleBlur = (idx: number) => {
+    setFieldTouched(`specs.${idx}.value`, true, true);
   };
 
   const handleRemove = (idx: number) => {
@@ -103,6 +108,7 @@ export default function SpecEditor({ formikProps }: Props) {
                         }
                         value={spec.value}
                         onChange={(e) => handleValueChange(idx, e.target.value)}
+                        onBlur={() => handleBlur(idx)}
                         variant="outlined"
                         error={!!showError}
                         helperText={
