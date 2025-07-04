@@ -1,97 +1,136 @@
 import { Button, Input } from "@ph-mold/ph-ui";
-import {
-  Control,
-  UseFieldArrayReturn,
-  UseFormRegister,
-  useWatch,
-} from "react-hook-form";
 import { IGetProductInfo, ISpecType } from "../../lib/types/product";
 import AddSpecModal from "./AddSpecModal";
 import { useState } from "react";
+import { FieldArray, FormikProps } from "formik";
 
-interface Props {
-  register: UseFormRegister<IGetProductInfo>;
-  control: Control<IGetProductInfo, unknown, IGetProductInfo> | undefined;
-  field: UseFieldArrayReturn<IGetProductInfo, "specs", "fieldId">;
-}
+type Props = {
+  formikProps: FormikProps<IGetProductInfo>;
+};
 
-export default function SpecEditor({ register, control, field }: Props) {
+export default function SpecEditor({ formikProps }: Props) {
+  const { values, setFieldValue, setFieldTouched, errors, touched } =
+    formikProps;
   const [openAddSpec, setOpenAddSpec] = useState(false);
 
-  const specs = useWatch({ control, name: "specs" });
-
   const handleValueChange = (idx: number, newValue: string) => {
-    const current = specs?.[idx];
+    const current = values.specs?.[idx];
     if (!current) return;
 
-    const original = field.fields[idx];
+    const original = values.specs[idx];
     const isChanged = newValue !== original.value;
 
     if (isChanged && current.flag !== "new") {
-      field.update(idx, { ...current, value: newValue, flag: "update" });
+      setFieldValue(`specs.${idx}.value`, newValue);
+      setFieldValue(`specs.${idx}.flag`, "update");
+    } else if (isChanged && current.flag === "new") {
+      setFieldValue(`specs.${idx}.value`, newValue);
     }
   };
 
+  const handleBlur = (idx: number) => {
+    setFieldTouched(`specs.${idx}.value`, true, true);
+  };
+
   const handleRemove = (idx: number) => {
-    const current = field.fields[idx];
-    if (current.flag === "new") {
-      field.remove(idx);
+    const current = values.specs?.[idx];
+    if (current?.flag === "new") {
+      // 새로 추가된 항목은 바로 제거
+      setFieldValue(
+        "specs",
+        values.specs?.filter((_, i) => i !== idx)
+      );
     } else {
-      field.update(idx, { ...current, flag: "delete" });
+      // 기존 항목은 삭제 플래그만 설정
+      setFieldValue(`specs.${idx}.flag`, "delete");
     }
   };
 
   return (
     <>
-      <AddSpecModal
-        open={openAddSpec}
-        setOpen={setOpenAddSpec}
-        addSpecTypeAction={(spec: ISpecType) =>
-          field.append({ value: "", specType: spec, flag: "new" })
-        }
-      />
-      <>
-        {field.fields
-          .map((spec, idx) => ({ spec, idx }))
-          .filter(({ spec }) => spec.flag !== "delete")
-          .map(({ spec, idx }) => (
-            <div
-              key={spec.id || spec.fieldId}
-              className="flex flex-row justify-between group"
+      <FieldArray
+        name="specs"
+        render={({ push, remove }) => (
+          <>
+            <AddSpecModal
+              open={openAddSpec}
+              setOpen={setOpenAddSpec}
+              addSpecTypeAction={(spec: ISpecType) => {
+                const newSpec = { value: "", specType: spec, flag: "new" };
+                push(newSpec);
+              }}
+            />
+            {values.specs
+              ?.map((spec, idx) => ({ spec, idx }))
+              .filter(({ spec }) => spec.flag !== "delete")
+              .map(({ spec, idx }) => {
+                const specErrors = errors.specs as
+                  | Array<{ value?: string }>
+                  | undefined;
+                const specTouched = touched.specs as
+                  | Array<{ value?: boolean }>
+                  | undefined;
+                const showError =
+                  specErrors?.[idx]?.value && specTouched?.[idx]?.value;
+
+                return (
+                  <div
+                    key={spec.id || `${spec.specType.id}-${idx}`}
+                    className="flex flex-row justify-between group"
+                  >
+                    <div className="flex flex-row items-center">
+                      <p className="text-sm font-semibold">
+                        {spec.specType.label}
+                      </p>
+                      <Button
+                        variant="text"
+                        size="small"
+                        color="error"
+                        className="!py-1 px-1 ml-4 !hidden group-hover:!block "
+                        onClick={() => {
+                          const current = values.specs?.[idx];
+                          if (current?.flag === "new") {
+                            remove(idx);
+                          } else {
+                            handleRemove(idx);
+                          }
+                        }}
+                      >
+                        삭제
+                      </Button>
+                    </div>
+                    <div className="flex flex-col">
+                      <Input
+                        className={`[&>*]:!p-0.5 [&>*]:!border-signature/30 [&>*]:!w-50`}
+                        inputClassName="text-sm text-right"
+                        endIcon={
+                          <span className="text-sm">{spec.specType.unit}</span>
+                        }
+                        value={spec.value}
+                        onChange={(e) => handleValueChange(idx, e.target.value)}
+                        onBlur={() => handleBlur(idx)}
+                        variant="outlined"
+                        error={!!showError}
+                        helperText={
+                          showError ? specErrors?.[idx]?.value : undefined
+                        }
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+            <Button
+              variant="text"
+              size="small"
+              className="!bg-signature/20"
+              fullWidth
+              onClick={() => setOpenAddSpec(true)}
             >
-              <div className="flex flex-row items-center">
-                <p className="text-sm font-semibold">{spec.specType.label}</p>
-                <Button
-                  variant="text"
-                  size="small"
-                  color="error"
-                  className="!py-1 px-1 ml-4 !hidden group-hover:!block "
-                  onClick={() => handleRemove(idx)}
-                >
-                  삭제
-                </Button>
-              </div>
-              <Input
-                className="[&>*]:!p-0.5 [&>*]:!border-signature/30 [&>*]:!w-50"
-                inputClassName="text-sm text-right"
-                endIcon={<span className="text-sm">{spec.specType.unit}</span>}
-                defaultValue={spec.value}
-                {...register(`specs.${idx}.value`)}
-                onBlur={(e) => handleValueChange(idx, e.target.value)}
-                variant="outlined"
-              />
-            </div>
-          ))}
-        <Button
-          variant="text"
-          size="small"
-          className="!bg-signature/20"
-          fullWidth
-          onClick={() => setOpenAddSpec(true)}
-        >
-          스펙 추가
-        </Button>
-      </>
+              스펙 추가
+            </Button>
+          </>
+        )}
+      />
     </>
   );
 }

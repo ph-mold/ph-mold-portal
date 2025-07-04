@@ -1,8 +1,7 @@
 import { useParams } from "react-router-dom";
 import useSWR, { mutate } from "swr";
-import { useFieldArray, useForm } from "react-hook-form";
-import { useEffect } from "react";
-import { Button, useAlert } from "@ph-mold/ph-ui";
+import { useEffect, useRef, useState } from "react";
+import { Button, useAlert, WithSkeleton } from "@ph-mold/ph-ui";
 import {
   IGetProductImage,
   IGetProductInfo,
@@ -16,50 +15,55 @@ import {
 } from "../../../../lib/api/products";
 import ProductImageEditor from "../../../../components/products/ProductImageEditor";
 import ProductInfoPanel from "../../../../components/products/ProductInfoPanel";
-import { AxiosError } from "axios";
 import { useHeader } from "../../../../hooks/useHeader";
 import { Pencil } from "lucide-react";
+import { Form, Formik, FormikProps } from "formik";
+import * as yup from "yup";
+import { AxiosError } from "axios";
+import ProductImageGallerySkeleton from "@/components/products/ProductImageGallery.skeleton";
+import ProductInfoPanelSkeleton from "@/components/products/ProductInfoPanel.skeleton";
+
+const validate = yup.object({
+  name: yup.string().required("제품명을 입력해주세요."),
+  moq: yup
+    .number()
+    .required("MOQ를 입력해주세요.")
+    .min(1, "1개 이상의 수량을 입력해주세요."),
+  specs: yup.array().of(
+    yup.object({
+      value: yup.string().required("스펙 값을 입력해주세요."),
+    })
+  ),
+});
 
 export default function ManagementProductPage() {
   const { productKey } = useParams<{ productKey: string }>();
 
-  const { data: product } = useSWR<IGetProductInfo | undefined>(
-    productKey ? [GET_PRODUCT_INFO_BY_KEY, productKey] : null,
-    () => getProductInfoByKey(productKey)
+  const { data: product, isLoading: isLoadingProduct } = useSWR<
+    IGetProductInfo | undefined
+  >(productKey ? [GET_PRODUCT_INFO_BY_KEY, productKey] : null, () =>
+    getProductInfoByKey(productKey)
   );
 
-  const { data: images } = useSWR<IGetProductImage[] | undefined>(
-    productKey ? [GET_PRODUCT_IMAGES_BY_KEY, productKey] : null,
-    () => getProductImagesByKey(productKey)
+  const { data: images, isLoading: isLoadingImages } = useSWR<
+    IGetProductImage[] | undefined
+  >(productKey ? [GET_PRODUCT_IMAGES_BY_KEY, productKey] : null, () =>
+    getProductImagesByKey(productKey)
   );
 
-  const {
-    register,
-    control,
-    reset,
-    formState: { errors },
-    getValues,
-  } = useForm<IGetProductInfo>({ mode: "onChange" });
+  const formikRef = useRef<FormikProps<IGetProductInfo> | null>(null);
 
-  const specsField = useFieldArray({
-    control,
-    name: "specs",
-    keyName: "fieldId",
-  });
-  const tagsField = useFieldArray({
-    control,
-    name: "tags",
-    keyName: "fieldId",
-  });
-  const imagesField = useFieldArray({
-    control,
-    name: "images",
-    keyName: "fieldId",
+  const [initFormValues, setInitFormValues] = useState<IGetProductInfo>({
+    name: "",
+    moq: 0,
+    specs: [],
+    tags: [],
+    images: [],
   });
 
   useEffect(() => {
     if (product && images) {
-      reset({
+      setInitFormValues({
         name: product.name,
         moq: product.moq,
         specs: product.specs,
@@ -67,14 +71,15 @@ export default function ManagementProductPage() {
         images: images ?? [],
       });
     }
-  }, [product, images, reset]);
+  }, [product, images]);
 
   const alert = useAlert();
 
   const handleOnModify = () => {
+    if (!formikRef) return;
     alert({
       description: "제품 정보를 수정하시겠습니까?",
-      onAccept: handleOnSubmit,
+      onAccept: () => formikRef.current?.submitForm(),
       acceptLabel: "수정",
       cancelLabel: "취소",
     });
@@ -96,12 +101,10 @@ export default function ManagementProductPage() {
     ),
   });
 
-  const handleOnSubmit = async () => {
-    const values = getValues();
-
+  const handleOnSubmit = async (values: IGetProductInfo) => {
     try {
       if (!product) return;
-      await patchProduct(product.id, values);
+      await patchProduct(product.id!, values);
       mutate([GET_PRODUCT_IMAGES_BY_KEY, product.key]);
       mutate([GET_PRODUCT_INFO_BY_KEY, product.key]);
       alert({
@@ -125,17 +128,32 @@ export default function ManagementProductPage() {
   return (
     <div className="flex flex-col h-full overflow-y-auto">
       <div className="mx-auto mb-10 flex w-full max-w-[1080px] flex-col gap-10 px-4 md:px-10">
-        <div className="my-4 grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-4 md:gap-12">
-          <ProductImageEditor field={imagesField} />
-          <ProductInfoPanel
-            register={register}
-            control={control}
-            errors={errors}
-            product={product}
-            tagsField={tagsField}
-            specsField={specsField}
-          />
-        </div>
+        <Formik<IGetProductInfo>
+          initialValues={initFormValues}
+          onSubmit={handleOnSubmit}
+          validationSchema={validate}
+          enableReinitialize={true}
+          validateOnChange={true}
+          validateOnBlur={true}
+          innerRef={formikRef}
+        >
+          {(props) => (
+            <Form className="my-4 grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-4 md:gap-12">
+              <WithSkeleton
+                isLoading={isLoadingImages}
+                skeleton={<ProductImageGallerySkeleton />}
+              >
+                <ProductImageEditor {...props} />
+              </WithSkeleton>
+              <WithSkeleton
+                isLoading={isLoadingProduct}
+                skeleton={<ProductInfoPanelSkeleton />}
+              >
+                <ProductInfoPanel product={product} {...props} />
+              </WithSkeleton>
+            </Form>
+          )}
+        </Formik>
       </div>
     </div>
   );

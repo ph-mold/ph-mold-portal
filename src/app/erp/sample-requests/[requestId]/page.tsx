@@ -43,7 +43,7 @@ function ProductCard({ req }: { req: ISampleRequest }) {
           <span>{prod.material}</span>
 
           <span className="text-foreground2">MOQ</span>
-          <span>{formatCount(prod.moq)} 개</span>
+          <span>{formatCount(prod.moq ?? 0)} 개</span>
         </div>
       </div>
     </section>
