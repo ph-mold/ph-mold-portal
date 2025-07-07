@@ -25,6 +25,7 @@ export const API = {
   },
   SPEC_TYPES: {
     GET_SPEC_TYPES: `${API_BASE}/admin/spec`,
+    GET_SPEC_TYPES_PAGINATED: `${API_BASE}/admin/spec`,
   },
   TAGS: {
     GET_TAGS: `${API_BASE}/admin/tag`,
