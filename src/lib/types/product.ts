@@ -1,4 +1,4 @@
-import { ISpecType } from "./spec";
+import { ISpecType } from "@/lib/types/spec";
 import { ITag } from "./tag";
 
 export interface IGetProduct {
