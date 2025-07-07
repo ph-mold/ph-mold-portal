@@ -21,3 +21,29 @@ export const getSpecTypesPaginated = async (params: ISpecTypeListParams) => {
   );
   return response.data;
 };
+
+export const CREATE_SPEC_TYPE = "createSpecType";
+export const createSpecType = async (specType: ISpecType) => {
+  const response = await axiosInstance.post(
+    API.SPEC_TYPES.CREATE_SPEC_TYPE,
+    specType
+  );
+  return response.data;
+};
+
+export const UPDATE_SPEC_TYPE = "updateSpecType";
+export const updateSpecType = async ({ id, ...specType }: ISpecType) => {
+  const response = await axiosInstance.patch(
+    API.SPEC_TYPES.UPDATE_SPEC_TYPE(id),
+    specType
+  );
+  return response.data;
+};
+
+export const DELETE_SPEC_TYPE = "deleteSpecType";
+export const deleteSpecType = async (id: number) => {
+  const response = await axiosInstance.delete(
+    API.SPEC_TYPES.DELETE_SPEC_TYPE(id)
+  );
+  return response.data;
+};
