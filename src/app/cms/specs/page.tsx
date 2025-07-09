@@ -1,4 +1,4 @@
-import ContentLayout from "@/components/domain/layout/ContentLayout";
+import ContentLayout from "@/components/layout/ContentLayout";
 
 import { SpecFormModal, SpecList } from "@/components/spec";
 import { ITEMS_PER_PAGE } from "@/components/spec/constants";
