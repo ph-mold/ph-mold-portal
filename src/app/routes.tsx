@@ -13,6 +13,7 @@ import TagsPage from "./cms/tags/page";
 import LS3510Page from "./erp/label-sticker/ls-3510/page";
 import LabelStickerPage from "./erp/label-sticker/page";
 import LS3509Page from "./erp/label-sticker/ls-3509/page";
+import SpecsPage from "./cms/specs/page";
 
 export default function Routes() {
   return useRoutes([
@@ -66,6 +67,10 @@ export default function Routes() {
             {
               path: "tags",
               element: <TagsPage />,
+            },
+            {
+              path: "specs",
+              element: <SpecsPage />,
             },
           ],
         },

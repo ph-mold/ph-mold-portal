@@ -1,3 +1,4 @@
+import { ISpecType } from "@/lib/types/spec";
 import { ITag } from "./tag";
 
 export interface IGetProduct {
@@ -25,13 +26,6 @@ export interface ISpec {
   value: string;
   specType: ISpecType;
   flag?: ChangeFlag;
-}
-
-export interface ISpecType {
-  id: number;
-  key: string;
-  label: string;
-  unit: string;
 }
 
 export interface IGetProductImage {

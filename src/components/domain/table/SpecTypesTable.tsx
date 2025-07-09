@@ -1,5 +1,5 @@
 import { createColumnHelper } from "@tanstack/react-table";
-import { ISpecType } from "../../../lib/types/product";
+import { ISpecType } from "@/lib/types/spec";
 import { CustomColumnMeta } from "../../Table/types";
 import { Table } from "../../Table";
 

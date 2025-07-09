@@ -1,9 +1,9 @@
 import { Modal } from "@ph-mold/ph-ui";
 import { PlusSquare } from "lucide-react";
 import useSWR from "swr";
-import { ISpecType } from "../../lib/types/product";
 import { GET_SPEC_TYPES, getSpecTypes } from "../../lib/api/spec-types";
 import SpecTypesTable from "../domain/table/SpecTypesTable";
+import { ISpecType } from "@/lib/types/spec";
 
 interface Props {
   open: boolean;

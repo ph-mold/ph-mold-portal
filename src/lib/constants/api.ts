@@ -25,6 +25,10 @@ export const API = {
   },
   SPEC_TYPES: {
     GET_SPEC_TYPES: `${API_BASE}/admin/spec`,
+    GET_SPEC_TYPES_PAGINATED: `${API_BASE}/admin/spec`,
+    CREATE_SPEC_TYPE: `${API_BASE}/admin/spec`,
+    UPDATE_SPEC_TYPE: (specId: number) => `${API_BASE}/admin/spec/${specId}`,
+    DELETE_SPEC_TYPE: (specId: number) => `${API_BASE}/admin/spec/${specId}`,
   },
   TAGS: {
     GET_TAGS: `${API_BASE}/admin/tag`,
