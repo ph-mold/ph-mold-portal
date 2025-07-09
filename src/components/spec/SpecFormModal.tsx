@@ -44,13 +44,11 @@ export function SpecFormModal({
 
   const handleSubmit = (
     values: ISpecType,
-    { setSubmitting, resetForm }: FormikHelpers<ISpecType>
+    { setSubmitting }: FormikHelpers<ISpecType>
   ) => {
     try {
       setSubmitting(true);
       onSubmit(values);
-      resetForm();
-      onClose();
     } catch (error) {
       console.error(error);
     } finally {

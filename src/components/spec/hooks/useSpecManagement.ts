@@ -6,6 +6,7 @@ import {
 } from "@/lib/api/spec-types";
 import { ISpecType } from "@/lib/types/spec";
 import { useAlert } from "@ph-mold/ph-ui";
+import { AxiosError } from "axios";
 import { useState } from "react";
 import { mutate } from "swr";
 
@@ -50,11 +51,16 @@ export function useSpecManagement() {
         undefined
       );
       handleModalClose();
-    } catch {
-      alert({
-        description: editingSpec
+    } catch (error: unknown) {
+      // 서버에서 돌아온 에러 메시지 사용
+      const errorMessage =
+        (error as AxiosError<{ message: string }>)?.response?.data?.message ||
+        (editingSpec
           ? "스펙 수정에 실패했습니다."
-          : "스펙 생성에 실패했습니다.",
+          : "스펙 생성에 실패했습니다.");
+
+      alert({
+        description: errorMessage,
         acceptLabel: "확인",
         showCancelButton: false,
       });
