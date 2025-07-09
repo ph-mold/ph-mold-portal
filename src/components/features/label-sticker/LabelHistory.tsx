@@ -12,12 +12,12 @@ import {
   LabelStickerListResponse,
   LABEL_TYPES,
 } from "@/lib/types/label-sticker";
-import { usePDF } from "@/components/label-sticker/hooks";
+import { usePDF } from "@/components/features/label-sticker/hooks";
 import {
   PDFViewer,
   HistoryModal,
   HistoryList,
-} from "@/components/label-sticker";
+} from "@/components/features/label-sticker";
 
 const ITEMS_PER_PAGE = 5;
 

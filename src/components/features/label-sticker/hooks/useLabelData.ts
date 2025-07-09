@@ -1,9 +1,5 @@
 import { useState } from "react";
-import {
-  LabelData,
-  LabelSticker,
-  LabelType,
-} from "../../../lib/types/label-sticker";
+import { LabelData, LabelSticker, LabelType } from "@/lib/types/label-sticker";
 import { createEmptyDataArray } from "../label/utils";
 import { LABEL_TYPE_CONFIGS } from "../label/constants";
 

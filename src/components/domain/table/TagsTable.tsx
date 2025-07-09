@@ -1,7 +1,7 @@
 import { createColumnHelper, ColumnDef } from "@tanstack/react-table";
 import { ITag } from "../../../lib/types/tag";
-import { CustomColumnMeta } from "../../Table/types";
-import { Table } from "../../Table";
+import { CustomColumnMeta } from "../../common/Table/types";
+import { Table } from "../../common/Table";
 import { Button } from "@ph-mold/ph-ui";
 import { Pencil, Trash2 } from "lucide-react";
 

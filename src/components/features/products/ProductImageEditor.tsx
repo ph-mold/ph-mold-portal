@@ -1,6 +1,5 @@
 import { useMemo, useRef, useState } from "react";
-import { IMAGE_BASE_URL } from "../../lib/constants/api";
-import { IGetProductImage, IGetProductInfo } from "../../lib/types/product";
+import { IGetProductImage, IGetProductInfo } from "@/lib/types/product";
 import {
   ArrowLeft,
   ArrowRight,
@@ -14,6 +13,7 @@ import ImageUploader from "./ImageUploader";
 import { Swiper, SwiperClass, SwiperSlide } from "swiper/react";
 import { Button } from "@ph-mold/ph-ui";
 import { FormikProps } from "formik";
+import { IMAGE_BASE_URL } from "@/lib/constants/api";
 
 type Props = FormikProps<IGetProductInfo>;
 

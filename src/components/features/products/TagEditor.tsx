@@ -1,10 +1,10 @@
 import { Button } from "@ph-mold/ph-ui";
 import { PlusSquareIcon, X } from "lucide-react";
-import { IGetProductInfo } from "../../lib/types/product";
-import { ITag } from "../../lib/types/tag";
 import { useState } from "react";
-import AddTagModal from "./AddTagModal";
+import { IGetProductInfo } from "@/lib/types/product";
+import { ITag } from "@/lib/types/tag";
 import { FormikErrors } from "formik";
+import AddTagModal from "./AddTagModal";
 
 type Props = {
   values: IGetProductInfo;

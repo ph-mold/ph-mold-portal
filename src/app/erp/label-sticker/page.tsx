@@ -1,7 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { useHeader } from "@/hooks/useHeader";
 import { Button } from "@ph-mold/ph-ui";
-import { LabelHistory, LabelTypeIcon } from "@/components/label-sticker";
+import {
+  LabelHistory,
+  LabelTypeIcon,
+} from "@/components/features/label-sticker";
 import { LABEL_TYPES } from "@/lib/types/label-sticker";
 
 export default function LabelStickerPage() {

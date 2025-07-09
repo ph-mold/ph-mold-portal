@@ -1,8 +1,8 @@
-import ContentLayout from "@/components/layout/ContentLayout";
+import ContentLayout from "@/components/common/layout/ContentLayout";
 
-import { SpecFormModal, SpecList } from "@/components/spec";
-import { ITEMS_PER_PAGE } from "@/components/spec/constants";
-import { useSpecManagement } from "@/components/spec/hooks";
+import { SpecFormModal, SpecList } from "@/components/features/spec";
+import { ITEMS_PER_PAGE } from "@/components/features/spec/constants";
+import { useSpecManagement } from "@/components/features/spec/hooks";
 
 import { useHeader } from "@/hooks/useHeader";
 import { usePagination } from "@/hooks/usePagination";

@@ -4,14 +4,14 @@ import {
   clearLoginEmail,
   getSavedLoginEmail,
   saveLoginEmail,
-} from "../../lib/electron/loginPref";
-import { ILoginBody } from "../../lib/types/auth";
-import { GET_ME, postLogin } from "../../lib/api/auth";
-import { saveAccessToken, saveRefreshToken } from "../../lib/electron/authPref";
-import { isElectron } from "../../lib/electron/isElectron";
+} from "@/lib/electron/loginPref";
+import { ILoginBody } from "@/lib/types/auth";
+import { GET_ME, postLogin } from "@/lib/api/auth";
+import { saveAccessToken, saveRefreshToken } from "@/lib/electron/authPref";
+import { isElectron } from "@/lib/electron/isElectron";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
-import { userState } from "../../recoil/authAtom";
+import { userState } from "@/recoil/authAtom";
 import { mutate } from "swr";
 import { Formik, FormikHelpers } from "formik";
 import * as Yup from "yup";

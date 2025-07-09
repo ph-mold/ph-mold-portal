@@ -1,4 +1,4 @@
-import { LabelType } from "../../../lib/types/label-sticker";
+import { LabelType } from "@/lib/types/label-sticker";
 
 // 라벨 타입별 설정
 export interface LabelTypeConfig {

@@ -1,7 +1,7 @@
 import { createColumnHelper } from "@tanstack/react-table";
 import { ISpecType } from "@/lib/types/spec";
-import { CustomColumnMeta } from "../../Table/types";
-import { Table } from "../../Table";
+import { CustomColumnMeta } from "../../common/Table/types";
+import { Table } from "../../common/Table";
 
 const columnHelper = createColumnHelper<ISpecType>();
 

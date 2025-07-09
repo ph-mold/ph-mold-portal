@@ -1,8 +1,8 @@
-import { LabelData3510 } from "../../../../lib/types/label-sticker";
 import { clsx } from "clsx";
+import { LabelData3509 } from "@/lib/types/label-sticker";
 
 interface LabelCardProps {
-  data: Partial<LabelData3510>;
+  data: Partial<LabelData3509>;
   onClick: () => void;
 }
 
@@ -24,13 +24,13 @@ export function LabelCard({ data, onClick }: LabelCardProps) {
           : undefined
       }
     >
-      <div className="sm:h-full w-full aspect-[7/4] flex p-2 sm:relative overflow-hidden">
+      <div className="sm:h-full w-full aspect-[3/1] flex p-2 relative overflow-hidden">
         {!hasData ? (
-          <div className="text-foreground2 text-sm m-auto group-hover:!text-signature">
+          <span className="text-foreground2 text-sm m-auto group-hover:!text-signature">
             클릭
-          </div>
+          </span>
         ) : (
-          <div className="space-y-1 w-full overflow-hidden sm:absolute sm:left-2 sm:top-2">
+          <div className="space-y-1 w-full overflow-hidden absolute left-2 top-2">
             <div className="flex items-center gap-1">
               {data.value1 && (
                 <div className="font-medium text-base truncate">
@@ -45,10 +45,8 @@ export function LabelCard({ data, onClick }: LabelCardProps) {
               )}
             </div>
             <div className="text-xs flex-col gap-1">
-              {data.value3 && <div>코드: {data.value3}</div>}
+              {data.value3 && <div>규격: {data.value3}</div>}
               {data.value4 && <div>수량: {data.value4}</div>}
-              {data.value5 && <div>중량: {data.value5}</div>}
-              {data.value6 && <div>납품일: {data.value6}</div>}
             </div>
           </div>
         )}

@@ -1,8 +1,8 @@
-import { ISampleRequest } from "../../lib/types/sample-request";
 import { createColumnHelper } from "@tanstack/react-table";
-import { Table } from "../Table";
-import { formatCount, formatKoreanDateTime } from "../../utils/format";
-import { CustomColumnMeta } from "../Table/types";
+import { Table } from "@/components/common/Table";
+import { formatCount, formatKoreanDateTime } from "@/utils/format";
+import { CustomColumnMeta } from "@/components/common/Table/types";
+import { ISampleRequest } from "@/lib/types/sample-request";
 
 const columnHelper = createColumnHelper<ISampleRequest>();
 
