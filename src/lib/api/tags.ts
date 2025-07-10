@@ -1,6 +1,6 @@
 import { axiosInstance } from "../axiosInstance";
 import { API } from "../constants/api";
-import { CreateTagDto, ITag, UpdateTagDto } from "../types/tag";
+import { ITag, ITagListParams } from "../types/tag";
 
 export const GET_TAGS = "getTags";
 export const GET_TAG = "getTag";
@@ -18,6 +18,14 @@ export async function getTags(): Promise<ITag[]> {
   }
 }
 
+export const GET_TAGS_PAGINATED = "getTagsPaginated";
+export const getTagsPaginated = async (params: ITagListParams) => {
+  const response = await axiosInstance.get(API.TAGS.GET_TAGS_PAGINATED, {
+    params,
+  });
+  return response.data;
+};
+
 export async function getTag(id: number): Promise<ITag> {
   try {
     const response = await axiosInstance.get<ITag>(
@@ -30,7 +38,7 @@ export async function getTag(id: number): Promise<ITag> {
   }
 }
 
-export async function createTag(data: CreateTagDto): Promise<ITag> {
+export async function createTag(data: ITag): Promise<ITag> {
   try {
     const response = await axiosInstance.post<ITag>(API.TAGS.GET_TAGS, data);
     return response.data;
@@ -40,11 +48,11 @@ export async function createTag(data: CreateTagDto): Promise<ITag> {
   }
 }
 
-export async function updateTag(id: number, data: UpdateTagDto): Promise<ITag> {
+export async function updateTag({ id, ...tag }: ITag): Promise<ITag> {
   try {
     const response = await axiosInstance.patch<ITag>(
       `${API.TAGS.GET_TAGS}/${id}`,
-      data
+      tag
     );
     return response.data;
   } catch (error) {

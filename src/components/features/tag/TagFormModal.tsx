@@ -1,5 +1,5 @@
 import { Modal, Input, Button } from "@ph-mold/ph-ui";
-import { CreateTagDto, ITag } from "../../../lib/types/tag";
+import { ITag } from "../../../lib/types/tag";
 import { useState, useEffect } from "react";
 import { Form, Formik, FormikHelpers } from "formik";
 import * as yup from "yup";
@@ -11,29 +11,32 @@ const validationSchema = yup.object({
 interface Props {
   open: boolean;
   onClose: () => void;
-  onSubmit: (data: { name: string; key: string }) => void;
+  onSubmit: (data: ITag) => void;
   editingTag?: ITag;
 }
 
-export default function TagFormModal({
-  open,
-  onClose,
-  onSubmit,
-  editingTag,
-}: Props) {
-  const [initFormValues, setInitFormValues] = useState({ name: "", key: "" });
+export function TagFormModal({ open, onClose, onSubmit, editingTag }: Props) {
+  const [initFormValues, setInitFormValues] = useState<ITag>({
+    id: 0,
+    name: "",
+    key: "",
+  });
 
   useEffect(() => {
     if (editingTag) {
-      setInitFormValues({ name: editingTag.name, key: editingTag.key });
+      setInitFormValues(editingTag);
     } else {
-      setInitFormValues({ name: "", key: "" });
+      setInitFormValues({
+        id: 0,
+        name: "",
+        key: "",
+      });
     }
   }, [editingTag]);
 
   const handleSubmit = (
-    values: CreateTagDto,
-    { setSubmitting, resetForm }: FormikHelpers<CreateTagDto>
+    values: ITag,
+    { setSubmitting, resetForm }: FormikHelpers<ITag>
   ) => {
     try {
       setSubmitting(true);
@@ -54,7 +57,7 @@ export default function TagFormModal({
       onClose={onClose}
       bodyClassName="!p-4"
     >
-      <Formik<CreateTagDto>
+      <Formik<ITag>
         initialValues={initFormValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}

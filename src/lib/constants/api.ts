@@ -32,6 +32,7 @@ export const API = {
   },
   TAGS: {
     GET_TAGS: `${API_BASE}/admin/tag`,
+    GET_TAGS_PAGINATED: `${API_BASE}/admin/tag`,
   },
   SAMPLE_REQUESTS: {
     GET: `${API_BASE}/admin/sample-request`,
