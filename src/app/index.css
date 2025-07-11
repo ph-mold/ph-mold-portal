@@ -56,3 +56,21 @@
   animation: mist 12s infinite alternate ease-in-out;
   filter: blur(50px);
 }
+
+@layer components {
+  .bg-gradient-primary {
+    @apply from-sky-300 to-blue-400;
+  }
+  .bg-gradient-secondary {
+    @apply from-violet-300 to-purple-400;
+  }
+  .bg-gradient-tertiary {
+    @apply from-rose-300 to-pink-400;
+  }
+  .bg-gradient-quaternary {
+    @apply from-emerald-300 to-teal-400;
+  }
+  .bg-gradient-quinary {
+    @apply from-amber-300 to-orange-400;
+  }
+}
