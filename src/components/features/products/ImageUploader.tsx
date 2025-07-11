@@ -6,7 +6,7 @@ interface ImageUploaderProps {
   onUpload: (paths: string[]) => void;
 }
 
-export default function ImageUploader({ onUpload }: ImageUploaderProps) {
+export function ImageUploader({ onUpload }: ImageUploaderProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isDragging, setIsDragging] = useState(false);
 

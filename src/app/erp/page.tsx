@@ -1,5 +1,5 @@
 import { useHeader } from "../../hooks/useHeader";
-import PortalToggle from "../../components/domain/PortalToggle";
+import PortalToggle from "../../components/common/layout/PortalToggle";
 import { Link } from "react-router-dom";
 import { Button } from "@ph-mold/ph-ui";
 import { MailQuestion, Sticker } from "lucide-react";

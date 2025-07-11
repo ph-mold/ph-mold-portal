@@ -34,7 +34,7 @@ interface Props {
   onDoubleClick?: (row: ISpecType) => void;
 }
 
-export default function SpecTypesTable({ data, onDoubleClick }: Props) {
+export function SpecTypesTable({ data, onDoubleClick }: Props) {
   return (
     <Table<ISpecType>
       data={data}

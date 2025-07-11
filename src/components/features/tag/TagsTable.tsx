@@ -70,7 +70,7 @@ interface Props {
   showActions?: boolean;
 }
 
-export default function TagsTable({
+export function TagsTable({
   data = [],
   onEdit,
   onDelete,

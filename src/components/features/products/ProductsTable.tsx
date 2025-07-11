@@ -55,7 +55,7 @@ interface Props {
   onDoubleClick?: (row: IGetProduct) => void;
 }
 
-export default function ProductsTable({ data, onDoubleClick }: Props) {
+export function ProductsTable({ data, onDoubleClick }: Props) {
   return (
     <Table<IGetProduct>
       data={data}

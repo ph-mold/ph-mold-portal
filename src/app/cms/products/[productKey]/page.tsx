@@ -10,15 +10,17 @@ import {
   getProductInfoByKey,
   patchProduct,
 } from "@/lib/api/products";
-import ProductImageEditor from "@/components/features/products/ProductImageEditor";
-import ProductInfoPanel from "@/components/features/products/ProductInfoPanel";
+import {
+  ProductImageEditor,
+  ProductInfoPanel,
+  ProductImageGallerySkeleton,
+  ProductInfoPanelSkeleton,
+} from "@/components/features/products";
 import { useHeader } from "@/hooks/useHeader";
 import { Pencil } from "lucide-react";
 import { Form, Formik, FormikProps } from "formik";
 import * as yup from "yup";
 import { AxiosError } from "axios";
-import ProductImageGallerySkeleton from "@/components/features/products/ProductImageGallery.skeleton";
-import ProductInfoPanelSkeleton from "@/components/features/products/ProductInfoPanel.skeleton";
 
 const validate = yup.object({
   name: yup.string().required("제품명을 입력해주세요."),

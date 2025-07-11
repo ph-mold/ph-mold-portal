@@ -1,6 +1,6 @@
 import { Button, Input } from "@ph-mold/ph-ui";
 import { IGetProductInfo } from "@/lib/types/product";
-import AddSpecModal from "./AddSpecModal";
+import { AddSpecModal } from "./";
 import { useState } from "react";
 import { FieldArray, FormikProps } from "formik";
 import { ISpecType } from "@/lib/types/spec";
@@ -9,7 +9,7 @@ type Props = {
   formikProps: FormikProps<IGetProductInfo>;
 };
 
-export default function SpecEditor({ formikProps }: Props) {
+export function SpecEditor({ formikProps }: Props) {
   const { values, setFieldValue, setFieldTouched, errors, touched } =
     formikProps;
   const [openAddSpec, setOpenAddSpec] = useState(false);

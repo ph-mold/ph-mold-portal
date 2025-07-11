@@ -1,6 +1,6 @@
 import { Skeleton } from "@ph-mold/ph-ui";
 
-export default function ProductInfoPanelSkeleton() {
+export function ProductInfoPanelSkeleton() {
   return (
     <div className="flex flex-col gap-3">
       <div>

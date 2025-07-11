@@ -2,8 +2,8 @@ import { Button } from "@ph-mold/ph-ui";
 import { ChevronLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { headerState } from "../../recoil/headerAtom";
-import { useUser } from "../../hooks/useUser";
+import { headerState } from "../../../recoil/headerAtom";
+import { useUser } from "../../../hooks/useUser";
 
 export default function Header() {
   const header = useRecoilValue(headerState);

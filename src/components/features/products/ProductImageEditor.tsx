@@ -9,7 +9,7 @@ import {
   Star,
   X,
 } from "lucide-react";
-import ImageUploader from "./ImageUploader";
+import { ImageUploader } from "./";
 import { Swiper, SwiperClass, SwiperSlide } from "swiper/react";
 import { Button } from "@ph-mold/ph-ui";
 import { FormikProps } from "formik";
@@ -17,7 +17,7 @@ import { IMAGE_BASE_URL } from "@/lib/constants/api";
 
 type Props = FormikProps<IGetProductInfo>;
 
-export default function ProductImageEditor({ values, setFieldValue }: Props) {
+export function ProductImageEditor({ values, setFieldValue }: Props) {
   const swiperRef = useRef<SwiperClass | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 

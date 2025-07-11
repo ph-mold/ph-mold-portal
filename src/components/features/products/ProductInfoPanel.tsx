@@ -1,14 +1,13 @@
 import { Input } from "@ph-mold/ph-ui";
 import { FormikProps } from "formik";
 import { IGetProductInfo } from "@/lib/types/product";
-import SpecEditor from "./SpecEditor";
-import TagEditor from "./TagEditor";
+import { SpecEditor, TagEditor } from "./";
 
 interface Props extends FormikProps<IGetProductInfo> {
   product?: IGetProductInfo;
 }
 
-export default function ProductInfoPanel({
+export function ProductInfoPanel({
   product,
   values,
   handleChange,

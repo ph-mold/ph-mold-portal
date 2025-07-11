@@ -1,6 +1,6 @@
 import { Skeleton } from "@ph-mold/ph-ui";
 
-export default function ProductImageGallerySkeleton() {
+export function ProductImageGallerySkeleton() {
   return (
     <div className="flex flex-col gap-2">
       <div className="relative aspect-square">

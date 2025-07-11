@@ -3,7 +3,7 @@ import { PlusSquare } from "lucide-react";
 import useSWR from "swr";
 import { ITag } from "@/lib/types/tag";
 import { GET_TAGS, getTags } from "@/lib/api/tags";
-import TagsTable from "@/components/domain/table/TagsTable";
+import { TagsTable } from "@/components/features/tag";
 
 interface Props {
   open: boolean;
@@ -11,7 +11,7 @@ interface Props {
   addTagAction?: (tag: ITag) => void;
 }
 
-export default function AddTagModal({ open, setOpen, addTagAction }: Props) {
+export function AddTagModal({ open, setOpen, addTagAction }: Props) {
   const { data } = useSWR<ITag[]>([GET_TAGS], getTags);
 
   const handleOnDoubleClick = (tag: ITag) => {

@@ -3,7 +3,7 @@ import { PlusSquare } from "lucide-react";
 import useSWR from "swr";
 import { GET_SPEC_TYPES, getSpecTypes } from "@/lib/api/spec-types";
 import { ISpecType } from "@/lib/types/spec";
-import SpecTypesTable from "@/components/domain/table/SpecTypesTable";
+import { SpecTypesTable } from "@/components/features/spec";
 
 interface Props {
   open: boolean;
@@ -11,11 +11,7 @@ interface Props {
   addSpecTypeAction?: (spec: ISpecType) => void;
 }
 
-export default function AddSpecModal({
-  open,
-  setOpen,
-  addSpecTypeAction,
-}: Props) {
+export function AddSpecModal({ open, setOpen, addSpecTypeAction }: Props) {
   const { data } = useSWR<ISpecType[]>([GET_SPEC_TYPES], getSpecTypes);
 
   const handleOnDoubleClick = (spec: ISpecType) => {

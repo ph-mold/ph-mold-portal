@@ -4,7 +4,7 @@ import { useState } from "react";
 import { IGetProductInfo } from "@/lib/types/product";
 import { ITag } from "@/lib/types/tag";
 import { FormikErrors } from "formik";
-import AddTagModal from "./AddTagModal";
+import { AddTagModal } from "./";
 
 type Props = {
   values: IGetProductInfo;
@@ -15,7 +15,7 @@ type Props = {
   ) => Promise<void | FormikErrors<IGetProductInfo>>;
 };
 
-export default function TagEditor({ values, setFieldValue }: Props) {
+export function TagEditor({ values, setFieldValue }: Props) {
   const [openAddTag, setOpenAddTag] = useState(false);
 
   const handleRemove = (idx: number) => {
