@@ -13,15 +13,10 @@ import {
   LABEL_TYPES,
 } from "@/lib/types/label-sticker";
 import { usePDF } from "@/components/features/label-sticker/hooks";
-import {
-  PDFViewer,
-  HistoryModal,
-  HistoryList,
-} from "@/components/features/label-sticker";
 
 const ITEMS_PER_PAGE = 5;
 
-export function LabelHistory() {
+export function useLabelHistory() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [isPdfModalOpen, setIsPdfModalOpen] = useState(false);
@@ -106,31 +101,30 @@ export function LabelHistory() {
     setSearchParams({ page: page.toString() });
   };
 
-  return (
-    <div className="py-8 px-4 sm:px-6 max-w-3xl mx-auto">
-      <h1 className="text-2xl font-bold mb-6">라벨 스티커 이력</h1>
-      <HistoryList
-        items={currentItems}
-        onPdfView={handlePdfView}
-        onCopyWrite={handleCopyWrite}
-        onDelete={handleDelete}
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={handlePageChange}
-      />
-      <HistoryModal
-        open={isPdfModalOpen}
-        onClose={() => {
-          setIsPdfModalOpen(false);
-          if (abortRef.current) abortRef.current.abort();
-        }}
-        title={selectedLabel?.fileName || ""}
-        isGenerating={isGenerating}
-        pdfUrl={pdfUrl}
-        onDownload={() => downloadPDF(selectedLabel?.fileName || "")}
-      >
-        {pdfUrl && <PDFViewer pdfUrl={pdfUrl} />}
-      </HistoryModal>
-    </div>
-  );
+  // PDF 모달 닫기
+  const handlePdfModalClose = () => {
+    setIsPdfModalOpen(false);
+    if (abortRef.current) abortRef.current.abort();
+  };
+
+  return {
+    // 상태
+    isPdfModalOpen,
+    selectedLabel,
+    currentItems,
+    currentPage,
+    totalPages,
+    isGenerating,
+    pdfUrl,
+
+    // 핸들러
+    handlePdfView,
+    handleCopyWrite,
+    handleDelete,
+    handlePageChange,
+    handlePdfModalClose,
+
+    // PDF 관련
+    downloadPDF,
+  };
 }

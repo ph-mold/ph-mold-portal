@@ -1,11 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { useHeader } from "@/hooks/useHeader";
-import { Button } from "@ph-mold/ph-ui";
 import {
-  LabelHistory,
-  LabelTypeIcon,
+  LabelTypeSelector,
+  HistoryModal,
+  PDFViewer,
+  HistoryList,
 } from "@/components/features/label-sticker";
-import { LABEL_TYPES } from "@/lib/types/label-sticker";
+
+import ContentLayout from "@/components/common/layout/ContentLayout";
+import { useLabelHistory } from "@/components/features/label-sticker/hooks";
 
 export default function LabelStickerPage() {
   const navigate = useNavigate();
@@ -15,54 +18,61 @@ export default function LabelStickerPage() {
     prevLink: "/erp",
   });
 
+  const {
+    isPdfModalOpen,
+    selectedLabel,
+    currentItems,
+    currentPage,
+    totalPages,
+    isGenerating,
+    pdfUrl,
+    handlePdfView,
+    handleCopyWrite,
+    handleDelete,
+    handlePageChange,
+    handlePdfModalClose,
+    downloadPDF,
+  } = useLabelHistory();
+
   const handleLabelTypeClick = (labelType: string) => {
     navigate(`/erp/label-sticker/${labelType}`);
   };
 
   return (
-    <div className="h-full flex flex-col overflow-y-auto">
-      {/* 상단 라벨 타입 선택 영역 */}
-      <div className="py-8 px-4 sm:px-6 border-b border-border-light bg-gradient-to-b from-gray-50 to-white">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
-              라벨 스티커
-            </h1>
-            <p className="text-gray-600">원하는 라벨 타입을 선택하세요</p>
-          </div>
-
-          <div className="flex justify-center gap-6">
-            <Button
-              variant="outlined"
-              size="large"
-              onClick={() => handleLabelTypeClick(LABEL_TYPES.LS_3510)}
-              className="group relative flex flex-col items-center gap-4 px-8 py-8 min-w-[160px] hover:shadow-lg transition-all duration-200 border-2 !border-blue-300 hover:!border-blue-500"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-indigo-50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-lg" />
-              <div className="relative z-10">
-                <LabelTypeIcon labelType={LABEL_TYPES.LS_3510} />
-              </div>
-            </Button>
-
-            <Button
-              variant="outlined"
-              size="large"
-              onClick={() => handleLabelTypeClick(LABEL_TYPES.LS_3509)}
-              className="group relative flex flex-col items-center gap-4 px-8 py-8 min-w-[160px] hover:shadow-lg transition-all duration-200 border-2 !border-green-300 hover:!border-green-500"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-green-50 to-emerald-50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-lg" />
-              <div className="relative z-10">
-                <LabelTypeIcon labelType={LABEL_TYPES.LS_3509} />
-              </div>
-            </Button>
-          </div>
-        </div>
-      </div>
-
-      {/* 하단 이력 영역 */}
-      <div className="flex-1 bg-white">
-        <LabelHistory />
-      </div>
-    </div>
+    <>
+      <HistoryModal
+        open={isPdfModalOpen}
+        onClose={handlePdfModalClose}
+        title={selectedLabel?.fileName || ""}
+        isGenerating={isGenerating}
+        pdfUrl={pdfUrl}
+        onDownload={() => downloadPDF(selectedLabel?.fileName || "")}
+      >
+        {pdfUrl && <PDFViewer pdfUrl={pdfUrl} />}
+      </HistoryModal>
+      <ContentLayout
+        title="라벨 스티커"
+        subtitle="원하는 라벨 타입을 선택하세요"
+        actionSection={
+          <LabelTypeSelector onLabelTypeClick={handleLabelTypeClick} />
+        }
+        contentSections={[
+          {
+            title: "라벨 스티커 이력",
+            component: (
+              <HistoryList
+                items={currentItems}
+                onPdfView={handlePdfView}
+                onCopyWrite={handleCopyWrite}
+                onDelete={handleDelete}
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+              />
+            ),
+          },
+        ]}
+      />
+    </>
   );
 }
