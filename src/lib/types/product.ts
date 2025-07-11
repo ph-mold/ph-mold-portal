@@ -1,5 +1,6 @@
 import { ISpecType } from "@/lib/types/spec";
 import { ITag } from "./tag";
+import { IPaginated } from "@ph-mold/ph-ui";
 
 export interface IGetProduct {
   id?: number;
@@ -15,6 +16,8 @@ export interface IGetProduct {
   moq?: number;
   tags?: ITag[];
 }
+
+export type IGetProductListResponse = IPaginated<IGetProduct>;
 
 export interface IGetProductInfo extends IGetProduct {
   specs: ISpec[];
