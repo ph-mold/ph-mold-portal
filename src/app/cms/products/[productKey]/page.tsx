@@ -15,7 +15,7 @@ import {
   ProductInfoPanel,
   ProductImageGallerySkeleton,
   ProductInfoPanelSkeleton,
-} from "@/components/features/products";
+} from "@/components/features/products/product";
 import { useHeader } from "@/hooks/useHeader";
 import { Pencil } from "lucide-react";
 import { Form, Formik, FormikProps } from "formik";
