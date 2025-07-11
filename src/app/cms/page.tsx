@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useHeader } from "../../hooks/useHeader";
-import PortalToggle from "../../components/domain/PortalToggle";
+import PortalToggle from "../../components/common/layout/PortalToggle";
 import { Button } from "@ph-mold/ph-ui";
 import { PackageSearch, PencilRuler, Tag } from "lucide-react";
 

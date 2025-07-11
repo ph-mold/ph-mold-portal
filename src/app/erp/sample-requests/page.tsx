@@ -5,7 +5,7 @@ import {
   GET_SAMPLE_REQUESTS,
   getSampleRequests,
 } from "../../../lib/api/sample-request";
-import SampleRequestTable from "../../../components/sample-request/SampleRequestTable";
+import SampleRequestTable from "@/components/features/sample-request/SampleRequestTable";
 import { useNavigate } from "react-router-dom";
 
 export default function SampleRequestsPage() {

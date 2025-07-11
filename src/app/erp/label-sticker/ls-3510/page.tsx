@@ -4,19 +4,19 @@ import {
   AddDataModal,
   SelectDataModal,
   LSHeader,
-} from "@/components/label-sticker/label";
-import { LabelCard } from "@/components/label-sticker/label/ls-3510";
+} from "@/components/features/label-sticker/label";
+import { LabelCard } from "@/components/features/label-sticker/label/ls-3510";
 import {
   useLabelData,
   useModals,
   usePDF,
-} from "@/components/label-sticker/hooks";
+} from "@/components/features/label-sticker/hooks";
 import {
   GET_LABEL_STICKER_HISTORIES,
   getPDFGenerateFunction,
 } from "@/lib/api/label-sticker";
 import { LABEL_TYPES } from "@/lib/types/label-sticker";
-import { PDFViewer } from "@/components/label-sticker";
+import { PDFViewer } from "@/components/features/label-sticker";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { mutate } from "swr";

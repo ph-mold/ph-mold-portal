@@ -1,3 +1,4 @@
+import { IPaginated } from "@ph-mold/ph-ui";
 import { ChangeFlag } from "./product";
 
 export interface ITag {
@@ -7,12 +8,9 @@ export interface ITag {
   flag?: ChangeFlag;
 }
 
-export interface CreateTagDto {
-  name: string;
-  key: string;
+export interface ITagListParams {
+  page: number;
+  limit: number;
 }
 
-export interface UpdateTagDto {
-  name?: string;
-  key?: string;
-}
+export type ITagListResponse = IPaginated<ITag>;

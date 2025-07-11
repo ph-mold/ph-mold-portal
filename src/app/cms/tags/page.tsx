@@ -1,125 +1,74 @@
-import { useState } from "react";
-import useSWR, { mutate } from "swr";
-import {
-  getTags,
-  createTag,
-  updateTag,
-  deleteTag,
-  GET_TAGS,
-} from "../../../lib/api/tags";
-import { Button, useAlert } from "@ph-mold/ph-ui";
-import { ITag } from "../../../lib/types/tag";
+import useSWR from "swr";
+import { GET_TAGS_PAGINATED, getTagsPaginated } from "../../../lib/api/tags";
+import { Button } from "@ph-mold/ph-ui";
+import { ITagListResponse } from "../../../lib/types/tag";
 import { useHeader } from "../../../hooks/useHeader";
-import TagsTable from "../../../components/domain/table/TagsTable";
-import TagFormModal from "../../../components/domain/modal/TagFormModal";
 import { Plus } from "lucide-react";
+import ContentLayout from "@/components/common/layout/ContentLayout";
+import {
+  TagFormModal,
+  TagList,
+  useTagManagement,
+} from "@/components/features/tag";
+import { usePagination } from "@/hooks/usePagination";
+
+const ITEMS_PER_PAGE = 5;
 
 export default function TagsPage() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingTag, setEditingTag] = useState<ITag | null>(null);
-  const alert = useAlert();
-
-  const { data: tags, isLoading } = useSWR<ITag[]>([GET_TAGS], getTags);
-
   useHeader({
     title: "태그 관리",
     prevLink: "/cms",
-    rightSlot: (
-      <Button
-        variant="outlined"
-        className="mx-2"
-        size="small"
-        startIcon={<Plus size={16} />}
-        onClick={() => handleModalOpen()}
-      >
-        태그 추가
-      </Button>
-    ),
   });
 
-  const handleModalOpen = (tag?: ITag) => {
-    if (tag) {
-      setEditingTag(tag);
-    } else {
-      setEditingTag(null);
-    }
-    setIsModalOpen(true);
-  };
+  const { currentPage, handlePageChange } = usePagination();
 
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-    setEditingTag(null);
-  };
+  const { data: tags } = useSWR<ITagListResponse | undefined>(
+    [GET_TAGS_PAGINATED, currentPage],
+    () => getTagsPaginated({ page: currentPage, limit: ITEMS_PER_PAGE })
+  );
 
-  const handleSubmit = async (formData: { name: string; key: string }) => {
-    try {
-      if (editingTag) {
-        await updateTag(editingTag.id, formData);
-        alert({
-          description: "태그가 수정되었습니다.",
-          acceptLabel: "확인",
-          showCancelButton: false,
-        });
-      } else {
-        await createTag(formData);
-        alert({
-          description: "태그가 생성되었습니다.",
-          acceptLabel: "확인",
-          showCancelButton: false,
-        });
-      }
-      mutate([GET_TAGS]);
-      handleModalClose();
-    } catch {
-      alert({
-        description: editingTag
-          ? "태그 수정에 실패했습니다."
-          : "태그 생성에 실패했습니다.",
-        acceptLabel: "확인",
-        showCancelButton: false,
-      });
-    }
-  };
+  const currentItems = tags?.items ?? [];
+  const totalPages = Math.ceil((tags?.total || 0) / ITEMS_PER_PAGE);
 
-  const handleDelete = async (tag: ITag) => {
-    const confirmed = await new Promise<boolean>((resolve) => {
-      alert({
-        description: "정말 삭제하시겠습니까?",
-        acceptLabel: "삭제",
-        onAccept: () => resolve(true),
-        onCancel: () => resolve(false),
-      });
-    });
-
-    if (!confirmed) return;
-
-    try {
-      await deleteTag(tag.id);
-      alert({
-        description: "태그가 삭제되었습니다.",
-        acceptLabel: "확인",
-        showCancelButton: false,
-      });
-      mutate([GET_TAGS]);
-    } catch {
-      alert({
-        description: "태그 삭제에 실패했습니다.",
-        acceptLabel: "확인",
-        showCancelButton: false,
-      });
-    }
-  };
+  const {
+    isModalOpen,
+    editingTag,
+    handleModalOpen,
+    handleModalClose,
+    handleSubmit,
+    handleDelete,
+  } = useTagManagement();
 
   return (
-    <div className="flex flex-col h-full">
-      {!isLoading && tags && (
-        <TagsTable
-          data={tags}
-          onEdit={handleModalOpen}
-          onDelete={handleDelete}
-          showActions
-        />
-      )}
+    <>
+      <ContentLayout
+        title="태그 관리"
+        subtitle="제품의 태그를 관리합니다"
+        actionSection={
+          <Button
+            variant="outlined"
+            startIcon={<Plus size={16} />}
+            onClick={() => handleModalOpen()}
+          >
+            태그 추가
+          </Button>
+        }
+        contentSections={[
+          {
+            title: "스펙 리스트",
+            component: (
+              <TagList
+                handleModalOpen={handleModalOpen}
+                handleDelete={handleDelete}
+                currentItems={currentItems}
+                currentPage={currentPage}
+                totalPages={totalPages}
+                handlePageChange={handlePageChange}
+              />
+            ),
+          },
+        ]}
+      />
 
       <TagFormModal
         open={isModalOpen}
@@ -127,6 +76,6 @@ export default function TagsPage() {
         onSubmit={handleSubmit}
         editingTag={editingTag ?? undefined}
       />
-    </div>
+    </>
   );
 }

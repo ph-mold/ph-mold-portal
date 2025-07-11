@@ -2,26 +2,25 @@ import { useParams } from "react-router-dom";
 import useSWR, { mutate } from "swr";
 import { useEffect, useRef, useState } from "react";
 import { Button, useAlert, WithSkeleton } from "@ph-mold/ph-ui";
-import {
-  IGetProductImage,
-  IGetProductInfo,
-} from "../../../../lib/types/product";
+import { IGetProductImage, IGetProductInfo } from "@/lib/types/product";
 import {
   GET_PRODUCT_IMAGES_BY_KEY,
   GET_PRODUCT_INFO_BY_KEY,
   getProductImagesByKey,
   getProductInfoByKey,
   patchProduct,
-} from "../../../../lib/api/products";
-import ProductImageEditor from "../../../../components/products/ProductImageEditor";
-import ProductInfoPanel from "../../../../components/products/ProductInfoPanel";
-import { useHeader } from "../../../../hooks/useHeader";
+} from "@/lib/api/products";
+import {
+  ProductImageEditor,
+  ProductInfoPanel,
+  ProductImageGallerySkeleton,
+  ProductInfoPanelSkeleton,
+} from "@/components/features/products";
+import { useHeader } from "@/hooks/useHeader";
 import { Pencil } from "lucide-react";
 import { Form, Formik, FormikProps } from "formik";
 import * as yup from "yup";
 import { AxiosError } from "axios";
-import ProductImageGallerySkeleton from "@/components/products/ProductImageGallery.skeleton";
-import ProductInfoPanelSkeleton from "@/components/products/ProductInfoPanel.skeleton";
 
 const validate = yup.object({
   name: yup.string().required("제품명을 입력해주세요."),

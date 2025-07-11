@@ -4,9 +4,9 @@ import useSWR from "swr";
 import {
   GET_PRODUCTS_BY_CATEGORY,
   getProductsByCategory,
-} from "../../../lib/api/products";
-import ProductsTable from "../../../components/products/ProductsTable";
-import { useHeader } from "../../../hooks/useHeader";
+} from "@/lib/api/products";
+import { ProductsTable } from "@/components/features/products";
+import { useHeader } from "@/hooks/useHeader";
 
 export default function ManagementProductsPage() {
   const { data: products, isLoading: isProductsLoading } = useSWR<
