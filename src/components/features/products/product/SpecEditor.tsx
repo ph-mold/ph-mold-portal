@@ -1,6 +1,6 @@
 import { Button, Input } from "@ph-mold/ph-ui";
 import { IGetProductInfo } from "@/lib/types/product";
-import { AddSpecModal } from "./";
+import { AddSpecModal } from "./AddSpecModal";
 import { useState } from "react";
 import { FieldArray, FormikProps } from "formik";
 import { ISpecType } from "@/lib/types/spec";

@@ -3,6 +3,7 @@ import {
   IGetProduct,
   IGetProductImage,
   IGetProductInfo,
+  IGetProductListResponse,
 } from "../types/product";
 import { axiosInstance } from "../axiosInstance";
 
@@ -13,6 +14,26 @@ export async function getProductsByCategory(
 ): Promise<IGetProduct[]> {
   const res = await axiosInstance.get<IGetProduct[]>(
     API.PRODUCTS.GET_BY_CATEGORY(categoryKey)
+  );
+  return res.data;
+}
+
+export const GET_PRODUCTS_BY_CATEGORY_PAGINATED =
+  "getProductsByCategoryPaginated";
+export async function getProductsByCategoryPaginated(
+  categoryKey: string,
+  page?: number,
+  limit?: number
+): Promise<IGetProductListResponse> {
+  const res = await axiosInstance.get<IGetProductListResponse>(
+    API.PRODUCTS.GET_BY_CATEGORY_PAGINATED,
+    {
+      params: {
+        categoryKey,
+        page,
+        limit,
+      },
+    }
   );
   return res.data;
 }

@@ -6,6 +6,7 @@ import { IGetProductImage, IGetProductInfo } from "@/lib/types/product";
 import {
   GET_PRODUCT_IMAGES_BY_KEY,
   GET_PRODUCT_INFO_BY_KEY,
+  GET_PRODUCTS_BY_CATEGORY_PAGINATED,
   getProductImagesByKey,
   getProductInfoByKey,
   patchProduct,
@@ -15,7 +16,7 @@ import {
   ProductInfoPanel,
   ProductImageGallerySkeleton,
   ProductInfoPanelSkeleton,
-} from "@/components/features/products";
+} from "@/components/features/products/product";
 import { useHeader } from "@/hooks/useHeader";
 import { Pencil } from "lucide-react";
 import { Form, Formik, FormikProps } from "formik";
@@ -106,6 +107,11 @@ export default function ManagementProductPage() {
       await patchProduct(product.id!, values);
       mutate([GET_PRODUCT_IMAGES_BY_KEY, product.key]);
       mutate([GET_PRODUCT_INFO_BY_KEY, product.key]);
+      mutate(
+        (key) =>
+          Array.isArray(key) && key[0] === GET_PRODUCTS_BY_CATEGORY_PAGINATED,
+        undefined
+      );
       alert({
         description: "제품 수정이 완료되었습니다.",
         acceptLabel: "확인",
