@@ -63,7 +63,7 @@ interface Props {
   onDoubleClick?: (row: ISampleRequest) => void;
 }
 
-export default function SampleRequestTable({ data, onDoubleClick }: Props) {
+export function SampleRequestTable({ data, onDoubleClick }: Props) {
   return (
     <Table<ISampleRequest>
       fullWidth={false}
