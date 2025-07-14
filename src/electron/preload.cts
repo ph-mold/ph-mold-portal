@@ -4,6 +4,7 @@ contextBridge.exposeInMainWorld("electronAPI", {
   saveFile: (name: string, content: string) =>
     ipcRenderer.invoke("save-file", { name, content }),
   getAppVersion: () => ipcRenderer.invoke("get-app-version"),
+  openExternal: (url: string) => ipcRenderer.invoke("open-external", url),
   loginPref: {
     getSavedLoginEmail: () => ipcRenderer.invoke("get-login-email"),
     saveLoginEmail: (email: string) =>
