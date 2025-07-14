@@ -39,6 +39,7 @@ export default function ManagementProductsPage() {
   return (
     <ContentLayout
       title="제품 관리"
+      subtitle="제품을 관리합니다."
       contentSections={[
         {
           title: "제품 목록",
