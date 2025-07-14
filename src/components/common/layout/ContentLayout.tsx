@@ -19,9 +19,9 @@ export default function ContentLayout({
   return (
     <div className="flex flex-col h-full overflow-y-auto">
       {/* 타이틀 */}
-      <div className="py-8 px-4 sm:px-6 border-b border-border-light">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-foreground mb-2">{title}</h1>
+      <div className="py-8 px-4 sm:px-6 border-b border-border-light space-y-8">
+        <div className="text-center space-y-2">
+          <h1 className="text-3xl font-bold text-foreground">{title}</h1>
           {subtitle && <p className="text-foreground2">{subtitle}</p>}
         </div>
         {/* 액션 섹션 */}
