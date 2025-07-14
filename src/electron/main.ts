@@ -4,6 +4,7 @@ import { isDev } from "./util.js";
 import { getPreloadPath } from "./pathResolver.js";
 import { registerFileHandlers } from "./api/file.js";
 import { registerVersionHandlers } from "./api/version.js";
+import { registerExternalHandlers } from "./api/external.js";
 import "./api/userPref.js";
 import "./api/authPref.js";
 
@@ -26,4 +27,5 @@ app.whenReady().then(() => {
   createWindow();
   registerFileHandlers();
   registerVersionHandlers();
+  registerExternalHandlers();
 });

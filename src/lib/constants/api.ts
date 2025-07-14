@@ -37,6 +37,7 @@ export const API = {
   },
   SAMPLE_REQUESTS: {
     GET: `${API_BASE}/admin/sample-request`,
+    GET_PAGINATED: `${API_BASE}/admin/sample-request`,
     GET_ONE: (id: number) => `${API_BASE}/admin/sample-request/${id}`,
   },
   FILE: {

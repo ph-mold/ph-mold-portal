@@ -1,3 +1,4 @@
+import { IPaginated } from "@ph-mold/ph-ui";
 import { IGetProduct } from "./product";
 
 export interface ISampleRequest {
@@ -14,3 +15,10 @@ export interface ISampleRequest {
   remarks: string;
   createdAt: Date;
 }
+
+export interface GetSampleRequestsDto {
+  page?: number;
+  limit?: number;
+}
+
+export type IGetSampleRequestListResponse = IPaginated<ISampleRequest>;

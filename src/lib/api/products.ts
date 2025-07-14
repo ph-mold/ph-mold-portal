@@ -10,10 +10,10 @@ import { axiosInstance } from "../axiosInstance";
 // GET: 카테고리별 제품 목록
 export const GET_PRODUCTS_BY_CATEGORY = "getProductsByCategory";
 export async function getProductsByCategory(
-  categoryKey: string
+  category: string
 ): Promise<IGetProduct[]> {
   const res = await axiosInstance.get<IGetProduct[]>(
-    API.PRODUCTS.GET_BY_CATEGORY(categoryKey)
+    API.PRODUCTS.GET_BY_CATEGORY(category)
   );
   return res.data;
 }
@@ -21,7 +21,7 @@ export async function getProductsByCategory(
 export const GET_PRODUCTS_BY_CATEGORY_PAGINATED =
   "getProductsByCategoryPaginated";
 export async function getProductsByCategoryPaginated(
-  categoryKey: string,
+  category: string,
   page?: number,
   limit?: number
 ): Promise<IGetProductListResponse> {
@@ -29,7 +29,7 @@ export async function getProductsByCategoryPaginated(
     API.PRODUCTS.GET_BY_CATEGORY_PAGINATED,
     {
       params: {
-        categoryKey,
+        category,
         page,
         limit,
       },
