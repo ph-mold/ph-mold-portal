@@ -4,7 +4,8 @@ import RequireAuth from "@/components/common/RequireAuth";
 import clsx from "clsx";
 
 export default function RootLayout() {
-  const isRN = navigator.userAgent.includes("app");
+  const isRN = localStorage.getItem("platform") === "app";
+
   return (
     <RequireAuth>
       <div className="flex flex-col h-screen w-screen overflow-hidden">
