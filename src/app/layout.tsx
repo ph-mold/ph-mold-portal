@@ -3,8 +3,15 @@ import Header from "@/components/common/layout/Header";
 import RequireAuth from "@/components/common/RequireAuth";
 import clsx from "clsx";
 
+function getCookie(name: string) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop()?.split(";").shift();
+  return null;
+}
+
 export default function RootLayout() {
-  const isRN = localStorage.getItem("platform") === "app";
+  const isRN = getCookie("platform") === "app";
 
   return (
     <RequireAuth>
