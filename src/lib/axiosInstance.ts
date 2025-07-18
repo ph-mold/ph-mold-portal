@@ -44,7 +44,7 @@ function processQueue(error: unknown, token?: string) {
 
 const instance: AxiosInstance = axios.create({
   baseURL: "",
-  withCredentials: false,
+  withCredentials: true,
   headers: {
     "Content-Type": "application/json",
   },
@@ -53,7 +53,8 @@ const instance: AxiosInstance = axios.create({
 instance.interceptors.request.use(
   async (config) => {
     const token = await getAccessToken();
-    if (token) {
+    if (token && isElectron) {
+      // Electron 환경에서만 Authorization 헤더 설정
       config.headers?.set?.("Authorization", `Bearer ${token}`);
     }
     config.headers?.set?.("platform", isElectron ? "desktop" : "web");
