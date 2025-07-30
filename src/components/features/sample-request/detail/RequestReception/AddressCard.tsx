@@ -7,7 +7,7 @@ interface Props {
 
 export function AddressCard({ req }: Props) {
   return (
-    <section className="bg-background rounded-xl p-6 shadow-sm border border-border-strong">
+    <section className="p-4 sm:!p-6 border-b border-border-strong">
       <h3 className="text-lg font-semibold text-foreground mb-4">
         배송지 정보
       </h3>
