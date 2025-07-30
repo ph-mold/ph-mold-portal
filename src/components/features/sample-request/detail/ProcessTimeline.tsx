@@ -24,20 +24,20 @@ export function ProcessTimeline({
           const isCompleted = completedSteps.includes(node.id);
 
           let buttonClasses =
-            "w-full p-3 md:p-4 rounded-lg transition-all duration-200 cursor-pointer ";
+            "w-full p-3 md:p-4 rounded-lg transition-all duration-200 cursor-pointer bg-gradient-to-r ";
           let iconClasses =
             "w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ";
           let textClasses = "";
 
           if (isCurrentNode) {
             // 현재 노드
-            buttonClasses += `${node.activeColor} text-reverseForeground shadow-lg`;
+            buttonClasses += `${node.activeColor} text-reverseForeground shadow-lg scale-105 sm:scale-110 z-10`;
             iconClasses += `bg-background ${node.completedTextColor}`;
             textClasses = "text-reverseForeground";
           } else if (isCompleted) {
             // 완료된 노드
             buttonClasses += `${node.completedColor} ${node.completedTextColor} hover:bg-opacity-80`;
-            iconClasses += "bg-green-500 text-reverseForeground";
+            iconClasses += "bg-green-400 text-reverseForeground";
             textClasses = node.completedTextColor;
           } else {
             // 대기 중인 노드
@@ -69,7 +69,7 @@ export function ProcessTimeline({
                     {node.label}
                   </div>
                   <div
-                    className={`text-xs mt-1 opacity-75 line-clamp-1 md:line-clamp-none ${textClasses}`}
+                    className={`text-xs mt-1 line-clamp-1 md:line-clamp-none ${textClasses}`}
                   >
                     {node.description}
                   </div>

@@ -8,7 +8,7 @@ export function CompletedNode() {
         <div className="flex flex-col gap-4 mb-4">
           <label className="flex items-center cursor-pointer">
             <input type="checkbox" className="h-4 w-4 ring-signature" />
-            <span className="ml-2 text-sm font-medium text-gray-700">
+            <span className="ml-2 text-sm font-medium text-foreground">
               고객이 샘플을 수령했습니다
             </span>
           </label>
@@ -44,7 +44,7 @@ export function CompletedNode() {
         </div> */}
         <div className="flex justify-end space-x-2">
           <Button variant="outlined">이전 단계로</Button>
-          <Button>배송 준비 완료</Button>
+          <Button>완료</Button>
         </div>
       </div>
     </div>
