@@ -1,10 +1,4 @@
-import { ISampleRequest } from "../../../../lib/types/sample-request";
-
-interface ShippedNodeProps {
-  request: ISampleRequest;
-}
-
-export function ShippedNode({ request }: ShippedNodeProps) {
+export function ShippedNode() {
   return (
     <div className="space-y-4">
       <div className="bg-white rounded-lg shadow p-6">

@@ -1,10 +1,4 @@
-import { ISampleRequest } from "../../../../lib/types/sample-request";
-
-interface CompletedNodeProps {
-  request: ISampleRequest;
-}
-
-export function CompletedNode({ request }: CompletedNodeProps) {
+export function CompletedNode() {
   return (
     <div className="space-y-4">
       <div className="bg-white rounded-lg shadow p-6">

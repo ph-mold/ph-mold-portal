@@ -38,11 +38,11 @@ export default function SampleRequestDetailPage() {
       case "reception":
         return <RequestReceptionNode request={request} />;
       case "processing":
-        return <ProcessingNode request={request} />;
+        return <ProcessingNode />;
       case "shipped":
-        return <ShippedNode request={request} />;
+        return <ShippedNode />;
       case "completed":
-        return <CompletedNode request={request} />;
+        return <CompletedNode />;
       default:
         return <RequestReceptionNode request={request} />;
     }

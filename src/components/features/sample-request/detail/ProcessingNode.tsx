@@ -1,10 +1,4 @@
-import { ISampleRequest } from "../../../../lib/types/sample-request";
-
-interface ProcessingNodeProps {
-  request: ISampleRequest;
-}
-
-export function ProcessingNode({ request }: ProcessingNodeProps) {
+export function ProcessingNode() {
   return (
     <div className="space-y-4">
       <div className="bg-white rounded-lg shadow p-6">
