@@ -31,7 +31,7 @@ export function ProductCard({ req }: Props) {
   };
 
   return (
-    <section className="bg-background rounded-xl p-6 shadow-sm border border-border-strong">
+    <section className="p-4 sm:!p-6 border-b border-border-strong">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-lg font-semibold text-foreground">제품 정보</h2>
         <Button

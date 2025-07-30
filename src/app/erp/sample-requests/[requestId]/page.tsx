@@ -51,7 +51,7 @@ export default function SampleRequestDetailPage() {
   return (
     <>
       {request && (
-        <div className="flex flex-col h-full overflow-y-auto bg-gray-50">
+        <div className="flex flex-col h-full overflow-y-auto">
           <div className="mx-auto w-full max-w-7xl px-4 py-6">
             {/* 프로세스 타임라인 */}
             <ProcessTimeline

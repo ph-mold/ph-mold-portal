@@ -9,7 +9,7 @@ export function RemarksCard({ req }: Props) {
   if (!req.remarks) return null;
 
   return (
-    <section className="bg-background rounded-xl p-6 shadow-sm border border-border-strong">
+    <section className="p-4 sm:!p-6">
       <h3 className="text-lg font-semibold text-foreground mb-4">비고</h3>
 
       <div className="flex items-start gap-2">

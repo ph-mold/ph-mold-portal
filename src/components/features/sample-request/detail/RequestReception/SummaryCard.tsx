@@ -8,7 +8,7 @@ interface Props {
 
 export function SummaryCard({ req }: Props) {
   return (
-    <section className="bg-background rounded-xl p-6 shadow-sm border border-border-strong">
+    <section className="p-4 sm:!p-6 border-b border-border-strong">
       <h2 className="text-lg font-semibold text-foreground mb-4">요청 요약</h2>
 
       <div className="space-y-4">

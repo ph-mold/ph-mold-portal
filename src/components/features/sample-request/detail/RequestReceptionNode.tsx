@@ -13,7 +13,7 @@ interface RequestReceptionNodeProps {
 
 export function RequestReceptionNode({ request }: RequestReceptionNodeProps) {
   return (
-    <div className="space-y-3">
+    <div className="bg-background rounded-lg shadow-sm border border-border-strong">
       {/* 제품 정보 */}
       <ProductCard req={request} />
 

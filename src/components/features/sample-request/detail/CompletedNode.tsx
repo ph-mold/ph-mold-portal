@@ -1,46 +1,25 @@
+import { Button, Input, TextArea } from "@ph-mold/ph-ui";
+
 export function CompletedNode() {
   return (
-    <div className="space-y-4">
-      <div className="bg-white rounded-lg shadow p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">완료</h3>
-
-        {/* 수령 확인 */}
-        <div className="mb-4">
-          <label className="flex items-center">
-            <input
-              type="checkbox"
-              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-            />
+    <div className="space-y-4 bg-background rounded-lg shadow-sm border border-border-strong">
+      <div className="p-4 sm:!p-6">
+        <h3 className="text-lg font-semibold text-foreground mb-4">완료</h3>
+        <div className="flex flex-col gap-4 mb-4">
+          <label className="flex items-center cursor-pointer">
+            <input type="checkbox" className="h-4 w-4 ring-signature" />
             <span className="ml-2 text-sm font-medium text-gray-700">
               고객이 샘플을 수령했습니다
             </span>
           </label>
-        </div>
-
-        {/* 수령일자 */}
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            수령일자
-          </label>
-          <input
-            type="date"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
-
-        {/* 후속 메모 */}
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            후속 메모
-          </label>
-          <textarea
+          <Input label="수령일자" type="date" />
+          <TextArea
+            label="후속 메모"
             rows={4}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="고객 피드백이나 후속 조치 사항을 기록하세요"
           />
         </div>
-
-        {/* 완료 상태 표시 */}
+        {/* 완료 상태 표시
         <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-md">
           <div className="flex items-center">
             <div className="flex-shrink-0">
@@ -62,16 +41,10 @@ export function CompletedNode() {
               </p>
             </div>
           </div>
-        </div>
-
-        {/* 상태 변경 버튼 */}
+        </div> */}
         <div className="flex justify-end space-x-2">
-          <button className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600">
-            이전 단계로
-          </button>
-          <button className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600">
-            완료 처리
-          </button>
+          <Button variant="outlined">이전 단계로</Button>
+          <Button>배송 준비 완료</Button>
         </div>
       </div>
     </div>
