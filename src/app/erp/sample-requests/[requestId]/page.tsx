@@ -11,6 +11,8 @@ import {
   ShippedNode,
   useSampleRequestProcess,
 } from "@/components/features/sample-request/detail";
+import { CompletedStatusBanner } from "@/components/features/sample-request/detail/CompletedStatusBanner";
+import { isStatusCompleted } from "@/lib/types/sample-request";
 
 export default function SampleRequestDetailPage() {
   const { requestId } = useParams<{ requestId: string }>();
@@ -40,7 +42,7 @@ export default function SampleRequestDetailPage() {
       case "shipped":
         return <ShippedNode request={request} />;
       case "completed":
-        return <CompletedNode />;
+        return <CompletedNode request={request} />;
       default:
         return <RequestReceptionNode request={request} />;
     }
@@ -50,7 +52,12 @@ export default function SampleRequestDetailPage() {
     <>
       {request && (
         <div className="flex flex-col h-full overflow-y-auto">
-          <div className="mx-auto w-full max-w-7xl px-4 py-6">
+          <div className="mx-auto w-full max-w-7xl px-4 py-6 space-y-2">
+            {/* 완료 상태 배너 */}
+            {isStatusCompleted(request.status, "completed") && (
+              <CompletedStatusBanner />
+            )}
+
             {/* 프로세스 타임라인 */}
             <ProcessTimeline
               currentNode={currentNode}
