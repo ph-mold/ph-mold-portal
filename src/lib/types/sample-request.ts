@@ -31,6 +31,7 @@ export interface ISampleRequest {
 export interface IProcessNodeData {
   processing: IProcessingNodeBody & IProcessSign;
   shipped: IShippedNodeBody & IProcessSign;
+  completed: ICompletedNodeBody & IProcessSign;
 }
 
 export interface IProcessSign {
@@ -87,5 +88,10 @@ export interface IProcessingNodeBody {
 export interface IShippedNodeBody {
   trackingNumber: string;
   shippedAt: string;
+  memo?: string;
+}
+
+export interface ICompletedNodeBody {
+  completedAt?: string;
   memo?: string;
 }

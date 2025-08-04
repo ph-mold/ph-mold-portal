@@ -45,6 +45,8 @@ export const API = {
       `${API_BASE}/admin/sample-request/${id}/process/processing`,
     UPDATE_SHIPPED_NODE: (id: number) =>
       `${API_BASE}/admin/sample-request/${id}/process/shipped`,
+    UPDATE_COMPLETED_NODE: (id: number) =>
+      `${API_BASE}/admin/sample-request/${id}/process/completed`,
   },
   FILE: {
     UPLOAD_FILE: `${API_BASE}/file`,

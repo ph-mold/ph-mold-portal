@@ -2,6 +2,7 @@ import { axiosInstance } from "../axiosInstance";
 import { API } from "../constants/api";
 import {
   GetSampleRequestsDto,
+  ICompletedNodeBody,
   IGetSampleRequestListResponse,
   IProcessingNodeBody,
   ISampleRequest,
@@ -69,6 +70,18 @@ export async function updateShippedNode(
 ): Promise<ISampleRequest | undefined> {
   const res = await axiosInstance.post<ISampleRequest>(
     API.SAMPLE_REQUESTS.UPDATE_SHIPPED_NODE(id),
+    data
+  );
+  return res.data;
+}
+
+export const UPDATE_COMPLETED_NODE = "updateCompletedNode";
+export async function updateCompletedNode(
+  id: number,
+  data: ICompletedNodeBody
+): Promise<ISampleRequest | undefined> {
+  const res = await axiosInstance.post<ISampleRequest>(
+    API.SAMPLE_REQUESTS.UPDATE_COMPLETED_NODE(id),
     data
   );
   return res.data;
