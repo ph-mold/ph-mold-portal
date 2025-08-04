@@ -7,9 +7,10 @@ import { isElectron } from "@/lib/electron/isElectron";
 
 interface Props {
   req: ISampleRequest;
+  onUpdateReceptionNode: () => void;
 }
 
-export function ProductCard({ req }: Props) {
+export function ProductCard({ req, onUpdateReceptionNode }: Props) {
   const prod = req.product;
 
   const handleProductClick = async () => {
@@ -32,27 +33,36 @@ export function ProductCard({ req }: Props) {
 
   return (
     <section className="p-4 sm:!p-6 border-b border-border-strong">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-semibold text-foreground">제품 정보</h2>
+      <div className="flex justify-between space-x-2 mb-4">
+        <h3 className="text-lg font-semibold text-foreground">제품 정보</h3>
         <Button
+          type="button"
           variant="outlined"
           size="small"
-          onClick={handleProductClick}
-          className="flex items-center gap-1.5"
-          startIcon={<ExternalLink size={14} />}
+          className="h-10"
+          onClick={onUpdateReceptionNode}
         >
-          제품 바로가기
+          요청 접수
         </Button>
       </div>
 
       <div className="flex flex-col lg:flex-row gap-4">
         {/* 썸네일 */}
-        <div className="flex-shrink-0">
+        <div className="flex-shrink-0 w-fit gap-2 flex flex-col">
           <img
             src={`${IMAGE_BASE_URL}${prod.thumbnailImageUrl}`}
             alt={`thumb-${prod.code}`}
             className="w-full max-w-40 h-40 object-contain rounded-lg border border-border-strong shadow-sm bg-background2"
           />
+          <Button
+            variant="outlined"
+            size="small"
+            onClick={handleProductClick}
+            className="flex items-center gap-1.5"
+            startIcon={<ExternalLink size={14} />}
+          >
+            제품 바로가기
+          </Button>
         </div>
 
         {/* 제품 정보 */}
