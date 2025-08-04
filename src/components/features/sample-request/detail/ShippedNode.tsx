@@ -29,7 +29,7 @@ export function ShippedNode({ request }: ShippedNodeProps) {
       shippedAt: request.nodeData?.shipped?.shippedAt
         ? request.nodeData?.shipped?.shippedAt
         : new Date().toISOString().split("T")[0],
-      memo: request.nodeData?.shipped?.memo || undefined,
+      memo: request.nodeData?.shipped?.memo || "",
     });
   }, [request]);
 
@@ -99,14 +99,14 @@ export function ShippedNode({ request }: ShippedNodeProps) {
                   placeholder="배송일자를 입력하세요"
                   type="date"
                   name="shippedAt"
-                  value={values.shippedAt}
+                  value={values.shippedAt || ""}
                   onChange={handleChange}
                 />
                 <TextArea
                   label="내부 메모"
                   name="memo"
                   placeholder="작업 진행 상황을 기록하세요"
-                  value={values.memo}
+                  value={values.memo || ""}
                   rows={4}
                   onChange={handleChange}
                 />
