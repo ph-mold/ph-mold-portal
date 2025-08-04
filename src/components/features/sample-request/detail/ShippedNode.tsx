@@ -8,10 +8,19 @@ import { Formik } from "formik";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { mutate } from "swr";
+import * as Yup from "yup";
 
 interface ShippedNodeProps {
   request: ISampleRequest;
 }
+
+// Yup 검증 스키마
+const validationSchema = Yup.object().shape({
+  trackingNumber: Yup.string()
+    .required("송장번호를 입력해주세요.")
+    .trim()
+    .min(1, "송장번호를 입력해주세요."),
+});
 
 export function ShippedNode({ request }: ShippedNodeProps) {
   const alert = useAlert();
@@ -66,10 +75,11 @@ export function ShippedNode({ request }: ShippedNodeProps) {
       <div className="p-4 sm:!p-6">
         <Formik<IShippedNodeBody>
           initialValues={initFormValues}
+          validationSchema={validationSchema}
           onSubmit={onSubmit}
           enableReinitialize={true}
         >
-          {({ values, handleChange, submitForm }) => (
+          {({ values, handleChange, submitForm, errors, touched }) => (
             <>
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-lg font-semibold text-foreground">
@@ -93,20 +103,27 @@ export function ShippedNode({ request }: ShippedNodeProps) {
                   name="trackingNumber"
                   value={values.trackingNumber}
                   onChange={handleChange}
+                  helperText={
+                    touched.trackingNumber && errors.trackingNumber
+                      ? errors.trackingNumber
+                      : undefined
+                  }
+                  error={touched.trackingNumber && !!errors.trackingNumber}
                 />
+
                 <Input
                   label="배송일자"
                   placeholder="배송일자를 입력하세요"
                   type="date"
                   name="shippedAt"
-                  value={values.shippedAt || ""}
+                  value={values.shippedAt}
                   onChange={handleChange}
                 />
                 <TextArea
                   label="내부 메모"
                   name="memo"
                   placeholder="작업 진행 상황을 기록하세요"
-                  value={values.memo || ""}
+                  value={values.memo}
                   rows={4}
                   onChange={handleChange}
                 />
