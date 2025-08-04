@@ -30,10 +30,11 @@ export interface ISampleRequest {
 
 export interface IProcessNodeData {
   processing: IProcessingNodeBody & IProcessSign;
+  shipped: IShippedNodeBody & IProcessSign;
 }
 
 export interface IProcessSign {
-  date?: Date;
+  date?: string; // Date를 string으로 변경
   operator?: string;
 }
 
@@ -81,4 +82,10 @@ export type IGetSampleRequestListResponse = IPaginated<ISampleRequest>;
 export interface IProcessingNodeBody {
   memo?: string;
   imageUrl?: string;
+}
+
+export interface IShippedNodeBody {
+  trackingNumber: string;
+  shippedAt: string;
+  memo?: string;
 }

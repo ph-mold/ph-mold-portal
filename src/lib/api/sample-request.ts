@@ -5,6 +5,7 @@ import {
   IGetSampleRequestListResponse,
   IProcessingNodeBody,
   ISampleRequest,
+  IShippedNodeBody,
 } from "../types/sample-request";
 
 export const GET_SAMPLE_REQUESTS = "getSampleRequests";
@@ -56,6 +57,18 @@ export async function updateProcessingNode(
 ): Promise<ISampleRequest | undefined> {
   const res = await axiosInstance.post<ISampleRequest>(
     API.SAMPLE_REQUESTS.UPDATE_PROCESSING_NODE(id),
+    data
+  );
+  return res.data;
+}
+
+export const UPDATE_SHIPPED_NODE = "updateShippedNode";
+export async function updateShippedNode(
+  id: number,
+  data: IShippedNodeBody
+): Promise<ISampleRequest | undefined> {
+  const res = await axiosInstance.post<ISampleRequest>(
+    API.SAMPLE_REQUESTS.UPDATE_SHIPPED_NODE(id),
     data
   );
   return res.data;
