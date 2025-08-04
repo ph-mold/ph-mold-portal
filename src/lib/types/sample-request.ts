@@ -23,9 +23,18 @@ export interface ISampleRequest {
   assignedUserId?: number;
   completedAt?: Date;
   trackingCode?: string;
-  nodeData?: Record<string, unknown>;
+  nodeData?: IProcessNodeData;
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface IProcessNodeData {
+  processing: IProcessingNodeBody & IProcessSign;
+}
+
+export interface IProcessSign {
+  date?: Date;
+  operator?: string;
 }
 
 // 완료된 상태들을 배열로 반환하는 유틸리티 함수
@@ -68,3 +77,8 @@ export interface GetSampleRequestsDto {
 }
 
 export type IGetSampleRequestListResponse = IPaginated<ISampleRequest>;
+
+export interface IProcessingNodeBody {
+  memo?: string;
+  imageUrl?: string;
+}

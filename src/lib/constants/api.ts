@@ -39,6 +39,8 @@ export const API = {
     GET: `${API_BASE}/admin/sample-request`,
     GET_PAGINATED: `${API_BASE}/admin/sample-request`,
     GET_ONE: (id: number) => `${API_BASE}/admin/sample-request/${id}`,
+    UPDATE_PROCESSING_NODE: (id: number) =>
+      `${API_BASE}/admin/sample-request/${id}/process/processing`,
   },
   FILE: {
     UPLOAD_FILE: `${API_BASE}/file`,

@@ -3,6 +3,7 @@ import { API } from "../constants/api";
 import {
   GetSampleRequestsDto,
   IGetSampleRequestListResponse,
+  IProcessingNodeBody,
   ISampleRequest,
 } from "../types/sample-request";
 
@@ -34,6 +35,18 @@ export async function getSampleRequest(
   if (!id) return;
   const res = await axiosInstance.get<ISampleRequest>(
     API.SAMPLE_REQUESTS.GET_ONE(parseInt(id))
+  );
+  return res.data;
+}
+
+export const UPDATE_PROCESSING_NODE = "updateProcessingNode";
+export async function updateProcessingNode(
+  id: number,
+  data: IProcessingNodeBody
+): Promise<ISampleRequest | undefined> {
+  const res = await axiosInstance.post<ISampleRequest>(
+    API.SAMPLE_REQUESTS.UPDATE_PROCESSING_NODE(id),
+    data
   );
   return res.data;
 }
