@@ -13,19 +13,22 @@ import {
   updateProcessingNode,
 } from "@/lib/api/sample-request";
 import { mutate } from "swr";
+import { useNavigate } from "react-router-dom";
 
 interface ProcessingNodeProps {
   request: ISampleRequest;
 }
 
 export function ProcessingNode({ request }: ProcessingNodeProps) {
-  const [initFormValues, setInitFormValues] = useState<IProcessingNodeBody>({});
   const alert = useAlert();
+  const navigate = useNavigate();
+
+  const [initFormValues, setInitFormValues] = useState<IProcessingNodeBody>({});
 
   useEffect(() => {
     setInitFormValues({
-      memo: request.nodeData?.processing.memo,
-      imageUrl: request.nodeData?.processing.imageUrl,
+      memo: request.nodeData?.processing?.memo,
+      imageUrl: request.nodeData?.processing?.imageUrl,
     });
   }, [request]);
 
@@ -37,6 +40,9 @@ export function ProcessingNode({ request }: ProcessingNodeProps) {
         description: "준비 완료되었습니다.",
         acceptLabel: "확인",
         showCancelButton: false,
+        onAccept: () => {
+          navigate(`/erp/sample-requests/${request.id}?n=shipped`);
+        },
       });
       mutate([GET_SAMPLE_REQUEST, request.id.toString()]);
     }
