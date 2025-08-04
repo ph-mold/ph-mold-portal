@@ -4,9 +4,13 @@ import { uploadFile } from "@/lib/api/file";
 
 interface ImageUploaderProps {
   onUpload: (paths: string[]) => void;
+  multiple?: boolean; // 단일/다중 업로드 옵션
 }
 
-export function ImageUploader({ onUpload }: ImageUploaderProps) {
+export function ImageUploader({
+  onUpload,
+  multiple = true,
+}: ImageUploaderProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isDragging, setIsDragging] = useState(false);
 
@@ -21,7 +25,10 @@ export function ImageUploader({ onUpload }: ImageUploaderProps) {
       return;
     }
 
-    const uploadedResults = await Promise.all(pngFiles.map(uploadFile));
+    // 단일 업로드인 경우 첫 번째 파일만 사용
+    const filesToUpload = multiple ? pngFiles : pngFiles.slice(0, 1);
+
+    const uploadedResults = await Promise.all(filesToUpload.map(uploadFile));
 
     const validPaths = uploadedResults
       .filter((r): r is { path: string } => !!r)
@@ -37,7 +44,7 @@ export function ImageUploader({ onUpload }: ImageUploaderProps) {
       <input
         type="file"
         accept="image/png"
-        multiple
+        multiple={multiple}
         hidden
         ref={fileInputRef}
         onChange={(e) => handleFiles(e.target.files)}
