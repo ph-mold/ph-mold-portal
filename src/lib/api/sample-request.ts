@@ -39,6 +39,16 @@ export async function getSampleRequest(
   return res.data;
 }
 
+export const UPDATE_RECEPTION_NODE = "updateReceptionNode";
+export async function updateReceptionNode(
+  id: number
+): Promise<ISampleRequest | undefined> {
+  const res = await axiosInstance.post<ISampleRequest>(
+    API.SAMPLE_REQUESTS.UPDATE_RECEPTION_NODE(id)
+  );
+  return res.data;
+}
+
 export const UPDATE_PROCESSING_NODE = "updateProcessingNode";
 export async function updateProcessingNode(
   id: number,
