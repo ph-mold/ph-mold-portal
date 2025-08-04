@@ -70,15 +70,14 @@ export function ProcessingNode({ request }: ProcessingNodeProps) {
         >
           {({ values, setFieldValue, submitForm, handleChange }) => (
             <>
-              <div className="flex justify-between space-x-2">
-                <h3 className="text-lg font-semibold text-foreground mb-4">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-lg font-semibold text-foreground">
                   준비 중
                 </h3>
                 <Button
                   type="button"
-                  variant="outlined"
                   size="small"
-                  className="h-10"
+                  variant="outlined"
                   onClick={() => handleCompleteProcessing(submitForm)}
                 >
                   준비 완료
