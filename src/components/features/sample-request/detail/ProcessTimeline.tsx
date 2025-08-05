@@ -14,7 +14,7 @@ export function ProcessTimeline({
   onNodeChange,
 }: ProcessTimelineProps) {
   return (
-    <div className="bg-background shadow rounded-lg p-4 sm:!p-6 mb-2 border border-border-strong">
+    <div className="bg-background shadow rounded-lg p-4 sm:!p-6 border border-border-strong">
       <h2 className="text-lg font-semibold mb-4">샘플 요청 처리</h2>
 
       {/* 반응형 레이아웃 */}

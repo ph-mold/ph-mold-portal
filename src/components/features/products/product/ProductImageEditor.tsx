@@ -9,7 +9,7 @@ import {
   Star,
   X,
 } from "lucide-react";
-import { ImageUploader } from "./ImageUploader";
+import { ImageUploader } from "@/components/common/ImageUploader";
 import { Swiper, SwiperClass, SwiperSlide } from "swiper/react";
 import { Button } from "@ph-mold/ph-ui";
 import { FormikProps } from "formik";

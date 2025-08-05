@@ -39,6 +39,14 @@ export const API = {
     GET: `${API_BASE}/admin/sample-request`,
     GET_PAGINATED: `${API_BASE}/admin/sample-request`,
     GET_ONE: (id: number) => `${API_BASE}/admin/sample-request/${id}`,
+    UPDATE_RECEPTION_NODE: (id: number) =>
+      `${API_BASE}/admin/sample-request/${id}/process/reception`,
+    UPDATE_PROCESSING_NODE: (id: number) =>
+      `${API_BASE}/admin/sample-request/${id}/process/processing`,
+    UPDATE_SHIPPED_NODE: (id: number) =>
+      `${API_BASE}/admin/sample-request/${id}/process/shipped`,
+    UPDATE_COMPLETED_NODE: (id: number) =>
+      `${API_BASE}/admin/sample-request/${id}/process/completed`,
   },
   FILE: {
     UPLOAD_FILE: `${API_BASE}/file`,

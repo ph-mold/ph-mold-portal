@@ -5,3 +5,5 @@ export { ShippedNode } from "./ShippedNode";
 export { CompletedNode } from "./CompletedNode";
 export { ProcessTimeline } from "./ProcessTimeline";
 export type { ProcessNode } from "./type";
+
+export { useSampleRequestProcess } from "./hooks/useSampleRequestProcess";
