@@ -19,7 +19,7 @@ export function ProcessTimeline({
 
       {/* 반응형 레이아웃 */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-2 md:gap-1">
-        {PROCESS_NODES.map((node, index) => {
+        {PROCESS_NODES.map((node) => {
           const isCurrentNode = currentNode === node.id;
           const isCompleted = completedSteps.includes(node.id);
 
@@ -59,7 +59,7 @@ export function ProcessTimeline({
                   {isCompleted ? (
                     <Check className="w-4 h-4" />
                   ) : (
-                    <span className="text-sm font-bold">{index + 1}</span>
+                    <span className="text-sm font-bold">{node.icon}</span>
                   )}
                 </div>
                 <div className="flex-1 min-w-0 md:flex-none md:text-center mt-1">
