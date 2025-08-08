@@ -1,3 +1,4 @@
+import { Check, Package, Truck, UserCheck } from "lucide-react";
 import { ProcessNode } from ".";
 
 export const PROCESS_NODE_VALUES = [
@@ -16,6 +17,8 @@ export const PROCESS_NODES = [
     activeColor: "bg-gradient-primary",
     completedColor: "bg-blue-100",
     completedTextColor: "text-blue-400",
+    completedBorderColor: "border-blue-400",
+    icon: <UserCheck size={16} />,
   },
   {
     id: "processing" as ProcessNode,
@@ -25,6 +28,8 @@ export const PROCESS_NODES = [
     activeColor: "bg-gradient-quinary",
     completedColor: "bg-yellow-100",
     completedTextColor: "text-yellow-400",
+    completedBorderColor: "border-yellow-400",
+    icon: <Package size={16} />,
   },
   {
     id: "shipped" as ProcessNode,
@@ -34,6 +39,8 @@ export const PROCESS_NODES = [
     activeColor: "bg-gradient-secondary",
     completedColor: "bg-purple-100",
     completedTextColor: "text-purple-400",
+    completedBorderColor: "border-purple-400",
+    icon: <Truck size={16} />,
   },
   {
     id: "completed" as ProcessNode,
@@ -43,5 +50,7 @@ export const PROCESS_NODES = [
     activeColor: "bg-gradient-quaternary",
     completedColor: "bg-green-100",
     completedTextColor: "text-green-400",
+    completedBorderColor: "border-green-400",
+    icon: <Check size={16} />,
   },
 ];
