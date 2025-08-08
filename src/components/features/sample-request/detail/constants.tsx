@@ -1,4 +1,4 @@
-import { Check, Package, Truck, UserCheck } from "lucide-react";
+import { Package, PackageCheck, Truck, UserCheck } from "lucide-react";
 import { ProcessNode } from ".";
 
 export const PROCESS_NODE_VALUES = [
@@ -51,6 +51,6 @@ export const PROCESS_NODES = [
     completedColor: "bg-green-100",
     completedTextColor: "text-green-400",
     completedBorderColor: "border-green-400",
-    icon: <Check size={16} />,
+    icon: <PackageCheck size={16} />,
   },
 ];
