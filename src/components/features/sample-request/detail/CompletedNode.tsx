@@ -1,5 +1,6 @@
 import {
   GET_SAMPLE_REQUEST,
+  GET_SAMPLE_REQUESTS_PAGINATED,
   updateCompletedNode,
 } from "@/lib/api/sample-request";
 import { ICompletedNodeBody } from "@/lib/types/sample-request";
@@ -40,6 +41,10 @@ export function CompletedNode({ request }: CompletedNodeProps) {
         showCancelButton: false,
       });
       mutate([GET_SAMPLE_REQUEST, request.id.toString()]);
+      mutate(
+        (key) => Array.isArray(key) && key[0] === GET_SAMPLE_REQUESTS_PAGINATED,
+        undefined
+      );
     }
   };
 
