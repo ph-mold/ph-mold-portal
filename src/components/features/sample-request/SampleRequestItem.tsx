@@ -1,7 +1,8 @@
 import { formatKoreanDateTime } from "@/utils/format";
 import { User, Building, Calendar } from "lucide-react";
 import { useState } from "react";
-import { ISampleRequest } from "@/lib/types/sample-request";
+import { ISampleRequest, isStatusCompleted } from "@/lib/types/sample-request";
+import { SampleRequestTimeline } from "./SampleRequestTimeline";
 
 interface Props {
   item: ISampleRequest;
@@ -14,7 +15,11 @@ export function SampleRequestItem({ item, onClick }: Props) {
 
   return (
     <div
-      className="relative border border-border-strong rounded-xl px-4 py-4 hover:shadow-md transition-all duration-200 bg-background cursor-pointer group"
+      className={`relative border  rounded-xl px-4 py-4 hover:shadow-md transition-all duration-200 cursor-pointer group ${
+        isStatusCompleted(item.status, "completed")
+          ? "bg-green-50 border-green-200"
+          : "bg-background border-border-strong"
+      }`}
       onClick={() => onClick(item)}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -36,7 +41,7 @@ export function SampleRequestItem({ item, onClick }: Props) {
           </div>
 
           {/* 요청자 정보와 날짜 */}
-          <div className="flex flex-wrap items-center gap-2 text-sm text-gray-600">
+          <div className="flex flex-wrap items-center gap-2 text-sm text-gray-600 mb-3">
             <div className="flex items-center gap-1.5">
               <User size={14} className="text-gray-400 flex-shrink-0" />
               <span className="truncate">{item.name}</span>
@@ -53,6 +58,11 @@ export function SampleRequestItem({ item, onClick }: Props) {
                 {formatKoreanDateTime(item.createdAt.toString())}
               </span>
             </div>
+          </div>
+
+          {/* 타임라인 */}
+          <div className="mt-3">
+            <SampleRequestTimeline sampleRequest={item} />
           </div>
         </div>
       </div>

@@ -29,6 +29,7 @@ export function RequestReceptionNode({ request }: RequestReceptionNodeProps) {
       alert({
         title: "요청 접수",
         description: "요청 접수가 완료되었습니다.",
+        showCancelButton: false,
         acceptLabel: "확인",
         onAccept: () => {
           navigate(`/erp/sample-requests/${request.id}?n=processing`);
