@@ -73,7 +73,7 @@ export function useSampleRequestProcess(request: ISampleRequest | undefined) {
       // URL 쿼리가 없고 request가 로드되면 완료된 단계 다음 노드로 이동
       const newNextNode = getNextNode(getCompletedSteps(request));
       setCurrentNode(newNextNode);
-      setSearchParams({ n: newNextNode });
+      // setSearchParams 제거 - URL을 변경하지 않음
     }
   }, [searchParams, request]);
 
