@@ -6,7 +6,7 @@ import {
   IInquiry,
 } from "../types/inquiry";
 
-export const GET_INQUIRIES = "getInquiries";
+export const GET_INQUIRIES_PAGINATED = "getInquiriesPaginated";
 export async function getInquiriesWithPagination(
   params: IInquiriesParams
 ): Promise<IInquiriesResponse> {
