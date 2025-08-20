@@ -14,6 +14,7 @@ import LS3510Page from "./erp/label-sticker/ls-3510/page";
 import LabelStickerPage from "./erp/label-sticker/page";
 import LS3509Page from "./erp/label-sticker/ls-3509/page";
 import SpecsPage from "./cms/specs/page";
+import InquiriesPage from "./erp/inquiry/page";
 
 export default function Routes() {
   return useRoutes([
@@ -49,6 +50,10 @@ export default function Routes() {
                   element: <LS3509Page />,
                 },
               ],
+            },
+            {
+              path: "inquiry",
+              element: <InquiriesPage />,
             },
           ],
         },
