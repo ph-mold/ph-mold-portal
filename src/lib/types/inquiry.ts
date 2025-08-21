@@ -2,6 +2,13 @@ import { IPaginated } from "@ph-mold/ph-ui";
 
 export type InquiryStatus = "PENDING" | "IN_PROGRESS" | "COMPLETED";
 
+export interface IReply {
+  id: number;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface IInquiry {
   id: number;
   status: InquiryStatus;
@@ -15,6 +22,7 @@ export interface IInquiry {
   remarks: string;
   password: string;
   createdAt: string;
+  reply?: IReply;
 }
 
 export interface IInquiriesParams {

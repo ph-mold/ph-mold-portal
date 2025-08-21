@@ -2,6 +2,7 @@ import { IInquiry } from "@/lib/types/inquiry";
 import { User, Building, Calendar } from "lucide-react";
 import { useState } from "react";
 import { STATUS_MAP } from ".";
+import { Card } from "@/components/common/Card";
 
 interface Props {
   item: IInquiry;
@@ -13,8 +14,10 @@ export function InquiryItem({ item, onClick }: Props) {
   const status = STATUS_MAP[item.status];
 
   return (
-    <div
-      className={`group relative cursor-pointer rounded-xl border px-4 py-4 transition-all duration-200 hover:shadow-md ${
+    <Card
+      padding
+      basic
+      className={`group relative cursor-pointer hover:shadow-md ${
         item.status === "COMPLETED"
           ? "border-green-200 bg-green-50"
           : "bg-background border-border-strong"
@@ -74,7 +77,7 @@ export function InquiryItem({ item, onClick }: Props) {
 
       {/* Hover 오버레이 - 더보기 버튼에 마우스가 없을 때만 표시 */}
       {isHovered && (
-        <div className="pointer-events-none absolute inset-0 z-9 flex items-center justify-center rounded-xl bg-blue-500/8 backdrop-blur-[2px] transition-all duration-200">
+        <div className="pointer-events-none absolute inset-0 z-9 flex items-center justify-center rounded-lg bg-blue-500/8 backdrop-blur-[2px] transition-all duration-200">
           <div className="rounded-lg border !border-blue-200 bg-blue-50/90 px-4 py-2 text-blue-700 shadow-sm backdrop-blur-md">
             <span className="text-sm font-medium tracking-wide">
               문의 상세 보기
@@ -82,6 +85,6 @@ export function InquiryItem({ item, onClick }: Props) {
           </div>
         </div>
       )}
-    </div>
+    </Card>
   );
 }
