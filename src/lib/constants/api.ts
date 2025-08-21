@@ -62,6 +62,6 @@ export const API = {
   },
   INQUIRY: {
     GET_PAGINATED: `${API_BASE}/admin/inquiry`,
-    GET_ONE_BY_ID: (id: number) => `${API_BASE}/admin/inquiry/${id}`,
+    GET_ONE_BY_ID: (id: string) => `${API_BASE}/admin/inquiry/${id}`,
   },
 };

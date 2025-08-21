@@ -18,7 +18,10 @@ export async function getInquiriesWithPagination(
 }
 
 export const GET_INQUIRY_BY_ID = "getInquiryById";
-export async function getInquiryById(id: number): Promise<IInquiry> {
+export async function getInquiryById(
+  id?: string
+): Promise<IInquiry | undefined> {
+  if (!id) return;
   const res = await axiosInstance.get<IInquiry>(API.INQUIRY.GET_ONE_BY_ID(id));
   return res.data;
 }
