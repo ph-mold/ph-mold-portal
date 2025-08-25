@@ -4,6 +4,7 @@ import {
   IInquiriesParams,
   IInquiriesResponse,
   IInquiry,
+  InquiryStatus,
 } from "../types/inquiry";
 
 export const GET_INQUIRIES_PAGINATED = "getInquiriesPaginated";
@@ -24,4 +25,9 @@ export async function getInquiryById(
   if (!id) return;
   const res = await axiosInstance.get<IInquiry>(API.INQUIRY.GET_ONE_BY_ID(id));
   return res.data;
+}
+
+export const PATCH_INQUIRY_STATUS = "patchInquiryStatus";
+export async function patchInquiryStatus(id: string, status: InquiryStatus) {
+  await axiosInstance.patch(API.INQUIRY.PATCH_STATUS(id), { status });
 }
