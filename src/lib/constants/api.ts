@@ -60,4 +60,10 @@ export const API = {
     LS_3509: `${API_BASE}/admin/label-sticker/ls-3509`,
     LS_3509_REGENERATE: `${API_BASE}/admin/label-sticker/ls-3509/regenerate`,
   },
+  INQUIRY: {
+    GET_PAGINATED: `${API_BASE}/admin/inquiry`,
+    GET_ONE_BY_ID: (id: string) => `${API_BASE}/admin/inquiry/${id}`,
+    PATCH_STATUS: (id: string) => `${API_BASE}/admin/inquiry/${id}/status`,
+    POST_REPLY: (id: string) => `${API_BASE}/admin/inquiry/${id}/reply`,
+  },
 };
