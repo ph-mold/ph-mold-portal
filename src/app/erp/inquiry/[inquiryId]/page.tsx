@@ -11,6 +11,7 @@ import {
   GET_INQUIRY_BY_ID,
   getInquiryById,
   patchInquiryStatus,
+  postInquiryReply,
 } from "@/lib/api/inquiry";
 import useSWR, { mutate } from "swr";
 import { useParams } from "react-router-dom";
@@ -70,9 +71,27 @@ export default function InquiryDetailPage() {
       });
   };
 
-  const handleReplySubmit = (content: string) => {
-    // TODO: 답변 등록 API 호출
-    console.log("Reply submitted:", content);
+  const handleReplySubmit = async (content: string) => {
+    if (!inquiryId) return;
+    await postInquiryReply(inquiryId, content)
+      .then(() => {
+        mutate([GET_INQUIRY_BY_ID, inquiryId]);
+        invalidateQueryByPattern(GET_INQUIRIES_PAGINATED);
+        alert({
+          title: "답변 등록 성공",
+          description: "답변이 등록되었습니다.",
+          acceptLabel: "확인",
+          showCancelButton: false,
+        });
+      })
+      .catch((error) => {
+        alert({
+          title: "답변 등록 실패",
+          description: error.message,
+          acceptLabel: "확인",
+          showCancelButton: false,
+        });
+      });
   };
 
   return (
@@ -91,6 +110,7 @@ export default function InquiryDetailPage() {
               {/* 답변 관리 섹션 */}
               <InquiryReply
                 remarks={data.remarks}
+                replies={data.replies}
                 onReplySubmit={handleReplySubmit}
               />
             </Card>

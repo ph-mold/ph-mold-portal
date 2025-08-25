@@ -1,27 +1,45 @@
 import { useState } from "react";
-import { Button, TextArea } from "@ph-mold/ph-ui";
-import { Clock, MessageSquare, Send, FileText } from "lucide-react";
+import { Button, TextArea, useAlert } from "@ph-mold/ph-ui";
+import { Clock, MessageSquare, Send, FileText, User } from "lucide-react";
 import { IReply } from "@/lib/types/inquiry";
+import { formatKoreanDateTime } from "@/utils/format";
 
 interface InquiryReplyProps {
   remarks: string;
-  reply?: IReply;
-  onReplySubmit: (content: string) => void;
+  replies?: IReply[];
+  onReplySubmit: (content: string) => Promise<void>;
 }
 
 export function InquiryReply({
   remarks,
-  reply,
+  replies,
   onReplySubmit,
 }: InquiryReplyProps) {
   const [isAddingReply, setIsAddingReply] = useState(false);
   const [replyText, setReplyText] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const alert = useAlert();
 
-  const handleReplySubmit = () => {
+  const handleReplySubmit = async () => {
     if (replyText.trim()) {
-      onReplySubmit(replyText);
-      setReplyText("");
-      setIsAddingReply(false);
+      alert({
+        title: "답변 등록",
+        description: "답변을 등록하시겠습니까?",
+        acceptLabel: "확인",
+        cancelLabel: "취소",
+        onAccept: async () => {
+          setIsLoading(true);
+          try {
+            await onReplySubmit(replyText);
+            setReplyText("");
+            setIsAddingReply(false);
+          } catch (error) {
+            console.error("답변 등록 실패:", error);
+          } finally {
+            setIsLoading(false);
+          }
+        },
+      });
     }
   };
 
@@ -43,18 +61,31 @@ export function InquiryReply({
         </p>
       </div>
 
-      {/* 기존 답변 표시 */}
-      {reply ? (
-        <div className="mb-4 p-4 bg-green-50 border border-green-200 rounded-lg">
-          <div className="flex items-start justify-between mb-2">
-            <span className="text-sm font-medium text-green-800">답변</span>
-            <span className="text-xs text-green-600">
-              {new Date(reply.createdAt).toLocaleDateString("ko-KR")}
-            </span>
-          </div>
-          <p className="text-green-700 text-sm whitespace-pre-wrap">
-            {reply.content}
-          </p>
+      {/* 기존 답변들 표시 */}
+      {replies && replies.length > 0 ? (
+        <div className="mb-4 space-y-3">
+          <h4 className="text-sm font-medium text-foreground">답변 목록</h4>
+          {replies.map((reply, index) => (
+            <div
+              key={reply.id || index}
+              className="p-4 bg-green-50 border border-green-200 rounded-lg"
+            >
+              <div className="flex items-start justify-between mb-2">
+                <div className="flex items-center gap-2">
+                  <User size={14} className="text-green-600" />
+                  <span className="text-xs text-green-700 font-medium">
+                    {reply.replyType === "COMPANY" ? "회사 담당자" : "고객"}
+                  </span>
+                </div>
+                <span className="text-xs text-green-600">
+                  {formatKoreanDateTime(reply.createdAt)}
+                </span>
+              </div>
+              <p className="text-green-700 text-sm whitespace-pre-wrap">
+                {reply.content}
+              </p>
+            </div>
+          ))}
         </div>
       ) : (
         <div className="mb-4 p-4 bg-gray-50 border border-gray-200 rounded-lg">
@@ -65,7 +96,7 @@ export function InquiryReply({
         </div>
       )}
 
-      {/* 답변 작성/수정 */}
+      {/* 답변 작성 */}
       {!isAddingReply ? (
         <Button
           variant="outlined"
@@ -74,7 +105,7 @@ export function InquiryReply({
           startIcon={<MessageSquare size={16} />}
           className="w-full sm:!w-auto"
         >
-          {reply ? "답변 수정" : "답변 등록"}
+          답변 추가
         </Button>
       ) : (
         <div className="space-y-3">
@@ -84,6 +115,7 @@ export function InquiryReply({
             placeholder="답변을 입력해주세요..."
             rows={4}
             className="w-full"
+            disabled={isLoading}
           />
           <div className="flex items-center gap-2">
             <Button
@@ -91,6 +123,8 @@ export function InquiryReply({
               size="small"
               onClick={handleReplySubmit}
               startIcon={<Send size={16} />}
+              loading={isLoading}
+              disabled={isLoading}
             >
               답변 등록
             </Button>
@@ -101,6 +135,7 @@ export function InquiryReply({
                 setIsAddingReply(false);
                 setReplyText("");
               }}
+              disabled={isLoading}
             >
               취소
             </Button>
