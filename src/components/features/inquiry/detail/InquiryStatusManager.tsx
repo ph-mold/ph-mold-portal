@@ -6,7 +6,7 @@ import { STATUS_MAP } from "@/components/features/inquiry/constants";
 
 interface InquiryStatusManagerProps {
   currentStatus: InquiryStatus;
-  onStatusChange: (newStatus: InquiryStatus) => void;
+  onStatusChange: (newStatus: InquiryStatus) => Promise<void>;
 }
 
 export function InquiryStatusManager({
@@ -16,10 +16,20 @@ export function InquiryStatusManager({
   const [isEditingStatus, setIsEditingStatus] = useState(false);
   const [selectedStatus, setSelectedStatus] =
     useState<InquiryStatus>(currentStatus);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleStatusChange = () => {
-    onStatusChange(selectedStatus);
-    setIsEditingStatus(false);
+  const handleStatusChange = async () => {
+    if (selectedStatus === currentStatus) return;
+
+    setIsLoading(true);
+    try {
+      await onStatusChange(selectedStatus);
+      setIsEditingStatus(false);
+    } catch (error) {
+      console.error("상태 변경 실패:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -61,9 +71,10 @@ export function InquiryStatusManager({
                 setSelectedStatus(e.target.value as InquiryStatus)
               }
               className="rounded-md border border-border-strong px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              disabled={isLoading}
             >
-              {Object.values(STATUS_MAP).map((status) => (
-                <option key={status.label} value={status.label}>
+              {Object.entries(STATUS_MAP).map(([key, status]) => (
+                <option key={key} value={key}>
                   {status.label}
                 </option>
               ))}
@@ -72,6 +83,8 @@ export function InquiryStatusManager({
               variant="outlined"
               size="small"
               onClick={handleStatusChange}
+              loading={isLoading}
+              disabled={isLoading}
             >
               저장
             </Button>
@@ -79,6 +92,7 @@ export function InquiryStatusManager({
               variant="outlined"
               size="small"
               onClick={() => setIsEditingStatus(false)}
+              disabled={isLoading}
             >
               취소
             </Button>

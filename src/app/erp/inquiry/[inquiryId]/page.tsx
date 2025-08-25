@@ -6,9 +6,27 @@ import {
 } from "@/components/features/inquiry/detail";
 import { IInquiry, InquiryStatus } from "@/lib/types/inquiry";
 import { useHeader } from "@/hooks/useHeader";
-import { GET_INQUIRY_BY_ID, getInquiryById } from "@/lib/api/inquiry";
-import useSWR from "swr";
+import {
+  GET_INQUIRIES_PAGINATED,
+  GET_INQUIRY_BY_ID,
+  getInquiryById,
+  patchInquiryStatus,
+} from "@/lib/api/inquiry";
+import useSWR, { mutate } from "swr";
 import { useParams } from "react-router-dom";
+import { invalidateQueryByPattern } from "@/utils/queryCache";
+import { useAlert } from "@ph-mold/ph-ui";
+import { STATUS_MAP } from "@/components/features/inquiry";
+
+function InquiryStatusBadge({ status }: { status: InquiryStatus }) {
+  return (
+    <span
+      className={`rounded-full px-3 py-1 text-sm font-medium ${STATUS_MAP[status].color} border ${STATUS_MAP[status].borderColor}`}
+    >
+      {STATUS_MAP[status].label}
+    </span>
+  );
+}
 
 export default function InquiryDetailPage() {
   useHeader({
@@ -22,9 +40,34 @@ export default function InquiryDetailPage() {
     () => getInquiryById(inquiryId)
   );
 
-  const handleStatusChange = (newStatus: InquiryStatus) => {
-    // TODO: 상태 변경 API 호출
-    console.log("Status changed to:", newStatus);
+  const alert = useAlert();
+
+  const handleStatusChange = async (newStatus: InquiryStatus) => {
+    if (!inquiryId) return;
+    await patchInquiryStatus(inquiryId, newStatus)
+      .then(() => {
+        mutate([GET_INQUIRY_BY_ID, inquiryId]);
+        invalidateQueryByPattern(GET_INQUIRIES_PAGINATED);
+        alert({
+          title: "문의 상태 변경 성공",
+          description: (
+            <p className="flex items-center gap-2">
+              문의 상태가 <InquiryStatusBadge status={newStatus} />로
+              변경되었습니다.
+            </p>
+          ),
+          acceptLabel: "확인",
+          showCancelButton: false,
+        });
+      })
+      .catch((error) => {
+        alert({
+          title: "문의 상태 변경 실패",
+          description: error.message,
+          acceptLabel: "확인",
+          showCancelButton: false,
+        });
+      });
   };
 
   const handleReplySubmit = (content: string) => {
