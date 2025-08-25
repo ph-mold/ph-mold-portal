@@ -64,5 +64,6 @@ export const API = {
     GET_PAGINATED: `${API_BASE}/admin/inquiry`,
     GET_ONE_BY_ID: (id: string) => `${API_BASE}/admin/inquiry/${id}`,
     PATCH_STATUS: (id: string) => `${API_BASE}/admin/inquiry/${id}/status`,
+    POST_REPLY: (id: string) => `${API_BASE}/admin/inquiry/${id}/reply`,
   },
 };

@@ -31,3 +31,8 @@ export const PATCH_INQUIRY_STATUS = "patchInquiryStatus";
 export async function patchInquiryStatus(id: string, status: InquiryStatus) {
   await axiosInstance.patch(API.INQUIRY.PATCH_STATUS(id), { status });
 }
+
+export const POST_INQUIRY_REPLY = "postInquiryReply";
+export async function postInquiryReply(id: string, content: string) {
+  await axiosInstance.post(API.INQUIRY.POST_REPLY(id), { content });
+}

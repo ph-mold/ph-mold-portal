@@ -4,6 +4,9 @@ export type InquiryStatus = "PENDING" | "IN_PROGRESS" | "COMPLETED";
 
 export interface IReply {
   id: number;
+  inquiryId: number;
+  assignedUserId: number;
+  replyType: "COMPANY" | "USER";
   content: string;
   createdAt: string;
   updatedAt: string;
@@ -22,7 +25,7 @@ export interface IInquiry {
   remarks: string;
   password: string;
   createdAt: string;
-  reply?: IReply;
+  replies?: IReply[];
 }
 
 export interface IInquiriesParams {
